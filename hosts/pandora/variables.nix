@@ -14,7 +14,7 @@
     configDirectory =
       "/home/"
       + config.var.username
-      + "/Documents/nixy-main";
+      + "/Documents/nixy";
 
     keyboardLayout = "de";
 
@@ -24,8 +24,8 @@
     extraLocale = "de_DE.UTF-8";
 
     git = {
-      username = "TODO";
-      email = "TODO@users.noreply.github.com";
+      username = "furilo";
+      email = "53122773+furilofox@users.noreply.github.com";
     };
 
     autoUpgrade = false;

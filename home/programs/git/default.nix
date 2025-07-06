@@ -1,6 +1,5 @@
 # Git configuration
-{ config, ... }:
-let
+{config, ...}: let
   username = config.var.git.username;
   email = config.var.git.email;
 in {

@@ -1,23 +1,26 @@
 # Define the apps, different media types should open with
-{ pkgs, lib, ... }:
-with lib;
-let
+{
+  pkgs,
+  lib,
+  ...
+}:
+with lib; let
   defaultApps = {
-    browser = [ "zen-beta.desktop" ];
-    text = [ "org.gnome.TextEditor.desktop" ];
-    image = [ "imv-dir.desktop" ];
-    audio = [ "mpv.desktop" ];
-    video = [ "mpv.desktop" ];
-    directory = [ "thunar.desktop" ];
-    office = [ "libreoffice.desktop" ];
-    pdf = [ "zathura.desktop" ];
-    terminal = [ "kitty.desktop" ];
-    discord = [ "discord.desktop" ];
-    archive = [ "xarchiver.desktop" ];
+    browser = ["zen-beta.desktop"];
+    text = ["org.gnome.TextEditor.desktop"];
+    image = ["imv-dir.desktop"];
+    audio = ["mpv.desktop"];
+    video = ["mpv.desktop"];
+    directory = ["thunar.desktop"];
+    office = ["libreoffice.desktop"];
+    pdf = ["zathura.desktop"];
+    terminal = ["kitty.desktop"];
+    discord = ["discord.desktop"];
+    archive = ["xarchiver.desktop"];
   };
 
   mimeMap = {
-    text = [ "text/plain" ];
+    text = ["text/plain"];
     image = [
       "image/bmp"
       "image/gif"
@@ -48,7 +51,7 @@ let
       "video/x-matroska"
       "video/x-msvideo"
     ];
-    directory = [ "inode/directory" ];
+    directory = ["inode/directory"];
     browser = [
       "text/html"
       "x-scheme-handler/about"
@@ -68,15 +71,15 @@ let
       "application/vnd.ms-powerpoint"
       "application/rtf"
     ];
-    pdf = [ "application/pdf" ];
-    terminal = [ "terminal" ];
+    pdf = ["application/pdf"];
+    terminal = ["terminal"];
     archive = [
       "application/zip"
       "application/rar"
       "application/7z"
       "application/*tar"
     ];
-    discord = [ "x-scheme-handler/discord" ];
+    discord = ["x-scheme-handler/discord"];
   };
 
   associations = with lists;

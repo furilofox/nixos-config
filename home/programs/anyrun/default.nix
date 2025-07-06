@@ -1,14 +1,19 @@
-{ pkgs, inputs, ... }: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   programs.anyrun = {
     enable = true;
     config = {
       plugins = with inputs.anyrun.packages.${pkgs.system}; [
         applications
         shell
-        randr
-        rink
+        randr # Change Monitor Configuration (HYPRLAND ONLY!)
+        rink # Calculator & Unit Conversion
         symbols
         translate
+        dictionary
       ];
 
       width.fraction = 0.25;

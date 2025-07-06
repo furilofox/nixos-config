@@ -1,26 +1,45 @@
-{ config, inputs, ... }:
-let autoGarbageCollector = config.var.autoGarbageCollector;
-in {
-  security.sudo.extraRules = [{
-    users = [ config.var.username ];
-    commands = [{
-      command = "/run/current-system/sw/bin/nixos-rebuild";
-      options = [ "NOPASSWD" ];
-    }];
-  }];
+{
+  config,
+  inputs,
+  ...
+}: {
+  # Allow Rebuild without Password
+  security.sudo.extraRules = [
+    {
+      users = [config.var.username];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/nixos-rebuild";
+          options = ["NOPASSWD"];
+        }
+      ];
+    }
+  ];
+
+  # Allow other Packages
   nixpkgs.config = {
     allowUnfree = true;
     allowBroken = true;
   };
+
+  # Better outputs for missing applications
+  programs.nix-index.enable = true;
+  programs.command-not-found.enable = false;
+
   nix = {
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
     channel.enable = false;
+
+    # Remove annoying dirty warning
     extraOptions = ''
       warn-dirty = false
     '';
+
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
+
+      # Add other package sources
       substituters = [
         # high priority since it's almost always used
         "https://cache.nixos.org?priority=10"
@@ -35,11 +54,18 @@ in {
         "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
       ];
     };
+
+    # Auto Garbage collection
     gc = {
-      automatic = autoGarbageCollector;
+      automatic = config.var.autoGarbageCollector;
       persistent = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
   };
+
+  # Add alejandra for nix formatting ("alejandra .")
+  environment.systemPackages = with pkgs; [
+    alejandra
+  ];
 }

@@ -66,13 +66,13 @@
       # pfetch
       # btop
       # fastfetch
- 
+
       # # Just cool
       # peaclock
       # cbonsai
       # pipes
       # cmatrix
- 
+
       # # Backup
       # brave
       vscode

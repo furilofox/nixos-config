@@ -27,19 +27,18 @@
 
   outputs = inputs @ {nixpkgs, ...}: {
     nixosConfigurations = {
-      pandora =
-        nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-          };
-
-          modules = [
-            inputs.home-manager.nixosModules.home-manager
-            inputs.stylix.nixosModules.stylix
-
-            ./hosts/pandora/configuration.nix
-          ];
+      pandora = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
         };
+
+        modules = [
+          inputs.home-manager.nixosModules.home-manager
+          inputs.stylix.nixosModules.stylix
+
+          ./hosts/pandora/configuration.nix
+        ];
+      };
     };
   };
 }

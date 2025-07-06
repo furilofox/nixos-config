@@ -1,10 +1,12 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # Enable Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
-    
+
     # Basic Hyprland configuration
     settings = {
       # Monitor configuration
@@ -79,7 +81,7 @@
 
       # Key bindings
       "$mod" = "SUPER";
-      
+
       bind = [
         # Basic bindings
         "$mod, Q, exec, kitty"
@@ -152,22 +154,22 @@
   home.file.".config/hypr/autostart.sh" = {
     text = ''
       #!/bin/bash
-      
+
       # Wait a moment for the desktop to load
       # sleep 2
-      
+
       # Start anyrun daemon (if it has daemon mode)
       # Comment out if anyrun doesn't have a daemon mode
       anyrun --daemon &
-      
+
       # Optional: Start other applications
       waybar &
       # hyprpaper &
       # mako &
-      
+
       # Optional: Set wallpaper
       # hyprctl hyprpaper wallpaper "eDP-1,/path/to/wallpaper.jpg"
-      
+
       echo "Hyprland autostart completed"
     '';
     executable = true;

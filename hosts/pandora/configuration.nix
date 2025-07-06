@@ -1,4 +1,4 @@
-{ config, ... }: {
+{config, ...}: {
   imports = [
     # Mostly system related configuration
     ../../nixos/audio.nix
