@@ -8,35 +8,59 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    hyprland.url = "github:hyprwm/Hyprland";
+    # hyprland.url = "github:hyprwm/Hyprland";
 
-    stylix.url = "github:danth/stylix";
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    nixcord.url = "github:kaylorben/nixcord";
-    sops-nix.url = "github:Mic92/sops-nix";
-    anyrun.url = "github:fufexan/anyrun/launch-prefix";
+    # stylix.url = "github:danth/stylix";
+    # zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    # nixcord.url = "github:kaylorben/nixcord";
+    # sops-nix.url = "github:Mic92/sops-nix";
+    # anyrun.url = "github:fufexan/anyrun/launch-prefix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nixvim = {
+    #   url = "github:nix-community/nixvim";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
-  outputs = inputs @ {nixpkgs, ...}: {
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    ...
+  }: {
     nixosConfigurations = {
-      pandora = nixpkgs.lib.nixosSystem {
+      # pandora = nixpkgs.lib.nixosSystem {
+      #   specialArgs = {
+      #     inherit inputs;
+      #   };
+      #
+      #   modules = [
+      #     inputs.home-manager.nixosModules.home-manager
+      #     # inputs.stylix.nixosModules.stylix
+      #
+      #     ./hosts/pandora/configuration.nix
+      #   ];
+      # };
+      promethea = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
         };
 
         modules = [
           inputs.home-manager.nixosModules.home-manager
-          inputs.stylix.nixosModules.stylix
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
 
-          ./hosts/pandora/configuration.nix
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+            };
+          }
+          # inputs.stylix.nixosModules.stylix
+
+          ./hosts/promethea/configuration.nix
         ];
       };
     };

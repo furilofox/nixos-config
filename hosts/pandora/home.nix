@@ -20,12 +20,12 @@
     ../../home/scripts # All scripts
 
     # System (Desktop environment like stuff)
-    ../../home/system/hyprland
-    ../../home/system/hypridle
-    ../../home/system/hyprlock
-    ../../home/system/hyprpanel
-    ../../home/system/hyprpaper
-    ../../home/system/wofi
+    # ../../home/system/hyprland
+    # ../../home/system/hypridle
+    # ../../home/system/hyprlock
+    # ../../home/system/hyprpanel
+    # ../../home/system/hyprpaper
+    # ../../home/system/wofi
   ];
 
   home = {
@@ -76,6 +76,15 @@
       # # Backup
       # brave
       vscode
+
+      # vim
+      # wget
+      # git
+      # curl
+      # devenv
+      # bruno
+
+      # xdg-utils
     ];
 
     # Don't touch this

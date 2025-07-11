@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  pkgs,
   ...
 }: {
   # Allow Rebuild without Password
@@ -54,18 +55,18 @@
         "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
       ];
     };
-
-    # Auto Garbage collection
-    gc = {
-      automatic = config.var.autoGarbageCollector;
-      persistent = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
   };
 
   # Add alejandra for nix formatting ("alejandra .")
   environment.systemPackages = with pkgs; [
     alejandra
   ];
+
+  programs.nh = {
+    enable = true;
+    # Auto Garbage collection
+    clean.enable = config.var.autoGarbageCollector;
+    clean.extraArgs = "--keep-since 14d --keep 5";
+    flake = config.var.configDirectory;
+  };
 }
