@@ -9,12 +9,12 @@
 
     # Programs
     # ../../home/programs/anyrun
-    # ../../home/programs/brave
-    # ../../home/programs/discord
+    ../../home/programs/brave
+    ../../home/programs/zen
+    ../../home/programs/discord
     # ../../home/programs/git
     # ../../home/programs/kitty
-    # ../../home/programs/nextcloud
-    # ../../home/programs/zen
+    ../../home/programs/nextcloud
     ../../home/programs/1pass
 
     # Scripts
@@ -34,10 +34,14 @@
     homeDirectory = "/home/" + config.var.username;
 
     packages = with pkgs; [
-      vscode
-      brave
-      git
+      # System Monitoring
+      resources # Shows System Ressources better
+      mission-center # Shows Processes better
 
+      # Development
+      vscode
+      git
+      
       # Apps
       # bitwarden # Password manager
       # vlc # Video player
@@ -47,7 +51,7 @@
       # gnome-calendar # Calendar
       # textpieces # Manipulate texts
       # curtail # Compress images
-      # resources
+
       # gnome-clocks
       # gnome-text-editor
       # mpv # Video player
