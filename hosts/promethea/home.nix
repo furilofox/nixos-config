@@ -27,6 +27,7 @@
     # ../../home/system/hyprpanel
     # ../../home/system/hyprpaper
     # ../../home/system/wofi
+    ../../home/system/hardware/libinput.nix
   ];
 
   home = {
@@ -46,7 +47,7 @@
       # bitwarden # Password manager
       # vlc # Video player
       # blanket # White-noise app
-      # obsidian # Note taking app
+      obsidian # Note taking app
       # # planify # Todolists
       # gnome-calendar # Calendar
       # textpieces # Manipulate texts

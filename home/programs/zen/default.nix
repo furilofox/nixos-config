@@ -1,4 +1,5 @@
 # Zen is a minimalistic web browser.
+# https://github.com/0xc000022070/zen-browser-flake#home-manager-reference
 {
   pkgs,
   inputs,
