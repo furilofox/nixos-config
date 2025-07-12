@@ -15,6 +15,7 @@
     # ../../home/programs/kitty
     # ../../home/programs/nextcloud
     # ../../home/programs/zen
+    ../../home/programs/1pass
 
     # Scripts
     # ../../home/scripts # All scripts

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
   username = config.var.username;
@@ -8,7 +9,7 @@ in {
   users = {
     users.${username} = {
       isNormalUser = true;
-      description = "${username} account";
+      description = "${username}";
       extraGroups = ["networkmanager" "wheel"];
     };
   };

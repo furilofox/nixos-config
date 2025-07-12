@@ -9,6 +9,7 @@
     ../../nixos/common
     ../../nixos/hardware/intel.nix
 
+    ../../nixos/1pass.nix
     ../../nixos/audio.nix
     ../../nixos/printing.nix
     # ../../nixos/bluetooth.nix
