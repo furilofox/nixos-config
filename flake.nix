@@ -31,7 +31,6 @@
     ...
   }: let
     mkHost = {
-      hostname,
       modules,
     }:
       nixpkgs.lib.nixosSystem {
