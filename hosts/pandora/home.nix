@@ -8,16 +8,16 @@
     ./variables.nix
 
     # Programs
-    ../../home/programs/anyrun
-    ../../home/programs/brave
-    ../../home/programs/discord
-    ../../home/programs/git
-    ../../home/programs/kitty
-    ../../home/programs/nextcloud
+    # ../../home/programs/anyrun
+    # ../../home/programs/brave
+    # ../../home/programs/discord
+    # ../../home/programs/git
+    # ../../home/programs/kitty
+    # ../../home/programs/nextcloud
     ../../home/programs/zen
 
     # Scripts
-    ../../home/scripts # All scripts
+    # ../../home/scripts # All scripts
 
     # System (Desktop environment like stuff)
     # ../../home/system/hyprland
@@ -33,6 +33,11 @@
     homeDirectory = "/home/" + config.var.username;
 
     packages = with pkgs; [
+
+      vscode
+      brave
+      git
+
       # Apps
       # bitwarden # Password manager
       # vlc # Video player
@@ -75,7 +80,7 @@
 
       # # Backup
       # brave
-      vscode
+      # vscode
 
       # vim
       # wget

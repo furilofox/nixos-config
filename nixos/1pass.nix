@@ -18,14 +18,6 @@
       enable = true;
       polkitPolicyOwners = [config.var.username];
     };
-
-    ssh = {
-      enable = true;
-      extraConfig = ''
-        Host *
-            IdentityAgent ~/.1password/agent.sock
-      '';
-    };
   };
   security.polkit.enable = true;
 
