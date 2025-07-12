@@ -33,7 +33,6 @@
     homeDirectory = "/home/" + config.var.username;
 
     packages = with pkgs; [
-
       vscode
       brave
       git

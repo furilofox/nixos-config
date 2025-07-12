@@ -1,4 +1,4 @@
-{ pkgs, ...}: {
+{pkgs, ...}: {
   # Enable printer support
   services.printing = {
     enable = true;

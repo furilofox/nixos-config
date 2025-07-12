@@ -30,9 +30,7 @@
     nixpkgs,
     ...
   }: let
-    mkHost = {
-      modules,
-    }:
+    mkHost = {modules}:
       nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;

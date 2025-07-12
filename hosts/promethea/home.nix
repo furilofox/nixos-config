@@ -41,7 +41,7 @@
       # Development
       vscode
       git
-      
+
       # Apps
       # bitwarden # Password manager
       # vlc # Video player

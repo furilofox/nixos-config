@@ -10,7 +10,7 @@ in {
 
   # networking.networkmanager.enable = true;
   # systemd.services.NetworkManager-wait-online.enable = false;
-# 
+  #
   # services = {
   #   xserver = {
   #     enable = true;
@@ -21,7 +21,7 @@ in {
   #     resyncTimer = "10m";
   #   };
   # };
-# 
+  #
   # environment.variables = {
   #   XDG_DATA_HOME = "$HOME/.local/share";
   #   PASSWORD_STORE_DIR = "$HOME/.local/share/password-store";
@@ -30,7 +30,7 @@ in {
   #   TERM = "kitty";
   #   BROWSER = "zen-beta";
   # };
-# 
+  #
   # services.libinput.enable = true;
   # programs.dconf.enable = true;
   # services = {
@@ -44,10 +44,10 @@ in {
   #   power-profiles-daemon.enable = true;
   #   udisks2.enable = true;
   # };
-# 
+  #
   # # enable zsh autocompletion for system packages (systemd, etc)
   # environment.pathsToLink = ["/share/zsh"];
-# 
+  #
   # # Faster rebuilding
   # documentation = {
   #   enable = true;
@@ -57,7 +57,7 @@ in {
   #   info.enable = false;
   #   nixos.enable = false;
   # };
-# 
+  #
   # environment.systemPackages = with pkgs; [
   #   hyprland-qtutils
   #   fd
@@ -69,7 +69,7 @@ in {
   #   curl
   #   vim
   # ];
-# 
+  #
   # xdg.portal = {
   #   enable = true;
   #   xdgOpenUsePortal = true;
@@ -77,23 +77,23 @@ in {
   #     common.default = ["gtk"];
   #     hyprland.default = ["gtk" "hyprland"];
   #   };
-# 
+  #
   #   extraPortals = [pkgs.xdg-desktop-portal-gtk];
   # };
-# 
+  #
   # security = {
   #   # allow wayland lockers to unlock the screen
   #   pam.services.hyprlock.text = "auth include login";
-# 
+  #
   #   # userland niceness
   #   rtkit.enable = true;
-# 
+  #
   #   # don't ask for password for wheel group
   #   sudo.wheelNeedsPassword = false;
   # };
-# 
+  #
   # services.logind.extraConfig = ''
   #   # don’t shutdown when power button is short-pressed
   #   HandlePowerKey=ignore
   # '';
-} 
+}
