@@ -8,16 +8,19 @@
     # Mostly system related configuration
     ../../nixos/common
     ../../nixos/hardware/intel.nix
+    ../../nixos/hardware/touchpad.nix
+
+    ../../nixos/audio.nix
+    ../../nixos/bluetooth.nix
+    ../../nixos/printing.nix
+    ../../nixos/ram-swap.nix
+    ../../nixos/miracast.nix
+
+    ../../nixos/gnome.nix
+    ../../nixos/fonts.nix
 
     ../../nixos/1pass.nix
-    ../../nixos/audio.nix
-    ../../nixos/printing.nix
-    ../../nixos/bluetooth.nix
-    ../../nixos/fonts.nix
-    ../../nixos/gnome.nix
     ../../nixos/utils.nix
-
-    ../../nixos/hardware/touchpad.nix
 
     ./hardware-configuration.nix
     ./variables.nix

@@ -1,4 +1,4 @@
-# Virtual RAM / RAM Compression
+# RAM Swap / RAM Compression
 {config, ...}: {
   swapDevices = [
     {
