@@ -10,13 +10,14 @@
     ../../nixos/hardware/intel.nix
     ../../nixos/hardware/touchpad.nix
 
+    ../../nixos/desktop/gnome
+
     ../../nixos/audio.nix
     ../../nixos/bluetooth.nix
     ../../nixos/printing.nix
     ../../nixos/ram-swap.nix
     ../../nixos/miracast.nix
 
-    ../../nixos/gnome.nix
     ../../nixos/fonts.nix
 
     ../../nixos/1pass.nix

@@ -38,79 +38,38 @@
       # System Monitoring
       resources # Shows System Ressources better
       mission-center # Shows Processes better
+      btop # Console System Monitoring
 
       # Development
       vscode
       git
 
       # Apps
-      # bitwarden # Password manager
-      # vlc # Video player
-      # blanket # White-noise app
-      obsidian # Note taking app
-      # # planify # Todolists
-      # gnome-calendar # Calendar
-      # textpieces # Manipulate texts
-      # curtail # Compress images
-
-      # gnome-clocks
-      # gnome-text-editor
-      # mpv # Video player
-      # figma-linux
 
       # # Dev
-      # go
-      # bun
-      # nodejs
-      # python3
-      # jq
-      # just
-      # pnpm
-      # air
+      devenv
 
       # # Utils
-      # zip
-      # unzip
-      # optipng
-      # jpegoptim
-      # pfetch
-      # btop
-      # fastfetch
+      zip
+      unzip
+      optipng
+      jpegoptim
+      pfetch
+      fastfetch
+      gparted
 
       # # Just cool
-      # peaclock
-      # cbonsai
-      # pipes
-      # cmatrix
-
-      # Communication
-      # vesktop
+      peaclock
+      cbonsai
+      pipes # pipes.sh -t [0-9]
+      cmatrix
 
       # Unsorted
-      # bottles # windows app container
-      # gparted
-      # easyeffects
-      # nextcloud-client
-      # telegram-desktop
-      # obsidian
-
-      # devenv
-
-      # protonup
-
-      # gnome-tweaks
-
-      # bruno
-
-      # realvnc-vnc-viewer
-
-      # cheese
-      # fastfetch
-
-      # kdePackages.dolphin # File Manager
-      # kdePackages.qtsvg # To support svg icons
-      # kdePackages.kio-fuse # To mount remote filesystems via FUSE
-      # kdePackages.kio-extras # Extra protocols support (sftp, fish and more)
+      bottles # windows app container
+      obsidian # Note taking app
+      easyeffects # Speaker / Mic Management
+      nextcloud-client # File Sync
+      telegram-desktop # Chatting
     ];
 
     # Don't touch this
