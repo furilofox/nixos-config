@@ -3,7 +3,11 @@
   inputs,
   pkgs,
   ...
-}: {
+}: let
+  configDir = config.var.configDirectory;
+  autoGC = config.var.autoGarbageCollector;
+  autoUpgrade = config.var.autoUpgrade;
+in {
   # Allow Rebuild without Password
   security.sudo.extraRules = [
     {
@@ -20,7 +24,7 @@
   # Allow other Packages
   nixpkgs.config = {
     allowUnfree = true;
-    allowBroken = true;
+    allowBroken = false;
   };
 
   # Better outputs for missing applications
@@ -64,9 +68,18 @@
 
   programs.nh = {
     enable = true;
+    flake = configDir;
+
     # Auto Garbage collection
-    clean.enable = config.var.autoGarbageCollector;
-    clean.extraArgs = "--keep-since 14d --keep 5";
-    flake = config.var.configDirectory;
+    clean.enable = autoGC;
+    clean.extraArgs = "--keep-since 14d --keep 10";
+  };
+
+  system.autoUpgrade = {
+    enable = autoUpgrade;
+    flake = "${configDir}";
+    dates = "04:00";
+    flags = ["--update-input" "nixpkgs" "--commit-lock-file"];
+    allowReboot = false;
   };
 }

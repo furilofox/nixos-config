@@ -5,10 +5,9 @@
     ../../nixos/hardware/amd.nix
 
     ../../nixos/audio.nix
-    ../../nixos/bluetooth.nix
-    ../../nixos/fonts.nix
     ../../nixos/gnome.nix
-    ../../nixos/utils.nix
+    ../../nixos/docker.nix
+    ../../nixos/1pass.nix
 
     ./hardware-configuration.nix
     ./variables.nix

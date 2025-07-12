@@ -29,35 +29,32 @@
     self,
     nixpkgs,
     ...
-  }: {
-    nixosConfigurations = {
-      # pandora = nixpkgs.lib.nixosSystem {
-      #   specialArgs = {
-      #     inherit inputs;
-      #   };
-      #
-      #   modules = [
-      #     inputs.home-manager.nixosModules.home-manager
-      #     # inputs.stylix.nixosModules.stylix
-      #
-      #     ./hosts/pandora/configuration.nix
-      #   ];
-      # };
-      promethea = nixpkgs.lib.nixosSystem {
+  }: let
+    mkHost = {
+      hostname,
+      modules,
+    }:
+      nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
         };
 
+        modules = modules;
+      };
+  in {
+    nixosConfigurations = {
+      pandora = mkHost {
         modules = [
           inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
+          # inputs.stylix.nixosModules.stylix
 
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-            };
-          }
+          ./hosts/pandora/configuration.nix
+        ];
+      };
+
+      promethea = mkHost {
+        modules = [
+          inputs.home-manager.nixosModules.home-manager
           # inputs.stylix.nixosModules.stylix
 
           ./hosts/promethea/configuration.nix

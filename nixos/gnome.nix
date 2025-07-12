@@ -8,12 +8,6 @@
   services = {
     xserver = {
       enable = true;
-
-      # Configure keyboard
-      xkb = {
-        layout = config.var.keyboardLayout;
-        variant = "";
-      };
     };
 
     displayManager = {

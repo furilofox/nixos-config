@@ -16,7 +16,7 @@
 
     _1password-gui = {
       enable = true;
-      polkitPolicyOwners = ["fabian"];
+      polkitPolicyOwners = [config.var.username];
     };
 
     ssh = {
