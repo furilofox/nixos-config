@@ -8,11 +8,10 @@
     ./variables.nix
 
     # Programs
-    # ../../home/programs/anyrun
     ../../home/programs/brave
     ../../home/programs/zen
     ../../home/programs/discord
-    # ../../home/programs/git
+    ../../home/programs/git
     # ../../home/programs/kitty
     ../../home/programs/nextcloud
     ../../home/programs/1pass
@@ -20,13 +19,7 @@
     # Scripts
     # ../../home/scripts # All scripts
 
-    # System (Desktop environment like stuff)
-    # ../../home/system/hyprland
-    # ../../home/system/hypridle
-    # ../../home/system/hyprlock
-    # ../../home/system/hyprpanel
-    # ../../home/system/hyprpaper
-    # ../../home/system/wofi
+    # System
     ../../home/system/hardware/libinput.nix
   ];
 
