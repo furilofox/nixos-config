@@ -66,4 +66,8 @@
     pkgs.gnome-connections
     gnome-tour
   ];
+
+  home.packages = with pkgs; [
+    gnomeExtensions.gsconnect
+  ];
 }
