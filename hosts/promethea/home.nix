@@ -15,6 +15,7 @@
     # ../../home/programs/kitty
     ../../home/programs/nextcloud
     ../../home/programs/1pass
+    ../../home/programs/kdeconnect
 
     # Scripts
     # ../../home/scripts # All scripts
