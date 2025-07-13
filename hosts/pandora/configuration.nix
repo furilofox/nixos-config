@@ -4,10 +4,16 @@
     ../../nixos/common
     ../../nixos/hardware/amd.nix
 
+    ../../nixos/desktop/gnome
+
     ../../nixos/audio.nix
-    ../../nixos/gnome.nix
-    ../../nixos/docker.nix
+    ../../nixos/printing.nix
+    ../../nixos/ram-swap.nix
+
+    ../../nixos/fonts.nix
+
     ../../nixos/1pass.nix
+    ../../nixos/utils.nix
 
     ./hardware-configuration.nix
     ./variables.nix

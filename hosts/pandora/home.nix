@@ -8,24 +8,18 @@
     ./variables.nix
 
     # Programs
-    # ../../home/programs/anyrun
-    # ../../home/programs/brave
-    # ../../home/programs/discord
-    # ../../home/programs/git
-    # ../../home/programs/kitty
-    # ../../home/programs/nextcloud
+    ../../home/programs/brave
     ../../home/programs/zen
+    ../../home/programs/discord
+    ../../home/programs/git
+    # ../../home/programs/kitty
+    ../../home/programs/nextcloud
+    ../../home/programs/1pass
 
     # Scripts
     # ../../home/scripts # All scripts
 
-    # System (Desktop environment like stuff)
-    # ../../home/system/hyprland
-    # ../../home/system/hypridle
-    # ../../home/system/hyprlock
-    # ../../home/system/hyprpanel
-    # ../../home/system/hyprpaper
-    # ../../home/system/wofi
+    # System
   ];
 
   home = {
@@ -33,62 +27,41 @@
     homeDirectory = "/home/" + config.var.username;
 
     packages = with pkgs; [
+      # System Monitoring
+      resources # Shows System Ressources better
+      mission-center # Shows Processes better
+      btop # Console System Monitoring
+
+      # Development
       vscode
-      brave
       git
 
       # Apps
-      # bitwarden # Password manager
-      # vlc # Video player
-      # blanket # White-noise app
-      # obsidian # Note taking app
-      # # planify # Todolists
-      # gnome-calendar # Calendar
-      # textpieces # Manipulate texts
-      # curtail # Compress images
-      # resources
-      # gnome-clocks
-      # gnome-text-editor
-      # mpv # Video player
-      # figma-linux
 
       # # Dev
-      # go
-      # bun
-      # nodejs
-      # python3
-      # jq
-      # just
-      # pnpm
-      # air
+      devenv
 
       # # Utils
-      # zip
-      # unzip
-      # optipng
-      # jpegoptim
-      # pfetch
-      # btop
-      # fastfetch
+      zip
+      unzip
+      optipng
+      jpegoptim
+      pfetch
+      fastfetch
+      gparted
 
       # # Just cool
-      # peaclock
-      # cbonsai
-      # pipes
-      # cmatrix
+      peaclock
+      cbonsai
+      pipes # pipes.sh -t [0-9]
+      cmatrix
 
-      # # Backup
-      # brave
-      # vscode
-
-      # vim
-      # wget
-      # git
-      # curl
-      # devenv
-      # bruno
-
-      # xdg-utils
+      # Unsorted
+      bottles # windows app container
+      obsidian # Note taking app
+      easyeffects # Speaker / Mic Management
+      nextcloud-client # File Sync
+      telegram-desktop # Chatting
     ];
 
     # Don't touch this
