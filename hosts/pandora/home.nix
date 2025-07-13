@@ -8,7 +8,7 @@
     ./variables.nix
 
     # Programs
-    ../../home/programs/brave
+    # ../../home/programs/brave
     ../../home/programs/zen
     ../../home/programs/discord
     ../../home/programs/git
@@ -39,6 +39,13 @@
 
       # Apps
 
+      # # Gaming
+      mangohud # Game Hardware stats
+      protonup # "protonup" in terminal to download proton-ge
+      lutris # great game launcher
+      heroic # good for epicgames
+      prismlauncher # Minecraft
+
       # # Dev
       devenv
 
@@ -50,6 +57,7 @@
       pfetch
       fastfetch
       gparted
+      bottles # windows app container
 
       # # Just cool
       peaclock
@@ -58,11 +66,11 @@
       cmatrix
 
       # Unsorted
-      bottles # windows app container
       obsidian # Note taking app
       easyeffects # Speaker / Mic Management
       nextcloud-client # File Sync
       telegram-desktop # Chatting
+      bambu-studio # 3D-Printer
     ];
 
     # Don't touch this

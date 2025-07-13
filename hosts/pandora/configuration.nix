@@ -12,6 +12,7 @@
 
     ../../nixos/fonts.nix
 
+    ../../nixos/gaming.nix
     ../../nixos/1pass.nix
     ../../nixos/utils.nix
 

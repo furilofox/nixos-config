@@ -3,12 +3,7 @@
   config,
   inputs,
   ...
-}: let
-  hostname = config.var.hostname;
-in {
-  networking.hostName = hostname;
-  networking.networkmanager.enable = true;
-
+}: {
   environment.variables = {
     EDITOR = "vscode";
     BROWSER = "zen-beta";

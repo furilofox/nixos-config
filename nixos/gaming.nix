@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   # Gaming Stuff
   programs.gamescope = {
     enable = true;

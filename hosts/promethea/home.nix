@@ -8,7 +8,7 @@
     ./variables.nix
 
     # Programs
-    ../../home/programs/brave
+    # ../../home/programs/brave
     ../../home/programs/zen
     ../../home/programs/discord
     ../../home/programs/git
