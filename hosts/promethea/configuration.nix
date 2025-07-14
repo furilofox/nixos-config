@@ -18,6 +18,7 @@
     ../../nixos/printing.nix
     ../../nixos/ram-swap.nix
     ../../nixos/miracast.nix
+    ../../nixos/gaming.nix
 
     ../../nixos/fonts.nix
 
