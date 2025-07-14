@@ -9,6 +9,7 @@
     ../../nixos/common
     ../../nixos/hardware/intel.nix
     ../../nixos/hardware/touchpad.nix
+    ../../nixos/hardware/fprint.nix
 
     ../../nixos/desktop/gnome
 

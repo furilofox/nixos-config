@@ -1,5 +1,5 @@
 # Enable fingerprint authentication
-{...}: {
+{pkgs,lib,config,...}: {
   systemd.services.fprintd = {
     wantedBy = ["multi-user.target"];
     serviceConfig.Type = "simple";
