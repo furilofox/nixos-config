@@ -44,7 +44,15 @@
       protonup # "protonup" in terminal to download proton-ge
       lutris # great game launcher
       heroic # good for epicgames
-      prismlauncher # Minecraft
+      (prismlauncher.override { # Minecraft
+        additionalPrograms = [ffmpeg];
+        jdks = [
+          graalvm-ce
+          zulu8
+          zulu17
+          zulu
+        ];
+      })
 
       # # Dev
       devenv
