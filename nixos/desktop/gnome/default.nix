@@ -30,7 +30,7 @@
     # Force Wayland for Chromium based applications
     NIXOS_OZONE_WL = "1";
     # Force Wayland for vscode
-    ELECTRON_OZONE_PLATFORM_HINT = "x11";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     # Force Wayland for firefox
     MOZ_ENABLE_WAYLAND = 1;
   };

@@ -31,6 +31,9 @@
 
   home-manager.users."${config.var.username}" = import ./home.nix;
 
+  # Orientation & other Sensors
+  hardware.sensor.iio.enable = true;
+
   # Don't touch this
   system.stateVersion = "24.11";
 }
