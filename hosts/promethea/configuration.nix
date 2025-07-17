@@ -19,6 +19,7 @@
     ../../nixos/ram-swap.nix
     ../../nixos/miracast.nix
     ../../nixos/gaming.nix
+    ../../nixos/docker.nix
 
     ../../nixos/fonts.nix
 
