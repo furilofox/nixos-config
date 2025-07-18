@@ -15,6 +15,7 @@
     ../../nixos/gaming.nix
     ../../nixos/1pass.nix
     ../../nixos/utils.nix
+    ../../nixos/docker.nix
 
     ./hardware-configuration.nix
     ./variables.nix
