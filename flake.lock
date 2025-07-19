@@ -80,11 +80,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1752852534,
-        "narHash": "sha256-j5ta/UhJXOlvRrhsf/EGpD7fL0AgYkEXj1FYPI3qypg=",
+        "lastModified": 1752888590,
+        "narHash": "sha256-rZMb7ybVMHs2Rqx2ZDyI2X3Dq+phcgYWbdl+AXKt17Y=",
         "owner": "kaylorben",
         "repo": "nixcord",
-        "rev": "d6a843ccac9a39d675540ed93a02ff204b43647f",
+        "rev": "0563a8fe6eb4228eb3abad84401bafa750006912",
         "type": "github"
       },
       "original": {
@@ -179,11 +179,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752837946,
-        "narHash": "sha256-oLkH/Mr0cfrjD6WRf6GqJV6sizX0ZgYqD6gFdziyKVo=",
+        "lastModified": 1752921684,
+        "narHash": "sha256-GjN9BXxWMlmIAAcKYrsrEPVT/cJkWieG3YOJG7sJuGk=",
         "ref": "refs/heads/master",
-        "rev": "e55d519c280192d8d97695b6c5905a0d7a46f8fe",
-        "revCount": 647,
+        "rev": "759bd721dfd38e2ce02048f378ee025bcb175f93",
+        "revCount": 651,
         "type": "git",
         "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
       },
