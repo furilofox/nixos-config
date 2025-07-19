@@ -27,6 +27,8 @@
     ../../nixos/utils.nix
 
     ../../server/node-red
+    ../../server/home-assistant
+    ../../server/n8n
 
     ./hardware-configuration.nix
     ./variables.nix
