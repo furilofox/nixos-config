@@ -26,6 +26,8 @@
     ../../nixos/1pass.nix
     ../../nixos/utils.nix
 
+    ../../server/node-red
+
     ./hardware-configuration.nix
     ./variables.nix
   ];

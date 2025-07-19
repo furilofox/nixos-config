@@ -1,5 +1,5 @@
 # Git configuration
-{config, ...}: let
+{config,pkgs,lib,...}: let
   username = config.var.git.username;
   email = config.var.git.email;
 in {
@@ -24,6 +24,36 @@ in {
       pull.rebase = "false";
       push.autoSetupRemote = true;
       color.ui = "1";
+
+      gpg = {
+        format = "ssh";
+      };
+      "gpg \"ssh\"" = {
+        program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+      };
+      commit = {
+        gpgsign = true;
+      };
+    };
+  };
+  systemd = {
+    user.services.polkit-gnome-authentication-agent-1 = {
+      Unit = {
+        Description = "polkit-gnome-authentication-agent-1";
+        Wants = ["graphical-session.target"];
+        After = ["graphical-session-pre.target"];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        KillMode = "mixed";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+      Install = {
+        WantedBy = ["graphical-session.target"];
+      };
     };
   };
 }
