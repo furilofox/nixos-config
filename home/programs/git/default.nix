@@ -1,5 +1,10 @@
 # Git configuration
-{config,pkgs,lib,...}: let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   username = config.var.git.username;
   email = config.var.git.email;
 in {
@@ -34,6 +39,8 @@ in {
       commit = {
         gpgsign = true;
       };
+
+      user.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID/OqDv8cbzLzx983fHgAupPVy15LKEmVmUR9bOc7GlU";
     };
   };
   systemd = {
