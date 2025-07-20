@@ -1,4 +1,4 @@
-{config, ...}: {
+{config,pkgs, ...}: {
   imports = [
     # Mostly system related configuration
     ../../nixos/common
@@ -25,6 +25,8 @@
   ];
 
   home-manager.users."${config.var.username}" = import ./home.nix;
+
+  environment.systemPackages = with pkgs; [devenv];
 
   # Don't touch this
   system.stateVersion = "25.05";

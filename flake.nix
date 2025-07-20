@@ -27,11 +27,16 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-python = {
+      url = "github:cachix/nixpkgs-python";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
     self,
     nixpkgs,
+    nixpkgs-python,
     ...
   }: let
     mkHost = {modules}:

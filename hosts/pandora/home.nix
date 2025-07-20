@@ -55,9 +55,6 @@
         ];
       })
 
-      # # Dev
-      devenv
-
       # # Utils
       zip
       unzip
