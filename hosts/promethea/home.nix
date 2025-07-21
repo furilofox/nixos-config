@@ -16,7 +16,7 @@
     ../../home/programs/nextcloud
     ../../home/programs/1pass
     ../../home/programs/kdeconnect
-    ../../home/programs/quickshell
+    # ../../home/programs/quickshell
 
     # Scripts
     # ../../home/scripts # All scripts
@@ -40,9 +40,6 @@
       git
 
       # Apps
-
-      # # Dev
-      devenv
 
       # # Utils
       zip
