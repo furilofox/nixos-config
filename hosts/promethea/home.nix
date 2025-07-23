@@ -38,6 +38,7 @@
       # Development
       vscode
       git
+      bruno
 
       # Apps
 
