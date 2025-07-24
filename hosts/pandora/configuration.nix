@@ -26,7 +26,7 @@
 
   home-manager.users."${config.var.username}" = import ./home.nix;
 
-  environment.systemPackages = with pkgs; [devenv];
+  environment.systemPackages = with pkgs; [devenv unixtools.netstat];
 
   # Don't touch this
   system.stateVersion = "25.05";
