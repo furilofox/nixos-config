@@ -8,6 +8,7 @@
       extraPackages = with pkgs; [
         amdvlk
         rocmPackages.clr.icd
+        clinfo
       ];
       extraPackages32 = with pkgs; [
         driversi686Linux.amdvlk
@@ -16,4 +17,7 @@
   };
 
   services.xserver.videoDrivers = ["amdgpu"];
+
+  # Force RADV
+  environment.variables.AMD_VULKAN_ICD = "RADV";
 }

@@ -1,4 +1,8 @@
-{config,pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     # Mostly system related configuration
     ../../nixos/common
@@ -22,6 +26,11 @@
 
     ./hardware-configuration.nix
     ./variables.nix
+  ];
+
+  boot.kernelParams = [
+    "video=DP-2:1920x1200@60"
+    "video=HDMI-A-2:2560x1440@144"
   ];
 
   home-manager.users."${config.var.username}" = import ./home.nix;
