@@ -38,6 +38,7 @@
       vscode
       git
       bruno
+      mongodb-compass
 
       # Apps
 

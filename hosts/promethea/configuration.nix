@@ -29,6 +29,7 @@
     ../../server/node-red
     ../../server/home-assistant
     ../../server/n8n
+    ../../server/homepage
 
     ./hardware-configuration.nix
     ./variables.nix
