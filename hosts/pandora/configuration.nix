@@ -1,4 +1,8 @@
-{config,pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     # Mostly system related configuration
     ../../nixos/common
