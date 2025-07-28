@@ -28,6 +28,11 @@
     ./variables.nix
   ];
 
+  boot.kernelParams = [
+    "video=DP-2:1920x1200@60"
+    "video=HDMI-A-2:2560x1440@144"
+  ];
+
   home-manager.users."${config.var.username}" = import ./home.nix;
 
   environment.systemPackages = with pkgs; [devenv unixtools.netstat];
