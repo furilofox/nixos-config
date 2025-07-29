@@ -25,6 +25,9 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     allowBroken = false;
+    permittedInsecurePackages = [
+      "libsoup-2.74.3"
+    ];
   };
 
   # Better outputs for missing applications
