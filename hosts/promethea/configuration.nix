@@ -30,6 +30,7 @@
     ../../server/home-assistant
     ../../server/n8n
     ../../server/homepage
+    ../../server/vaultwarden
 
     ./hardware-configuration.nix
     ./variables.nix
