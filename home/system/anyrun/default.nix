@@ -22,7 +22,7 @@
       closeOnClick = true;
     };
 
-    extraCss = ''
+    /* extraCss = ''
       * {
         all: unset;
         font-size: 1.2rem;
@@ -40,7 +40,7 @@
         border-radius: 8px;
         margin: 4px 0;
         padding: 4px;
-        /* transition: 100ms ease-out; */
+        # transition: 100ms ease-out;
       }
       #match.activatable:first-child {
         margin-top: 12px;
@@ -87,6 +87,6 @@
           prefix: ">"
         )
       '';
-    };
+    }; */
   };
 }

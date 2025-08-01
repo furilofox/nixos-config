@@ -9,6 +9,7 @@
     ../../nixos/hardware/amd.nix
 
     ../../nixos/desktop/gnome
+    ../../nixos/desktop/hyprland
 
     ../../nixos/audio.nix
     ../../nixos/printing.nix
@@ -21,16 +22,10 @@
     ../../nixos/utils.nix
     ../../nixos/docker.nix
 
-    ../../server/home-assistant
-    ../../server/n8n
+    ../../homelab
 
     ./hardware-configuration.nix
     ./variables.nix
-  ];
-
-  boot.kernelParams = [
-    "video=DP-2:1920x1200@60"
-    "video=HDMI-A-2:2560x1440@144"
   ];
 
   home-manager.users."${config.var.username}" = import ./home.nix;

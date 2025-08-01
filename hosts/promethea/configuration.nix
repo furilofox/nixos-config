@@ -26,11 +26,11 @@
     ../../nixos/1pass.nix
     ../../nixos/utils.nix
 
-    ../../server/node-red
-    ../../server/home-assistant
-    ../../server/n8n
-    ../../server/homepage
-    ../../server/vaultwarden
+    ../../homelab/node-red
+    ../../homelab/home-assistant
+    ../../homelab/n8n
+    ../../homelab/homepage
+    ../../serhomelabver/vaultwarden
 
     ./hardware-configuration.nix
     ./variables.nix
