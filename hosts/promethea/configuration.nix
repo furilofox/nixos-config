@@ -11,7 +11,7 @@
     ../../nixos/hardware/touchpad.nix
     ../../nixos/hardware/fprint.nix
 
-    ../../nixos/desktop/gnome
+    ../../nixos/desktop/hyprland
 
     ../../nixos/audio.nix
     ../../nixos/bluetooth.nix
