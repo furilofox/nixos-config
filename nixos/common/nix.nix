@@ -78,13 +78,13 @@ in {
 
     # Auto Garbage collection
     clean.enable = autoGC;
-    clean.extraArgs = "--keep-since 14d --keep 10";
+    clean.extraArgs = "--keep-since 7d";
   };
 
   system.autoUpgrade = {
     enable = autoUpgrade;
     flake = "${configDir}";
-    dates = "04:00";
+    dates = "daily";
     flags = ["--update-input" "nixpkgs" "--commit-lock-file"];
     allowReboot = false;
   };
