@@ -10,6 +10,8 @@
 
     ../../nixos/desktop/gnome
 
+    ../../nixos/services/mullvad.nix
+
     ../../nixos/audio.nix
     ../../nixos/printing.nix
     ../../nixos/ram-swap.nix
