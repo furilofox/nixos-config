@@ -9,7 +9,6 @@
     ../../nixos/hardware/amd.nix
 
     ../../nixos/desktop/gnome
-    ../../nixos/desktop/hyprland
 
     ../../nixos/audio.nix
     ../../nixos/printing.nix

@@ -22,7 +22,7 @@
       closeOnClick = true;
     };
 
-    /* extraCss = ''
+    extraCss = ''
       * {
         all: unset;
         font-size: 1.2rem;
@@ -76,9 +76,7 @@
     extraConfigFiles = {
       "applications.ron".text = ''
         Config(
-          desktop_actions: false,
           max_entries: 5,
-          terminal: Some("foot"),
         )
       '';
 
@@ -87,6 +85,6 @@
           prefix: ">"
         )
       '';
-    }; */
+    };
   };
 }

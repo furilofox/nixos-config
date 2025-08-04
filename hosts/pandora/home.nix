@@ -76,7 +76,6 @@
       easyeffects # Speaker / Mic Management
       nextcloud-client # File Sync
       telegram-desktop # Chatting
-      bambu-studio # 3D-Printer
     ];
 
     # Don't touch this

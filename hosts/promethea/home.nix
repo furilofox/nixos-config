@@ -40,8 +40,6 @@
       bruno
       mongodb-compass
 
-      bambu-studio
-
       # Apps
 
       # # Utils
