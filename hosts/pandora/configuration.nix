@@ -22,6 +22,7 @@
     ../../nixos/1pass.nix
     ../../nixos/utils.nix
     ../../nixos/docker.nix
+    ../../nixos/home-manager.nix
 
     ../../homelab
 

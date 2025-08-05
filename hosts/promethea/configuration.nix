@@ -20,6 +20,7 @@
     ../../nixos/miracast.nix
     ../../nixos/gaming.nix
     ../../nixos/docker.nix
+    ../../nixos/home-manager.nix
 
     ../../nixos/fonts.nix
 
