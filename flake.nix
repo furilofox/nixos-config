@@ -70,6 +70,13 @@
           ./hosts/promethea/configuration.nix
         ];
       };
+
+      athenas = mkHost {
+        modules = [
+          inputs.home-manager.nixosModules.home-manager
+          ./hosts/athenas/configuration.nix
+        ];
+      };
     };
   };
 }
