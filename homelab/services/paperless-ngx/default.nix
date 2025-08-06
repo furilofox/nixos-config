@@ -42,7 +42,7 @@ in {
     };
     homepage.icon = lib.mkOption {
       type = lib.types.str;
-      default = "paperless.svg";
+      default = "si-paperlessngx";
     };
     homepage.category = lib.mkOption {
       type = lib.types.str;

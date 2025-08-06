@@ -23,6 +23,7 @@
     ../../nixos/utils.nix
     ../../nixos/docker.nix
     ../../nixos/home-manager.nix
+    ../../nixos/ssh.nix
 
     ../../homelab
 
