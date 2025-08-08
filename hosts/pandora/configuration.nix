@@ -5,7 +5,11 @@
 }: {
   imports = [
     # Mostly system related configuration
-    ../../nixos/common
+    ../../nixos/nix.nix
+    ../../nixos/users.nix
+    ../../nixos/systemd-boot.nix
+    ../../nixos/locale.nix
+    ../../nixos/networking.nix
     ../../nixos/hardware/amd.nix
 
     ../../nixos/desktop/gnome
