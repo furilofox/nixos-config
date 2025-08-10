@@ -10,11 +10,8 @@
     ../../nixos/users.nix
     ../../nixos/systemd-boot.nix
     ../../nixos/locale.nix
-    ../../nixos/networking.nix
     ../../nixos/hardware/intel.nix
-    ../../nixos/hardware/fprint.nix
     ../../nixos/ram-swap.nix
-    ../../nixos/1pass.nix
     ../../nixos/utils.nix
     ../../nixos/ssh.nix
 
@@ -35,21 +32,90 @@
     services = {
       homepage = {
         enable = true;
-
-        # Example for Service without module in my Config
-        /*
-           misc = [
-          {
-            CustomApp = {
-              description = "Some App not managed in this Config";
-              url = "http://something.com";
-              icon = "si-example";
-            };
-          }
-        ];
-        */
       };
     };
+  };
+
+  # Basic system configuration
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  networking = {
+    hostName = "homelab-server";
+    networkmanager.enable = true;
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 
+        80    # HTTP
+        443   # HTTPS  
+        53    # DNS TCP
+      ];
+      allowedUDPPorts = [ 
+        53    # DNS UDP
+      ];
+    };
+  };
+
+  # DNS Server Configuration (dnsmasq)
+  services.dnsmasq = {
+    enable = true;
+    settings = {
+      # Bind to specific interface (replace with your actual interface)
+      bind-interfaces = true;
+      listen-address = [
+        "127.0.0.1"
+        "192.168.225.123"  # Replace with your server's actual IP
+      ];
+      
+      # Upstream DNS servers (Cloudflare)
+      server = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
+      
+      # Local domain resolution
+      address = [
+        "/home.local/192.168.225.123"  # Replace with your server's actual IP
+      ];
+      
+      # Cache settings
+      cache-size = 1000;
+      
+      # Don't read /etc/hosts
+      no-hosts = true;
+      
+      # Don't read /etc/resolv.conf
+      no-resolv = true;
+      
+      # Log queries for debugging (disable in production)
+      log-queries = true;
+    };
+  };
+
+  # Caddy reverse proxy
+  services.caddy = {
+    enable = true;
+    virtualHosts = {
+      "homepage.home.local" = {
+        extraConfig = ''
+          reverse_proxy localhost:8082
+          tls internal
+        '';
+      };
+      
+      # Add more services here as needed
+      # "nextcloud.home.local" = {
+      #   extraConfig = ''
+      #     reverse_proxy localhost:8080
+      #     tls internal
+      #   '';
+      # };
+    };
+    
+    # Global config to allow self-signed certificates
+    globalConfig = ''
+      auto_https disable_redirects
+    '';
   };
 
   # Don't touch this
