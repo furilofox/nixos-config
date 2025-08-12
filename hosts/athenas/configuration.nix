@@ -60,11 +60,10 @@
   services.dnsmasq = {
     enable = true;
     settings = {
-      # Bind to specific interface (replace with your actual interface)
       bind-interfaces = true;
       listen-address = [
         "127.0.0.1"
-        "192.168.225.123"  # Replace with your server's actual IP
+        "192.168.225.123"
       ];
       
       # Upstream DNS servers (Cloudflare)
@@ -75,7 +74,7 @@
       
       # Local domain resolution
       address = [
-        "/home.local/192.168.225.123"  # Replace with your server's actual IP
+        "/home.local/192.168.225.123"
       ];
       
       # Cache settings
@@ -87,7 +86,7 @@
       # Don't read /etc/resolv.conf
       no-resolv = true;
       
-      # Log queries for debugging (disable in production)
+      # Log queries for debugging
       log-queries = true;
     };
   };
