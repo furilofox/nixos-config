@@ -45,13 +45,13 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 
-        80    # HTTP
-        443   # HTTPS  
-        53    # DNS TCP
+      allowedTCPPorts = [
+        80 # HTTP
+        443 # HTTPS
+        53 # DNS TCP
       ];
-      allowedUDPPorts = [ 
-        53    # DNS UDP
+      allowedUDPPorts = [
+        53 # DNS UDP
       ];
     };
   };
@@ -65,27 +65,27 @@
         "127.0.0.1"
         "192.168.225.123"
       ];
-      
+
       # Upstream DNS servers (Cloudflare)
       server = [
         "1.1.1.1"
         "1.0.0.1"
       ];
-      
+
       # Local domain resolution
       address = [
         "/home.local/192.168.225.123"
       ];
-      
+
       # Cache settings
       cache-size = 1000;
-      
+
       # Don't read /etc/hosts
       no-hosts = true;
-      
+
       # Don't read /etc/resolv.conf
       no-resolv = true;
-      
+
       # Log queries for debugging
       log-queries = true;
     };
@@ -101,7 +101,7 @@
           tls internal
         '';
       };
-      
+
       # Add more services here as needed
       # "nextcloud.home.local" = {
       #   extraConfig = ''
@@ -110,7 +110,7 @@
       #   '';
       # };
     };
-    
+
     # Global config to allow self-signed certificates
     globalConfig = ''
       auto_https disable_redirects

@@ -29,8 +29,10 @@
     consoleLogLevel = 0;
     initrd.verbose = false;
 
-    plymouth = {
-      enable = true;
+    # Disable for now to see console during boot
+    /*
+       plymouth = {
+      enable = false;
       theme = lib.mkForce "cuts_alt";
       themePackages = with pkgs; [
         (adi1090x-plymouth-themes.override {
@@ -38,5 +40,6 @@
         })
       ];
     };
+    */
   };
 }

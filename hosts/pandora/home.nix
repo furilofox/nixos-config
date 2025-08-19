@@ -76,6 +76,7 @@
       easyeffects # Speaker / Mic Management
       nextcloud-client # File Sync
       telegram-desktop # Chatting
+      youtube-music
     ];
 
     # Don't touch this

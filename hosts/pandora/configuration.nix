@@ -39,6 +39,22 @@
 
   environment.systemPackages = with pkgs; [devenv unixtools.netstat];
 
+  # Test Local AI
+  /* services = {
+    ollama = {
+      enable = true;
+      acceleration = "rocm";
+      port = 11434;
+      openFirewall = true;
+    };
+    open-webui = {
+      enable = true;
+      port = 11456;
+      openFirewall = true;
+      host = "0.0.0.0";
+    };
+  }; */
+
   # Don't touch this
   system.stateVersion = "25.05";
 }
