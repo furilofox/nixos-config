@@ -9,24 +9,20 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    hyprland.url = "github:hyprwm/Hyprland";
 
-    # stylix.url = "github:danth/stylix";
+    hyprland.url = "github:hyprwm/Hyprland";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     nixcord.url = "github:kaylorben/nixcord";
-    # sops-nix.url = "github:Mic92/sops-nix";
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # stylix.url = "github:danth/stylix";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # nixvim = {
-    #   url = "github:nix-community/nixvim";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,6 +31,10 @@
       url = "github:cachix/nixpkgs-python";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # nixvim = {
+    #   url = "github:nix-community/nixvim";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = inputs @ {
