@@ -10,6 +10,7 @@ in {
     users.${username} = {
       isNormalUser = true;
       description = "${username}";
+      initialHashedPassword = "1234";
       extraGroups = ["networkmanager" "wheel"];
     };
   };

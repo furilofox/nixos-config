@@ -12,7 +12,7 @@
     ../../nixos/networking.nix
     ../../nixos/hardware/amd.nix
 
-    ../../nixos/desktop/gnome
+    ../../nixos/desktop/hyprland
 
     ../../nixos/services/mullvad.nix
 
@@ -28,6 +28,7 @@
     ../../nixos/docker.nix
     ../../nixos/home-manager.nix
     ../../nixos/ssh.nix
+    ../../nixos/virtualisation.nix
 
     ../../homelab
 

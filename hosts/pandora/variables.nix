@@ -12,7 +12,7 @@
     configDirectory =
       "/home/"
       + config.var.username
-      + "/Documents/nixy";
+      + "/Documents/nixos-config";
 
     keyboardLayout = "de";
 

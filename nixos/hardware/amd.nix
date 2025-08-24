@@ -1,5 +1,8 @@
 {pkgs, ...}: {
   boot.initrd.kernelModules = ["amdgpu"];
+  
+  # Enable early KMS for proper display initialization
+  boot.kernelParams = [ "amdgpu.dc=1" "amdgpu.dpm=1" ];
 
   hardware = {
     graphics = {

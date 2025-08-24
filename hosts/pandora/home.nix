@@ -20,6 +20,10 @@
     # ../../home/scripts # All scripts
 
     # System
+    ../../home/system/hypr/hyprland
+    ../../home/system/anyrun
+    ../../home/system/mime
+    ../../home/system/udiskie
   ];
 
   home = {
@@ -64,6 +68,7 @@
       fastfetch
       gparted
       bottles # windows app container
+      xfce.thunar # File manager for Hyprland
 
       # # Just cool
       peaclock

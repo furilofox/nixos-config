@@ -1,1 +1,37 @@
 .sops.yaml
+
+# Devenv files
+.devenv/
+.devenv.flake.nix
+devenv.lock
+.devenv*
+
+# Claude Code files
+CLAUDE.md
+.claude/
+*.claude.bak
+
+# Node/npm files (for Claude Code CLI)
+node_modules/
+package-lock.json
+package.json
+
+# Nix build outputs
+result
+result-*
+
+# Direnv
+.direnv/
+.envrc
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.qcow2

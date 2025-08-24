@@ -11,6 +11,11 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     nixcord.url = "github:kaylorben/nixcord";
     # stylix.url = "github:danth/stylix";
@@ -40,7 +45,7 @@
   outputs = inputs @ {
     self,
     nixpkgs,
-    nixpkgs-python,
+    hyprland,
     ...
   }: let
     mkHost = {modules}:
