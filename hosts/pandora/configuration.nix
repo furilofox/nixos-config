@@ -26,6 +26,7 @@
     ../../nixos/1pass.nix
     ../../nixos/utils.nix
     ../../nixos/docker.nix
+    ../../nixos/devenv.nix
     ../../nixos/home-manager.nix
     ../../nixos/ssh.nix
     ../../nixos/virtualisation.nix
@@ -38,7 +39,7 @@
 
   home-manager.users."${config.var.username}" = import ./home.nix;
 
-  environment.systemPackages = with pkgs; [devenv unixtools.netstat];
+  environment.systemPackages = with pkgs; [unixtools.netstat];
 
   # Test Local AI
   /* services = {

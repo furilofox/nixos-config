@@ -46,6 +46,9 @@ in {
     settings = {
       auto-optimise-store = true;
       experimental-features = ["nix-command" "flakes"];
+      
+      # Add the user as trusted to allow devenv to manage caches
+      trusted-users = ["root" config.var.username];
 
       # Add other package sources
       substituters = [
@@ -56,6 +59,7 @@ in {
         "https://nix-community.cachix.org"
         "https://numtide.cachix.org"
         "https://devenv.cachix.org"
+        "https://nixpkgs-python.cachix.org"
       ];
       trusted-public-keys = [
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="

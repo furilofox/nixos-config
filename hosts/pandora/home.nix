@@ -15,6 +15,7 @@
     # ../../home/programs/kitty
     ../../home/programs/nextcloud
     ../../home/programs/1pass
+    ../../home/programs/devenv
 
     # Scripts
     # ../../home/scripts # All scripts
@@ -24,6 +25,7 @@
     ../../home/system/anyrun
     ../../home/system/mime
     ../../home/system/udiskie
+    ../../home/programs/quickshell
   ];
 
   home = {

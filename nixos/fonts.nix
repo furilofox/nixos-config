@@ -18,6 +18,10 @@
       nerd-fonts.meslo-lg
       openmoji-color
       twemoji-color-font
+      roboto
+      inter-nerdfont
+      material-symbols
+      nerd-fonts.symbols-only
     ];
 
     enableDefaultPackages = false;

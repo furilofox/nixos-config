@@ -40,7 +40,7 @@
   # Orientation & other Sensors
   hardware.sensor.iio.enable = true;
 
-  environment.systemPackages = with pkgs; [devenv unixtools.netstat];
+  environment.systemPackages = with pkgs; [unixtools.netstat];
 
   # Don't touch this
   system.stateVersion = "24.11";

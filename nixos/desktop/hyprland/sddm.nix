@@ -60,10 +60,8 @@
     sddm-astronaut
     # Add Qt platform plugins for better compatibility
     qt6.qtwayland
-    libsForQt5.qt5.qtwayland
     # Add cursor themes - ensure both icon theme and cursor package are installed
     adwaita-icon-theme
     gnome-themes-extra  # Contains Adwaita cursor theme
-    libsForQt5.breeze-qt5  # Additional cursor themes as fallback
   ];
 }

@@ -7,7 +7,7 @@
 }: let
   configDir = config.var.configDirectory;
   homeDir = "/home/${config.var.username}";
-  quickshellDir = "${configDir}/home/programs/quickshell/qml";
+  quickshellDir = "${configDir}/home/programs/quickshell/noctalia-shell";
   quickshellTarget = "${homeDir}/.config/quickshell";
 in {
   home.packages = with pkgs; [
