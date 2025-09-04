@@ -22,7 +22,6 @@
 
     # System
     ../../home/system/hypr/hyprland
-    ../../home/system/anyrun
     ../../home/system/mime
     ../../home/system/udiskie
     ../../home/programs/quickshell

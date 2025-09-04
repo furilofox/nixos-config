@@ -35,8 +35,6 @@
 
     swww # Wallpaper
 
-    inputs.anyrun.packages.${pkgs.system}.anyrun-with-all-plugins # App Launcher
-
     kitty # Terminal
 
     networkmanagerapplet # Network Manager UI
