@@ -41,7 +41,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking = {
-    hostName = "homelab-server";
+    hostName = "athenas";
     networkmanager.enable = true;
     firewall = {
       enable = true;

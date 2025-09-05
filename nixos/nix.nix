@@ -17,6 +17,58 @@ in {
           command = "/run/current-system/sw/bin/nixos-rebuild";
           options = ["NOPASSWD"];
         }
+        {
+          command = "/run/current-system/sw/bin/nh";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/nixos-rebuild";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/nh";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/run/current-system/sw/bin/nix";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/nix";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/run/current-system/sw/bin/nix-env";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/nix-env";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/run/current-system/sw/bin/systemctl";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/systemctl";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/sw/bin/nix-env";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/activate";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/switch-to-configuration";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/specialisation/*/bin/switch-to-configuration";
+          options = ["NOPASSWD"];
+        }
       ];
     }
   ];
