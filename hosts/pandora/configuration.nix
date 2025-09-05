@@ -15,6 +15,7 @@
     ../../nixos/desktop/hyprland
 
     ../../nixos/services/mullvad.nix
+    ../../nixos/services/gnome-keyring.nix
 
     ../../nixos/audio.nix
     ../../nixos/printing.nix
