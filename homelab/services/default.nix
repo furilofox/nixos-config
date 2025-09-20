@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./minecraft
     ./paperless-ngx
   ];
 }

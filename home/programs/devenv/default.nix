@@ -26,7 +26,7 @@
         source_env "$1"
       fi
     }
-    
+
     layout_devenv() {
       if [ -f devenv.nix ] || [ -f devenv.yaml ] || [ -f devenv.lock ]; then
         eval "$(devenv print-dev-env)"

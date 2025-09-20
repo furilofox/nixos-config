@@ -15,7 +15,7 @@
           enable = true;
           packages = [pkgs.OVMFFull.fd];
         };
-        vhostUserPackages = with pkgs; [ virtiofsd ];
+        vhostUserPackages = with pkgs; [virtiofsd];
       };
     };
     spiceUSBRedirection.enable = true;

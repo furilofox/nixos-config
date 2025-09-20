@@ -10,23 +10,15 @@
     ../../nixos/users.nix
     ../../nixos/systemd-boot.nix
     ../../nixos/locale.nix
-    ../../nixos/hardware/intel.nix
-    ../../nixos/ram-swap.nix
     ../../nixos/utils.nix
     ../../nixos/ssh.nix
+    ../../nixos/networking.nix
 
     ../../homelab/services/homepage
 
     ./hardware-configuration.nix
     ./variables.nix
   ];
-
-  # Prevent Suspend when lid closed
-  services.logind.lidSwitchDocked = "ignore";
-  services.logind.lidSwitchExternalPower = "ignore";
-
-  # Screen off after 30 Seconds
-  boot.kernelParams = ["consoleblank=30"];
 
   homelab = {
     services = {
@@ -41,10 +33,13 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking = {
-    hostName = "athenas";
-    networkmanager.enable = true;
+    interfaces.enp2s0 = {
+      ipv4.addresses = [{
+        address = "192.168.20.10";
+        prefixLength = 24;
+      }];
+    };
     firewall = {
-      enable = true;
       allowedTCPPorts = [
         80 # HTTP
         443 # HTTPS
@@ -54,10 +49,12 @@
         53 # DNS UDP
       ];
     };
+    nameservers = ["1.1.1.1" "1.0.0.1"];
   };
 
   # DNS Server Configuration (dnsmasq)
-  services.dnsmasq = {
+  /*
+     services.dnsmasq = {
     enable = true;
     settings = {
       bind-interfaces = true;
@@ -90,9 +87,11 @@
       log-queries = true;
     };
   };
+  */
 
   # Caddy reverse proxy
-  services.caddy = {
+  /*
+     services.caddy = {
     enable = true;
     virtualHosts = {
       "homepage.home.local" = {
@@ -116,6 +115,7 @@
       auto_https disable_redirects
     '';
   };
+  */
 
   # Don't touch this
   system.stateVersion = "24.11";

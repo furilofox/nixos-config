@@ -19,7 +19,7 @@
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1"; # Chromium and Electron based Apps
     MOZ_ENABLE_WAYLAND = 1; # Firefox
-    
+
     # Wayland/Hyprland optimizations for mixed refresh rates
     WLR_DRM_NO_ATOMIC = "1"; # Disable atomic modesetting (can help with flickering)
     __GL_SYNC_TO_VBLANK = "0"; # Disable VSync for better multi-monitor support
@@ -36,7 +36,5 @@
     swww # Wallpaper
 
     kitty # Terminal
-
-    networkmanagerapplet # Network Manager UI
   ];
 }

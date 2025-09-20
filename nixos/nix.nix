@@ -98,7 +98,7 @@ in {
     settings = {
       auto-optimise-store = true;
       experimental-features = ["nix-command" "flakes"];
-      
+
       # Add the user as trusted to allow devenv to manage caches
       trusted-users = ["root" config.var.username];
 

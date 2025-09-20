@@ -11,7 +11,7 @@
       package = pkgs.kdePackages.sddm;
       wayland.enable = true;
 
-      extraPackages = [ pkgs.sddm-astronaut ];
+      extraPackages = [pkgs.sddm-astronaut];
       theme = "sddm-astronaut-theme";
 
       settings = {
@@ -62,6 +62,6 @@
     qt6.qtwayland
     # Add cursor themes - ensure both icon theme and cursor package are installed
     adwaita-icon-theme
-    gnome-themes-extra  # Contains Adwaita cursor theme
+    gnome-themes-extra # Contains Adwaita cursor theme
   ];
 }
