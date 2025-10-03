@@ -77,7 +77,45 @@ in {
             dhcp = true;
             hosts = true;
           };
-          persistent = [];
+          persistent = [
+            {
+              name = "Desktop - Pandora";
+              ids = [
+                "192.168.20.21"
+              ];
+              tags = [
+                "device_pc"
+              ];
+            }
+            {
+              name = "Laptop - Promethea";
+              ids = [
+                "192.168.20.22"
+              ];
+              tags = [
+                "device_laptop"
+              ];
+            }
+            {
+              name = "Oneplus 13";
+              ids = [
+                "192.168.20.23"
+              ];
+              tags = [
+                "device_phone"
+              ];
+            }
+            {
+              name = "Server (Athenas)";
+              ids = [
+                "192.168.20.10"
+                "127.0.0.1"
+              ];
+              tags = [
+                "device_nas"
+              ];
+            }
+          ];
         };
         log_compress = false;
         log_localtime = false;

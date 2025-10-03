@@ -57,7 +57,7 @@
 
   networking = {
     defaultGateway = "192.168.20.1";
-    nameservers = ["192.168.20.10"];
+    nameservers = ["192.168.20.10" "1.1.1.1"];
     interfaces.enp42s0 = {
       ipv4.addresses = [
         {
