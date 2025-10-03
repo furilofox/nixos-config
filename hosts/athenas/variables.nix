@@ -29,6 +29,8 @@
 
     autoUpgrade = false;
     autoGarbageCollector = true;
+    
+    monitors = [];
   };
 
   # Let this here

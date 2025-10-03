@@ -4,9 +4,9 @@ in {
   networking = {
     hostName = hostname;
     networkmanager.enable = true;
+    networkmanager.dns = "none";
     firewall = {
       enable = true;
     };
-    nameservers = ["1.1.1.1" "1.0.0.1"];
   };
 }

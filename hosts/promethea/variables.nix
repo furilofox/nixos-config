@@ -28,6 +28,9 @@
 
     autoUpgrade = false;
     autoGarbageCollector = true;
+
+    # Monitor configuration for Hyprland (automatic)
+    monitors = [];
   };
 
   # Let this here

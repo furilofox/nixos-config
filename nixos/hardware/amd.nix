@@ -26,10 +26,6 @@
         vulkan-validation-layers
       ];
     };
-    amdgpu.amdvlk = {
-      enable = true;
-      support32Bit.enable = true;
-    };
   };
 
   services.xserver.videoDrivers = ["amdgpu"];

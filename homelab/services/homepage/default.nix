@@ -4,21 +4,24 @@
   lib,
   ...
 }: let
-  cfg = config.homelab.services.homepage;
+  cfg = config.homelab.homepage;
 in {
-  options.homelab.services.homepage = {
+  options.homelab.homepage = {
     enable = lib.mkEnableOption {
       description = "Enable the Homepage Dashboard";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    services.glances.enable = true;
+    services.glances = {
+      enable = true;
+      openFirewall = true;
+    };
     services.homepage-dashboard = {
       enable = true;
       package = pkgs.homepage-dashboard;
       openFirewall = true;
-      allowedHosts = "localhost:8082,127.0.0.1:8082,192.168.225.123:8082,homepage.home.local";
+      allowedHosts = "localhost:8082,127.0.0.1:8082,192.168.20.10:8082,homepage.home.local";
 
       settings = {
         layout = [
@@ -72,11 +75,11 @@ in {
               };
             }
             {
-              "Disk Usage" = {
+              "Disk Usage System" = {
                 widget = {
                   type = "glances";
                   url = "http://localhost:61208";
-                  metric = "disk:nvme0n1";
+                  metric = "disk:mmcblk0";
                   chart = true;
                   version = 4;
                 };

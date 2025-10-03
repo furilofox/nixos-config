@@ -28,6 +28,12 @@
 
     autoUpgrade = false;
     autoGarbageCollector = true;
+
+    # Monitor configuration for Hyprland
+    monitors = [
+      "HDMI-A-2, 1920x1200@60, 0x0, 1"
+      "DP-2, 2560x1440@144, 1920x-200, 1, vrr, 1"
+    ];
   };
 
   # Let this here

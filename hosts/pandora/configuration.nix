@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }: {
   imports = [
@@ -52,52 +53,20 @@
     bambu-studio
   ];
 
+
+
   networking = {
+    defaultGateway = "192.168.20.1";
+    nameservers = ["192.168.20.10"];
     interfaces.enp42s0 = {
-      ipv4.addresses = [{
-        address = "192.168.20.21";
-        prefixLength = 24;
-      }];
-    };
-    defaultGateway = {
-      address = "192.168.20.1";
-      interface = "enp42s0";
+      ipv4.addresses = [
+        {
+          address = "192.168.20.21";
+          prefixLength = 24;
+        }
+      ];
     };
   };
-
-  # Test Local AI
-  /*
-     services = {
-    ollama = {
-      enable = true;
-      acceleration = "rocm";
-      port = 11434;
-      openFirewall = true;
-    };
-    open-webui = {
-      enable = true;
-      port = 11456;
-      openFirewall = true;
-      host = "0.0.0.0";
-    };
-  };
-  */
-
-  /* systemd.network = {
-    enable = true;
-    
-    networks = {
-      "10-enp5s0-internet" = {
-        matchConfig.Name = "enp5s0";
-        networkConfig.Address = [ "192.168.20.21/24" ];
-      };
-
-      "20-enp42s0-direct" = {
-        matchConfig.Name = "enp42s0";
-        networkConfig.Address = [ "192.168.20.23/24" ];
-      };
-    };
-  }; */
 
   # Don't touch this
   system.stateVersion = "25.05";

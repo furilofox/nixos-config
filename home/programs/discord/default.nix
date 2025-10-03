@@ -1,6 +1,10 @@
 # Discord is a popular chat application.
-{inputs, ...}: {
+{inputs, config, ...}: {
   imports = [inputs.nixcord.homeModules.nixcord];
+
+  xdg.configFile."Vencord/themes" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/vesktop/themes";
+  };
 
   programs.nixcord = {
     enable = true;
@@ -8,9 +12,6 @@
     dorion.enable = false;
 
     config = {
-      themeLinks = [
-        "https://refact0r.github.io/midnight-discord/build/midnight.css"
-      ];
       frameless = true;
       plugins = {
         anonymiseFileNames.enable = true;
@@ -58,8 +59,8 @@
           enable = true;
           appID = "69";
           type = "playing";
-          appName = "Working on my NixOS Config";
-          details = "Something probably isn't working....";
+          appName = "Something probably";
+          details = "...";
           state = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
           buttonOneText = "My Github";
@@ -67,9 +68,6 @@
 
           buttonTwoText = "My Steam";
           buttonTwoURL = "https://steamcommunity.com/id/furilofox/";
-
-          imageBig = "https://i.imgur.com/glgZC48.png";
-          imageBigTooltip = "https://i.imgur.com/glgZC48.png";
 
           timestampMode = "customTime";
           startTime = 1;
