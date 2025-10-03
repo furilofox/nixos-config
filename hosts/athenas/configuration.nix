@@ -26,7 +26,7 @@
     enable = true;
     user = "homelab";
     group = "homelab";
-    baseDomain = "home";
+    baseDomain = "local";
 
     homepage = {
       enable = true;
@@ -40,7 +40,7 @@
 
     caddy = {
       enable = true;
-      domain = "home";
+      domain = "local";
       routes = {
         homepage = {
           subdomain = "home";

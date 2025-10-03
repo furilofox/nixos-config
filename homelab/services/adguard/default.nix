@@ -61,7 +61,7 @@ in {
         filtering = {
           rewrites = [
             {
-              domain = "*.home";
+              domain = "*.local";
               answer = "192.168.20.10";
             }
           ];
@@ -94,6 +94,7 @@ in {
               tags = [
                 "device_pc"
               ];
+              use_global_settings = true;
             }
             {
               name = "Laptop - Promethea";
@@ -103,6 +104,7 @@ in {
               tags = [
                 "device_laptop"
               ];
+              use_global_settings = true;
             }
             {
               name = "Oneplus 13";
@@ -112,6 +114,7 @@ in {
               tags = [
                 "device_phone"
               ];
+              use_global_settings = true;
             }
             {
               name = "Server (Athenas)";
@@ -122,6 +125,7 @@ in {
               tags = [
                 "device_nas"
               ];
+              use_global_settings = true;
             }
           ];
         };

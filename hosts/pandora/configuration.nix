@@ -51,6 +51,7 @@
     hyprshot
 
     bambu-studio
+    dig # nslookup and stuff
   ];
 
 
