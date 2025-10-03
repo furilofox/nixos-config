@@ -58,6 +58,14 @@ in {
             "8.8.8.8"
           ];
         };
+        filtering = {
+          rewrites = [
+            {
+              domain = "*.home";
+              answer = "192.168.20.10";
+            }
+          ];
+        };
         dhcp = {
           enabled = true;
           interface_name = "enp2s0";
