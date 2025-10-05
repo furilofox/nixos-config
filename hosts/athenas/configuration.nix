@@ -26,7 +26,7 @@
     enable = true;
     user = "homelab";
     group = "homelab";
-    baseDomain = "local";
+    baseDomain = "furilo.me";
 
     homepage = {
       enable = true;
@@ -40,7 +40,8 @@
 
     caddy = {
       enable = true;
-      domain = "local";
+      domain = "furilo.me";
+      cloudflareApiToken = "censored"; # TODO: DON'T PUSH!!!!!!!!!!!!!
       routes = {
         homepage = {
           subdomain = "home";

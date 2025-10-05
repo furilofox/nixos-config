@@ -34,6 +34,11 @@
     nixcord.url = "github:kaylorben/nixcord";
     # stylix.url = "github:danth/stylix";
 
+    caddy-nix = {
+      url = "github:vincentbernat/caddy-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -19,10 +19,8 @@
       "$menu" = "noctalia-shell ipc call launcher toggle";
       "$lockScreen" = "noctalia-shell ipc call lockScreen toggle";
 
-
       # Monitor configuration
       monitor = config.var.monitors ++ [",preferred,auto,auto"];
-
 
       # Autostart
       exec-once = [
@@ -135,43 +133,46 @@
       };
 
       # Keybindings
-      bind = [
-        # Program launches
-        "$mainMod,Q,exec,$terminal"
-        "$mainMod,C,killactive,"
-        "$mainMod,M,exit,"
-        "$mainMod,E,exec,$fileManager"
-        "$mainMod,V,togglefloating,"
-        "$mainMod,P,pseudo,"
-        "$mainMod,R,exec,$menu"
-        "$mainMod,J,togglesplit,"
-        "$mainMod,L,exec,$lockScreen"
+      bind =
+        [
+          # Program launches
+          "$mainMod,Q,exec,$terminal"
+          "$mainMod,C,killactive,"
+          "$mainMod,M,exit,"
+          "$mainMod,E,exec,$fileManager"
+          "$mainMod,V,togglefloating,"
+          "$mainMod,P,pseudo,"
+          "$mainMod,R,exec,$menu"
+          "$mainMod,J,togglesplit,"
+          "$mainMod,L,exec,$lockScreen"
 
-        # Move focus with arrow keys
-        "$mainMod,left,movefocus,l"
-        "$mainMod,right,movefocus,r"
-        "$mainMod,up,movefocus,u"
-        "$mainMod,down,movefocus,d"
+          # Move focus with arrow keys
+          "$mainMod,left,movefocus,l"
+          "$mainMod,right,movefocus,r"
+          "$mainMod,up,movefocus,u"
+          "$mainMod,down,movefocus,d"
 
-        # Workspace scroll
-        "$mainMod,mouse_down,workspace,e+1"
-        "$mainMod,mouse_up,workspace,e-1"
+          # Workspace scroll
+          "$mainMod,mouse_down,workspace,e+1"
+          "$mainMod,mouse_up,workspace,e-1"
 
-        # Screenshots
-        ",PRINT,exec,hyprshot -m region"
-        "$mainMod SHIFT,PRINT,exec,hyprshot -m window"
-      ] ++ (
-        # workspaces
-        # binds $mainMod + [shift +] {1..9} to [move to] workspace {1..9}
-        builtins.concatLists (builtins.genList (i:
-            let ws = i + 1;
-            in [
-              "$mainMod, code:1${toString i}, workspace, ${toString ws}"
-              "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-            ]
-          )
-          9)
-      );
+          # Screenshots
+          ",PRINT,exec,hyprshot -m region"
+          "$mainMod SHIFT,PRINT,exec,hyprshot -m window"
+        ]
+        ++ (
+          # workspaces
+          # binds $mainMod + [shift +] {1..9} to [move to] workspace {1..9}
+          builtins.concatLists (builtins.genList (
+              i: let
+                ws = i + 1;
+              in [
+                "$mainMod, code:1${toString i}, workspace, ${toString ws}"
+                "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+              ]
+            )
+            9)
+        );
 
       # Mouse bindings
       bindm = [

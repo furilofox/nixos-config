@@ -4,23 +4,24 @@
   ...
 }: {
   imports = [
-    # Mostly user-specific configuration
     ./variables.nix
 
     # Programs
-    # ../../home/programs/brave
     ../../home/programs/zen
     ../../home/programs/discord
     ../../home/programs/git
-    # ../../home/programs/kitty
     ../../home/programs/nextcloud
     ../../home/programs/1pass
-    # ../../home/programs/quickshell
+    ../../home/programs/devenv
 
     # Scripts
     # ../../home/scripts # All scripts
 
     # System
+    /* ../../home/system/hypr/hyprland
+    ../../home/programs/quickshell */
+    ../../home/system/mime
+    ../../home/system/udiskie
     ../../home/system/hardware/libinput.nix
   ];
 

@@ -18,7 +18,7 @@
       pkgs.linuxPackages_latest; # _zen, _hardened, _rt, _rt_latest, etc.
 
     # Silent boot
-    kernelParams = [
+    /* kernelParams = [
       "quiet"
       "splash"
       "rd.systemd.show_status=false"
@@ -27,7 +27,7 @@
       "boot.shell_on_fail"
     ];
     consoleLogLevel = 0;
-    initrd.verbose = false;
+    initrd.verbose = false; */
 
     # Disable for now to see console during boot
     /*

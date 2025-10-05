@@ -61,7 +61,7 @@ in {
         filtering = {
           rewrites = [
             {
-              domain = "*.local";
+              domain = "*.furilo.me";
               answer = "192.168.20.10";
             }
           ];

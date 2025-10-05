@@ -1,5 +1,9 @@
 # Discord is a popular chat application.
-{inputs, config, ...}: {
+{
+  inputs,
+  config,
+  ...
+}: {
   imports = [inputs.nixcord.homeModules.nixcord];
 
   xdg.configFile."Vencord/themes" = {

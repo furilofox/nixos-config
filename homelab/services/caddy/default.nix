@@ -2,18 +2,31 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }: let
   cfg = config.homelab.caddy;
   homelabCfg = config.homelab;
 in {
   options.homelab.caddy = {
-    enable = lib.mkEnableOption "Caddy reverse proxy with self-signed certificates";
+    enable = lib.mkEnableOption "Caddy reverse proxy with HTTPS certificates";
 
     httpPort = lib.mkOption {
       type = lib.types.port;
       default = 80;
       description = "HTTP port for Caddy";
+    };
+
+    httpsPort = lib.mkOption {
+      type = lib.types.port;
+      default = 443;
+      description = "HTTPS port for Caddy";
+    };
+
+    cloudflareApiToken = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "Cloudflare API token for DNS challenge";
     };
 
     routes = lib.mkOption {
@@ -52,23 +65,41 @@ in {
   };
 
   config = lib.mkIf (homelabCfg.enable && cfg.enable) {
+    # Import caddy-nix overlay for plugin support
+    nixpkgs.overlays = [
+      inputs.caddy-nix.overlays.default
+    ];
+
     services.caddy = {
       enable = true;
       dataDir = cfg.dataDir;
 
+      # Use Caddy with Cloudflare plugin
+      package = pkgs.caddy.withPlugins {
+        plugins = ["github.com/caddy-dns/cloudflare"];
+        hash = "sha256-j+xUy8OAjEo+bdMOkQ1kVqDnEkzKGTBIbMDVL7YDwDY=";
+      };
+
       virtualHosts =
         lib.mapAttrs (name: route: {
           hostName = "${route.subdomain}.${cfg.domain}";
-          extraConfig = ''
-            reverse_proxy ${route.upstream}
-            ${route.extraConfig}
-          '';
+          extraConfig =
+            ''
+              reverse_proxy ${route.upstream}
+              ${route.extraConfig}
+            ''
+            + lib.optionalString cfg.cloudflareApiToken
+            != null ''
+              tls {
+                dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+              }
+            '';
         })
         cfg.routes;
     };
 
     # Open firewall ports
-    networking.firewall.allowedTCPPorts = [cfg.httpPort];
+    networking.firewall.allowedTCPPorts = [cfg.httpPort cfg.httpsPort];
 
     # Create systemd service to ensure proper startup
     systemd.services.caddy = {
@@ -85,6 +116,9 @@ in {
         # Create data directory
         StateDirectory = "caddy";
         StateDirectoryMode = "0750";
+      };
+      environment = lib.mkIf (cfg.cloudflareApiToken != null) {
+        CLOUDFLARE_API_TOKEN = cfg.cloudflareApiToken;
       };
     };
 

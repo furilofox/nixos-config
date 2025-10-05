@@ -29,7 +29,7 @@
 
     autoUpgrade = false;
     autoGarbageCollector = true;
-    
+
     monitors = [];
   };
 

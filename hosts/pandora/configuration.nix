@@ -6,6 +6,7 @@
 }: {
   imports = [
     # Mostly system related configuration
+    ../../nixos/common
     ../../nixos/nix.nix
     ../../nixos/users.nix
     ../../nixos/systemd-boot.nix
@@ -54,7 +55,7 @@
     dig # nslookup and stuff
   ];
 
-
+  netbird.enableUi = true;
 
   networking = {
     defaultGateway = "192.168.20.1";
