@@ -70,6 +70,9 @@
     };
   };
 
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
+
   # Don't touch this
   system.stateVersion = "25.05";
 }

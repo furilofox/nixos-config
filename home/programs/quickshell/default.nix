@@ -23,7 +23,7 @@ in {
       settingsVersion = 12;
       bar = {
         position = "top";
-        backgroundOpacity = 0.85;
+        backgroundOpacity = 0;
         monitors = [];
         density = "compact";
         showCapsule = true;
