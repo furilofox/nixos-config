@@ -27,14 +27,7 @@
     CLUTTER_DEFAULT_FPS = "144"; # Set max FPS for Clutter-based apps
   };
 
-  environment.systemPackages = with pkgs; [
-    waybar # Top Bar
-
-    mako # Notification Daemon
-    libnotify # Notifications
-
-    swww # Wallpaper
-
-    kitty # Terminal
-  ];
+  # Dependencies for Shell
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
 }

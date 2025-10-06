@@ -5,20 +5,16 @@
   ...
 }: {
   imports = [
+    ../../nixos # General Nixos Stuff
+
     ../../nixos/hardware/intel.nix
     ../../nixos/hardware/touchpad.nix
     ../../nixos/hardware/fprint.nix
     ../../nixos/bluetooth.nix
     ../../nixos/miracast.nix
 
-    ../../nixos/common
-    ../../nixos/nix.nix
-    ../../nixos/users.nix
-    ../../nixos/systemd-boot.nix
-    ../../nixos/locale.nix
-    ../../nixos/networking.nix
 
-    ../../nixos/desktop/gnome
+    ../../nixos/desktop/hyprland
 
     ../../nixos/services/mullvad.nix
     ../../nixos/services/gnome-keyring.nix
@@ -33,8 +29,6 @@
     ../../nixos/utils.nix
     ../../nixos/docker.nix
     ../../nixos/devenv.nix
-    ../../nixos/home-manager.nix
-    ../../nixos/ssh.nix
     ../../nixos/virtualisation.nix
 
     ./hardware-configuration.nix
@@ -56,23 +50,12 @@
     hyprshot */
 
     dig # nslookup and stuff
+
+    virtualbox # Oracle Virtualbox
   ];
 
   netbird.enableUi = true;
-
-  networking = {
-    defaultGateway = "192.168.20.1";
-    nameservers = ["192.168.20.10" "1.1.1.1"];
-    interfaces.wlp0s20f3 = {
-      ipv4.addresses = [
-        {
-          address = "192.168.20.22";
-          prefixLength = 24;
-        }
-      ];
-    };
-  };
-
+  
   # Don't touch this
   system.stateVersion = "24.11";
 }

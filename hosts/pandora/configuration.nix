@@ -6,12 +6,7 @@
 }: {
   imports = [
     # Mostly system related configuration
-    ../../nixos/common
-    ../../nixos/nix.nix
-    ../../nixos/users.nix
-    ../../nixos/systemd-boot.nix
-    ../../nixos/locale.nix
-    ../../nixos/networking.nix
+    ../../nixos
     ../../nixos/hardware/amd.nix
 
     ../../nixos/desktop/hyprland
@@ -55,8 +50,6 @@
     dig # nslookup and stuff
   ];
 
-  netbird.enableUi = true;
-
   networking = {
     defaultGateway = "192.168.20.1";
     nameservers = ["192.168.20.10" "1.1.1.1"];
@@ -69,9 +62,6 @@
       ];
     };
   };
-
-  services.upower.enable = true;
-  services.power-profiles-daemon.enable = true;
 
   # Don't touch this
   system.stateVersion = "25.05";

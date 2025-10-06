@@ -131,6 +131,11 @@ in {
             directory = directory;
             wallpaper = wallpaper;
           }
+          {
+            name = "eDP-1";
+            directory = directory;
+            wallpaper = wallpaper;
+          }
         ];
       };
       appLauncher = {

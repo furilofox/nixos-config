@@ -18,8 +18,8 @@
     # ../../home/scripts # All scripts
 
     # System
-    /* ../../home/system/hypr/hyprland
-    ../../home/programs/quickshell */
+    ../../home/system/hypr/hyprland
+    ../../home/programs/quickshell
     ../../home/system/mime
     ../../home/system/udiskie
     ../../home/system/hardware/libinput.nix
