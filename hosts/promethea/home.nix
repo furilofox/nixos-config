@@ -40,6 +40,7 @@
       git
       bruno
       mongodb-compass
+      kitty # Terminal
 
       # Apps
 
@@ -51,6 +52,7 @@
       pfetch
       fastfetch
       gparted
+      xfce.thunar
 
       # # Just cool
       peaclock

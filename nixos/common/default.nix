@@ -1,14 +1,16 @@
 {
   imports = [
-    ./netbird.nix
-    ./ssh.nix
-    ./locale.nix
+    ./audio.nix
+    ./bluetooth.nix
+    ./boot.nix
     ./home-manager.nix
+    ./locale.nix
+    ./netbird.nix
+    ./networking.nix
+    ./nix.nix
     ./ssh.nix
     ./users.nix
-    ./nix.nix
-    ./boot.nix
-    ./networking.nix
+    ./utils.nix
   ];
 
   hardware.enableRedistributableFirmware = true;

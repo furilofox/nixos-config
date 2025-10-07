@@ -14,7 +14,6 @@
     ../../nixos/services/mullvad.nix
     ../../nixos/services/gnome-keyring.nix
 
-    ../../nixos/audio.nix
     ../../nixos/printing.nix
     ../../nixos/ram-swap.nix
 
@@ -22,14 +21,9 @@
 
     ../../nixos/gaming.nix
     ../../nixos/1pass.nix
-    ../../nixos/utils.nix
     ../../nixos/docker.nix
     ../../nixos/devenv.nix
-    ../../nixos/home-manager.nix
-    ../../nixos/ssh.nix
     ../../nixos/virtualisation.nix
-
-    ../../homelab
 
     ./hardware-configuration.nix
     ./variables.nix

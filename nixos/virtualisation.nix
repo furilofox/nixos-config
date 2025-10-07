@@ -11,10 +11,6 @@
         package = pkgs.qemu_kvm;
         runAsRoot = true;
         swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          packages = [pkgs.OVMFFull.fd];
-        };
         vhostUserPackages = with pkgs; [virtiofsd];
       };
     };
@@ -22,8 +18,6 @@
   };
 
   programs.virt-manager.enable = true;
-
-  users.users.${config.var.username}.extraGroups = ["libvirtd"];
 
   environment.systemPackages = with pkgs; [
     virt-viewer
@@ -36,4 +30,12 @@
   ];
 
   services.spice-vdagentd.enable = true;
+
+  # Broken
+  # virtualisation.virtualbox.host.enable = true; # Oracle VirtualBox
+
+  users.users.${config.var.username}.extraGroups = [
+    "libvirtd"
+    "vboxusers" # VirtualBox
+  ];
 }

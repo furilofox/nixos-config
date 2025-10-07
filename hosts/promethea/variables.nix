@@ -16,7 +16,7 @@
 
     keyboardLayout = "de";
 
-    location = "Berlin";
+    location = "Nuremberg";
     timeZone = "Europe/Berlin";
     defaultLocale = "en_US.UTF-8";
     extraLocale = "de_DE.UTF-8";

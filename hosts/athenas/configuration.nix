@@ -19,6 +19,10 @@
     ./variables.nix
   ];
 
+  system = {
+    audio.enable = false;
+  };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
