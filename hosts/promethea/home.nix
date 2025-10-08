@@ -11,7 +11,6 @@
     ../../home/programs/discord
     ../../home/programs/git
     ../../home/programs/nextcloud
-    ../../home/programs/1pass
     ../../home/programs/devenv
 
     # Scripts
@@ -23,6 +22,7 @@
     ../../home/system/mime
     ../../home/system/udiskie
     ../../home/system/hardware/libinput.nix
+    ../../home/programs/ssh
   ];
 
   home = {

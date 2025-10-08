@@ -15,7 +15,6 @@
     ../../home/programs/git
     # ../../home/programs/kitty
     ../../home/programs/nextcloud
-    ../../home/programs/1pass
     ../../home/programs/devenv
 
     # Scripts

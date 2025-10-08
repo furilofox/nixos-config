@@ -43,14 +43,13 @@
 
   environment.systemPackages = with pkgs; [
     unixtools.netstat
-    /*
-       cliphist # Clipboard history
+
+    cliphist # Clipboard history
     grim # Screenshotting
     slurp # Region select for screenshot
     wl-clipboard # Wayland clipboard utilities
     hyprpicker
     hyprshot
-    */
 
     dig # nslookup and stuff
   ];

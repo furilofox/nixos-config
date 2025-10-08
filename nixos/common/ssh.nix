@@ -22,26 +22,6 @@
 
   programs.ssh = {
     startAgent = true;
-    extraConfig = ''
-      Host athenas
-        HostName 192.168.20.10
-        User ${config.var.username}
-        ForwardAgent yes
-
-      Host pandora
-        HostName 192.168.20.21
-        User ${config.var.username}
-        ForwardAgent yes
-
-      Host promethea
-        HostName 192.168.20.22
-        User ${config.var.username}
-        ForwardAgent yes
-
-      Host *
-        AddKeysToAgent yes
-        IdentityFile ~/.ssh/id_ed25519
-    '';
     knownHosts = {
       pandora = {
         extraHostNames = ["pandora" "192.168.20.21"];

@@ -157,7 +157,7 @@
           "$mainMod,mouse_up,workspace,e-1"
 
           # Screenshots
-          ",PRINT,exec,hyprshot -m region"
+          ",PRINT,exec,hyprshot -m region -r -v"
           "$mainMod SHIFT,PRINT,exec,hyprshot -m window"
         ]
         ++ (
