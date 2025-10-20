@@ -157,8 +157,8 @@
           "$mainMod,mouse_up,workspace,e-1"
 
           # Screenshots
-          ",PRINT,exec,hyprshot -m region -r -v"
-          "$mainMod SHIFT,PRINT,exec,hyprshot -m window"
+          ",XF86CUT,exec,hyprshot -m region --clipboard-only"
+          "$mainMod SHIFT,XF86CUT,exec,hyprshot -m window"
         ]
         ++ (
           # workspaces

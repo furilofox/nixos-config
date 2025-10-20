@@ -29,13 +29,6 @@ in {
       pull.rebase = "false";
       push.autoSetupRemote = true;
       color.ui = "1";
-
-      /* gpg = {
-        format = "ssh";
-      };
-      commit = {
-        gpgsign = true;
-      }; */
     };
   };
   systemd = {

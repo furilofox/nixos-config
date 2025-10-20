@@ -66,6 +66,7 @@
       easyeffects # Speaker / Mic Management
       nextcloud-client # File Sync
       telegram-desktop # Chatting
+      onlyoffice-desktopeditors
     ];
 
     # Don't touch this
