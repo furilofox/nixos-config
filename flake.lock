@@ -616,8 +616,11 @@
       "locked": {
         "lastModified": 1759619523,
         "narHash": "sha256-r1ed7AR2ZEb2U8gy321/Xcp1ho2tzn+gG1te/Wxsj1A=",
+        "lastModified": 1759619523,
+        "narHash": "sha256-r1ed7AR2ZEb2U8gy321/Xcp1ho2tzn+gG1te/Wxsj1A=",
         "owner": "hyprwm",
         "repo": "hyprutils",
+        "rev": "3df7bde01efb3a3e8e678d1155f2aa3f19e177ef",
         "rev": "3df7bde01efb3a3e8e678d1155f2aa3f19e177ef",
         "type": "github"
       },
@@ -769,8 +772,11 @@
       "locked": {
         "lastModified": 1760045435,
         "narHash": "sha256-BN4nmQIKBwYQzmASIMRu1RIIsztrF2ujb24yLTHFqFo=",
+        "lastModified": 1760045435,
+        "narHash": "sha256-BN4nmQIKBwYQzmASIMRu1RIIsztrF2ujb24yLTHFqFo=",
         "owner": "cachix",
         "repo": "nixpkgs-python",
+        "rev": "5dd936b1ce299f6d230774a88b1052e47f71ab91",
         "rev": "5dd936b1ce299f6d230774a88b1052e47f71ab91",
         "type": "github"
       },
