@@ -40,8 +40,9 @@
     hyprpicker
     hyprshot
 
-    bambu-studio
+    # bambu-studio
     dig # nslookup and stuff
+    kitty
   ];
 
   networking = {

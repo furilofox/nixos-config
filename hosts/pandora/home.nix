@@ -25,6 +25,7 @@
     ../../home/system/mime
     ../../home/system/udiskie
     ../../home/programs/quickshell
+    ../../home/programs/ssh
   ];
 
   home = {
