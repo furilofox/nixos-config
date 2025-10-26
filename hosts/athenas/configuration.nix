@@ -5,13 +5,7 @@
   ...
 }: {
   imports = [
-    ../../nixos/nix.nix
-    ../../nixos/users.nix
-    ../../nixos/systemd-boot.nix
-    ../../nixos/locale.nix
-    ../../nixos/utils.nix
-    ../../nixos/ssh.nix
-    ../../nixos/networking.nix
+    ../../nixos
 
     ../../homelab
 
@@ -86,5 +80,5 @@
   };
 
   # Don't touch this
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

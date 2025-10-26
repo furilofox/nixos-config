@@ -77,7 +77,6 @@
       pandora = mkHost {
         modules = [
           inputs.home-manager.nixosModules.home-manager
-          # inputs.stylix.nixosModules.stylix
 
           ./hosts/pandora/configuration.nix
         ];
@@ -86,7 +85,6 @@
       promethea = mkHost {
         modules = [
           inputs.home-manager.nixosModules.home-manager
-          # inputs.stylix.nixosModules.stylix
 
           ./hosts/promethea/configuration.nix
         ];
@@ -94,6 +92,8 @@
 
       athenas = mkHost {
         modules = [
+          inputs.home-manager.nixosModules.home-manager
+          
           ./hosts/athenas/configuration.nix
         ];
       };

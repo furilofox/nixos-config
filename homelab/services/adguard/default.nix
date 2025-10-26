@@ -58,6 +58,9 @@ in {
             "8.8.8.8"
           ];
         };
+        statistics = {
+          interval = "720h"; # 30 Days
+        };
         filtering = {
           rewrites = [
             {
@@ -129,19 +132,22 @@ in {
             }
           ];
         };
-        log_compress = false;
-        log_localtime = false;
-        log_max_backups = 0;
-        log_max_size = 100;
-        log_max_age = 3;
-        log_file = "";
-        verbose = false;
+        log = {
+          enabled = true;
+          file = "/tmp/adguardhome.log";
+          max_backups = 0;
+          max_size = 100;
+          max_age = 3;
+          compress = false;
+          local_time = true;
+          verbose = false;
+        };
         os = {
           group = "";
           user = "";
           rlimit_nofile = 0;
         };
-        schema_version = 27;
+        schema_version = 30;
       };
     };
 

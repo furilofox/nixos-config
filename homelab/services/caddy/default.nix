@@ -77,7 +77,7 @@ in {
       # Use Caddy with Cloudflare plugin
       package = pkgs.caddy.withPlugins {
         plugins = ["github.com/caddy-dns/cloudflare"];
-        hash = "sha256-j+xUy8OAjEo+bdMOkQ1kVqDnEkzKGTBIbMDVL7YDwDY=";
+        hash = "sha256-4qUWhrv3/8BtNCi48kk4ZvbMckh/cGRL7k+MFvXKbTw=";
       };
 
       virtualHosts =
@@ -88,8 +88,7 @@ in {
               reverse_proxy ${route.upstream}
               ${route.extraConfig}
             ''
-            + lib.optionalString cfg.cloudflareApiToken
-            != null ''
+            + lib.optionalString (cfg.cloudflareApiToken != null) ''
               tls {
                 dns cloudflare {env.CLOUDFLARE_API_TOKEN}
               }
