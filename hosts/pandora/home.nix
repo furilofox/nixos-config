@@ -47,14 +47,14 @@
 
       # # Gaming
       mangohud # Game Hardware stats
-      protonup # "protonup" in terminal to download proton-ge
+      protonup-ng # "protonup" in terminal to download proton-ge
       lutris # great game launcher
       heroic # good for epicgames
       (prismlauncher.override {
         # Minecraft
         additionalPrograms = [ffmpeg];
         jdks = [
-          graalvm-ce
+          graalvmPackages.graalvm-ce
           zulu8
           zulu17
           zulu

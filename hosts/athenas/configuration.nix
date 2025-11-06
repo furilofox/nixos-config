@@ -39,7 +39,7 @@
     caddy = {
       enable = true;
       domain = "furilo.me";
-      cloudflareApiToken = "censored"; # TODO: DON'T PUSH!!!!!!!!!!!!!
+      cloudflareApiToken = "ZBtJgWABgN8panZlHwQV4ClDDafIKYqYYGc5mAoR"; # TODO: DON'T PUSH!!!!!!!!!!!!!
       routes = {
         homepage = {
           subdomain = "home";
