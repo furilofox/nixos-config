@@ -9,7 +9,59 @@
     enable = true;
     xwayland.enable = true;
 
-    settings = {
+    settings = let
+      # Helper function to generate binds from a map
+      generateBinds = keymap: pkgs.lib.flatten (
+        pkgs.lib.mapAttrsToList (action: keys:
+          map (key: "${key},${action}") keys
+        ) keymap
+      );
+
+      # Regular binds
+      keybinds = {
+        "exec,$terminal" = [ "$mainMod,Q" ];
+        "killactive," = [ "$mainMod,C" ];
+        "exit," = [ "$mainMod,M" ];
+        "exec,$fileManager" = [ "$mainMod,E" ];
+        "togglefloating," = [ "$mainMod,V" ];
+        "pseudo," = [ "$mainMod,P" ];
+        "exec,$menu" = [ "$mainMod,R" ];
+        "togglesplit," = [ "$mainMod,J" ];
+        "exec,$lockScreen" = [ "$mainMod,L" ];
+        "movefocus,l" = [ "$mainMod,left" ];
+        "movefocus,r" = [ "$mainMod,right" ];
+        "movefocus,u" = [ "$mainMod,up" ];
+        "movefocus,d" = [ "$mainMod,down" ];
+        "workspace,e+1" = [ "$mainMod,mouse_down" ];
+        "workspace,e-1" = [ "$mainMod,mouse_up" ];
+        "exec,$areaScreenshot" = [ ",XF86CUT" ",Print" ];
+        "exec,hyprshot -m window" = [ "$mainMod SHIFT,XF86CUT" ];
+      };
+
+      # Mouse bindings
+      mousebinds = {
+        "movewindow" = [ "$mainMod,mouse:272" ];
+        "resizewindow" = [ "$mainMod,mouse:273" ];
+      };
+
+      # Repeating binds (volume, brightness)
+      repeatingBinds = {
+        "exec,wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+" = [ ",XF86AudioRaiseVolume" ];
+        "exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" = [ ",XF86AudioLowerVolume" ];
+        "exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" = [ ",XF86AudioMute" ];
+        "exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle" = [ ",XF86AudioMicMute" ];
+        "exec,brightnessctl -e4 -n2 set 5%+" = [ ",XF86MonBrightnessUp" ];
+        "exec,brightnessctl -e4 -n2 set 5%-" = [ ",XF86MonBrightnessDown" ];
+      };
+
+      # Locked binds (media controls)
+      lockedBinds = {
+        "exec,playerctl next" = [ ",XF86AudioNext" ];
+        "exec,playerctl play-pause" = [ ",XF86AudioPause" ",XF86AudioPlay" ];
+        "exec,playerctl previous" = [ ",XF86AudioPrev" ];
+      };
+    in
+    {
       # Variables
       "$mainMod" = "SUPER";
 
@@ -17,8 +69,27 @@
       "$terminal" = "kitty";
       "$fileManager" = "dolphin";
       "$menu" = "noctalia-shell ipc call launcher toggle";
-      "$lockScreen" = "noctalia-shell ipc call lockScreen toggle";
+      "$lockScreen" = "lockScreen toggle";
       "$areaScreenshot" = "hyprshot -m region --clipboard-only --freeze";
+
+      # Keybindings
+      bind = generateBinds keybinds
+        ++ (
+          # workspaces
+          # binds $mainMod + [shift +] {1..9} to [move to] workspace {1..9}
+          builtins.concatLists (builtins.genList (
+              i: let
+                ws = i + 1;
+              in [
+                "$mainMod, code:1${toString i}, workspace, ${toString ws}"
+                "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+              ]
+            )
+            9)
+        );
+      bindm = generateBinds mousebinds;
+      binde = generateBinds repeatingBinds; # `bindel` was likely a typo for `binde` (repeating)
+      bindl = generateBinds lockedBinds;
 
       # Monitor configuration
       monitor = config.var.monitors ++ [",preferred,auto,auto"];
@@ -36,6 +107,17 @@
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
       ];
+
+      # Input configuration
+      input = {
+        kb_layout = "de";
+        follow_mouse = 1;
+        sensitivity = 0;
+
+        touchpad = {
+          natural_scroll = true;
+        };
+      };
 
       # General settings
       general = {
@@ -121,90 +203,6 @@
         vrr = 1;
         vfr = true;
       };
-
-      # Input configuration
-      input = {
-        kb_layout = "de";
-        follow_mouse = 1;
-        sensitivity = 0;
-
-        touchpad = {
-          natural_scroll = true;
-        };
-      };
-
-      # Keybindings
-      bind =
-        [
-          # Program launches
-          "$mainMod,Q,exec,$terminal"
-          "$mainMod,C,killactive,"
-          "$mainMod,M,exit,"
-          "$mainMod,E,exec,$fileManager"
-          "$mainMod,V,togglefloating,"
-          "$mainMod,P,pseudo,"
-          "$mainMod,R,exec,$menu"
-          "$mainMod,J,togglesplit,"
-          "$mainMod,L,exec,$lockScreen"
-
-          # Move focus with arrow keys
-          "$mainMod,left,movefocus,l"
-          "$mainMod,right,movefocus,r"
-          "$mainMod,up,movefocus,u"
-          "$mainMod,down,movefocus,d"
-
-          # Workspace scroll
-          "$mainMod,mouse_down,workspace,e+1"
-          "$mainMod,mouse_up,workspace,e-1"
-
-          # Screenshots
-          ",XF86CUT,exec,$areaScreenshot"
-          ",Print,exec,$areaScreenshot"
-          "$mainMod SHIFT,XF86CUT,exec,hyprshot -m window"
-        ]
-        ++ (
-          # workspaces
-          # binds $mainMod + [shift +] {1..9} to [move to] workspace {1..9}
-          builtins.concatLists (builtins.genList (
-              i: let
-                ws = i + 1;
-              in [
-                "$mainMod, code:1${toString i}, workspace, ${toString ws}"
-                "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-              ]
-            )
-            9)
-        );
-
-      # Mouse bindings
-      bindm = [
-        "$mainMod,mouse:272,movewindow"
-        "$mainMod,mouse:273,resizewindow"
-      ];
-
-      # Volume and brightness controls
-      bindel = [
-        ",XF86AudioRaiseVolume,exec,wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ",XF86AudioMute,exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ",XF86AudioMicMute,exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ",XF86MonBrightnessUp,exec,brightnessctl -e4 -n2 set 5%+"
-        ",XF86MonBrightnessDown,exec,brightnessctl -e4 -n2 set 5%-"
-      ];
-
-      # Media controls
-      bindl = [
-        ",XF86AudioNext,exec,playerctl next"
-        ",XF86AudioPause,exec,playerctl play-pause"
-        ",XF86AudioPlay,exec,playerctl play-pause"
-        ",XF86AudioPrev,exec,playerctl previous"
-      ];
-
-      # Window rules
-      windowrule = [
-        "suppressevent maximize,class:.*"
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-      ];
     };
   };
 }
