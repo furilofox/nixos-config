@@ -18,6 +18,7 @@
       "$fileManager" = "dolphin";
       "$menu" = "noctalia-shell ipc call launcher toggle";
       "$lockScreen" = "noctalia-shell ipc call lockScreen toggle";
+      "$areaScreenshot" = "hyprshot -m region --clipboard-only --freeze";
 
       # Monitor configuration
       monitor = config.var.monitors ++ [",preferred,auto,auto"];
@@ -157,7 +158,8 @@
           "$mainMod,mouse_up,workspace,e-1"
 
           # Screenshots
-          ",XF86CUT,exec,hyprshot -m region --clipboard-only"
+          ",XF86CUT,exec,$areaScreenshot"
+          ",Print,exec,$areaScreenshot"
           "$mainMod SHIFT,XF86CUT,exec,hyprshot -m window"
         ]
         ++ (

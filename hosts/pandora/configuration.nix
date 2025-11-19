@@ -43,6 +43,7 @@
     # bambu-studio
     dig # nslookup and stuff
     kitty
+    shotcut
   ];
 
   networking = {

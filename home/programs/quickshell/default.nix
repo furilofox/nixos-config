@@ -147,7 +147,8 @@ in {
         sortByMostUsed = true;
       };
       dock = {
-        autoHide = false;
+        enabled = false;
+        autoHide = true;
         exclusive = false;
         backgroundOpacity = 1;
         floatingRatio = 1;
