@@ -21,10 +21,9 @@
         anonymiseFileNames.enable = true;
         callTimer.enable = true;
         biggerStreamPreview.enable = true;
-        blurNSFW.enable = true;
+        blurNsfw.enable = true;
         betterSessions.enable = true;
         copyFileContents.enable = true;
-        vcNarrator.enable = true;
         betterSettings.enable = true;
         whoReacted.enable = true;
         validReply.enable = true;
@@ -42,11 +41,11 @@
         platformIndicators.enable = true;
         permissionsViewer.enable = true;
         fixCodeblockGap.enable = true;
-        clearURLs.enable = true;
+        clearUrLs.enable = true;
         forceOwnerCrown.enable = true;
         translate.enable = true;
         showConnections.enable = true;
-        reviewDB.enable = true;
+        reviewDb.enable = true;
         reverseImageSearch.enable = true;
         pinDMs.enable = true;
         mentionAvatars.enable = true;
@@ -59,23 +58,10 @@
           enable = true;
           collapseDeleted = true;
         };
-        customRPC = {
+
+        vcNarrator = {
           enable = true;
-          appID = "69";
-          type = "playing";
-          appName = "Something probably";
-          details = "...";
-          state = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-
-          buttonOneText = "My Github";
-          buttonOneURL = "https://github.com/furilofox";
-
-          buttonTwoText = "My Steam";
-          buttonTwoURL = "https://steamcommunity.com/id/furilofox/";
-
-          timestampMode = "customTime";
-          startTime = 1;
-          endTime = 1000000000000000000;
+          voice = "English (America) espeak-ng";
         };
       };
     };

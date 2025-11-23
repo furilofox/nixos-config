@@ -52,22 +52,24 @@
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # nixvim = {
-    #   url = "github:nix-community/nixvim";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
     self,
     nixpkgs,
     hyprland,
+    sops-nix,
     ...
   }: let
     mkHost = {modules}:
       nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
+          sops = inputs.sops-nix;
         };
 
         modules = modules;
@@ -77,6 +79,7 @@
       pandora = mkHost {
         modules = [
           inputs.home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
 
           ./hosts/pandora/configuration.nix
         ];
