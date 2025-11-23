@@ -69,7 +69,7 @@
       "$terminal" = "kitty";
       "$fileManager" = "dolphin";
       "$menu" = "noctalia-shell ipc call launcher toggle";
-      "$lockScreen" = "lockScreen toggle";
+      "$lockScreen" = "noctalia-shell ipc call lockScreen lock";
       "$areaScreenshot" = "hyprshot -m region --clipboard-only --freeze";
 
       # Keybindings
