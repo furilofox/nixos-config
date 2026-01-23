@@ -12,7 +12,7 @@
 
   programs.nixcord = {
     enable = true;
-    vesktop.enable = true;
+    vesktop.enable = false;
     dorion.enable = false;
 
     config = {
@@ -21,7 +21,6 @@
         anonymiseFileNames.enable = true;
         callTimer.enable = true;
         biggerStreamPreview.enable = true;
-        blurNsfw.enable = true;
         betterSessions.enable = true;
         copyFileContents.enable = true;
         betterSettings.enable = true;
@@ -41,13 +40,10 @@
         platformIndicators.enable = true;
         permissionsViewer.enable = true;
         fixCodeblockGap.enable = true;
-        clearUrLs.enable = true;
         forceOwnerCrown.enable = true;
         translate.enable = true;
         showConnections.enable = true;
-        reviewDb.enable = true;
         reverseImageSearch.enable = true;
-        pinDMs.enable = true;
         mentionAvatars.enable = true;
         memberCount.enable = true;
         imageZoom.enable = true;

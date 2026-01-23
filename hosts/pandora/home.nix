@@ -70,7 +70,7 @@
       fastfetch
       gparted
       bottles # windows app container
-      xfce.thunar # File manager for Hyprland
+      nautilus # File Manager (Gnome Files)
 
       # # Just cool
       peaclock
@@ -84,6 +84,7 @@
       nextcloud-client # File Sync
       telegram-desktop # Chatting
       youtube-music
+      antigravity
     ];
 
     # Don't touch this

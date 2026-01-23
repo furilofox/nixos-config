@@ -26,6 +26,8 @@
       email = "53122773+furilofox@users.noreply.github.com";
     };
 
+    ssh_key = "/home/" + config.var.username + "/.ssh/id_ed25519";
+
     autoUpgrade = false;
     autoGarbageCollector = true;
 

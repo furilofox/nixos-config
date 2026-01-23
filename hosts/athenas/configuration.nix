@@ -1,4 +1,6 @@
-{
+let
+  secrets = import ./secrets.nix;
+in {
   config,
   pkgs,
   lib,
@@ -8,6 +10,8 @@
     ../../nixos
 
     ../../homelab
+
+    ../../homelab/gameserver/necesse.nix
 
     ./hardware-configuration.nix
     ./variables.nix
@@ -39,7 +43,7 @@
     caddy = {
       enable = true;
       domain = "furilo.me";
-      cloudflareApiToken = "ZBtJgWABgN8panZlHwQV4ClDDafIKYqYYGc5mAoR"; # TODO: DON'T PUSH!!!!!!!!!!!!!
+      cloudflareApiToken = secrets.cloudflareApiToken;
       routes = {
         homepage = {
           subdomain = "home";
@@ -52,6 +56,13 @@
         };
       };
     };
+  };
+
+  services.necesse-server = {
+    enable = true;
+    worldName = "IrgendEineWelt"; # Will be created if it doesn't exist
+    slots = 20;
+    openFirewall = true;
   };
 
   networking = {
