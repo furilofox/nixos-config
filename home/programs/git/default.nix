@@ -10,8 +10,6 @@
 in {
   programs.git = {
     enable = true;
-    userName = username;
-    userEmail = email;
     ignores = [
       ".cache/"
       ".DS_Store"
@@ -24,11 +22,15 @@ in {
       "result"
       "result-*"
     ];
-    extraConfig = {
+    settings = {
+      user = {
+        name = username;
+        email = email;
+      };
       init.defaultBranch = "main";
-      pull.rebase = "false";
+      pull.rebase = false;
       push.autoSetupRemote = true;
-      color.ui = "1";
+      color.ui = "auto";
     };
   };
   systemd = {

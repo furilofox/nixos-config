@@ -1,8 +1,8 @@
 {
-  # https://github.com/anotherhadi/nixy
   description = ''
-    Nixy simplifies and unifies the Hyprland ecosystem with a modular, easily customizable setup.
-    It provides a structured way to manage your system configuration and dotfiles with minimal effort.
+    Modular NixOS Configuration with Niri & Noctalia.
+    Fully declarative with config.* options, profiles for shared configurations,
+    and sops-nix secrets management.
   '';
 
   inputs = {
@@ -27,7 +27,7 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.quickshell.follows = "quickshell";
+      # Note: quickshell follows removed - noctalia doesn't expose that input
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
@@ -36,7 +36,7 @@
 
     caddy-nix = {
       url = "github:vincentbernat/caddy-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # Note: nixpkgs follows removed - caddy-nix doesn't expose that input
     };
 
     home-manager = {
@@ -56,50 +56,41 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Private secrets repository (uncomment when ready)
+    # my-secrets = {
+    #   url = "git+ssh://git@github.com/YOUR_USERNAME/nixos-secrets.git";
+    #   flake = false;
+    # };
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    hyprland,
-    sops-nix,
-    ...
-  }: let
-    mkHost = {modules}:
-      nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          sops = inputs.sops-nix;
-        };
-
-        modules = modules;
-      };
+  outputs = inputs@{ self, nixpkgs, ... }:
+  let
+    # Import custom library with mkHost helper
+    myLib = import ./lib { 
+      inherit (nixpkgs) lib; 
+      inherit inputs; 
+    };
   in {
     nixosConfigurations = {
-      pandora = mkHost {
-        modules = [
-          inputs.home-manager.nixosModules.home-manager
-          sops-nix.nixosModules.sops
-
-          ./hosts/pandora/configuration.nix
-        ];
+      # Desktop - uses desktop profile
+      pandora = myLib.mkHost {
+        hostname = "pandora";
+        system = "x86_64-linux";
       };
 
-      promethea = mkHost {
-        modules = [
-          inputs.home-manager.nixosModules.home-manager
-
-          ./hosts/promethea/configuration.nix
-        ];
+      # Laptop - uses desktop profile  
+      promethea = myLib.mkHost {
+        hostname = "promethea";
+        system = "x86_64-linux";
       };
 
-      athenas = mkHost {
-        modules = [
-          inputs.home-manager.nixosModules.home-manager
-          
-          ./hosts/athenas/configuration.nix
-        ];
+      # Server - uses server profile
+      athenas = myLib.mkHost {
+        hostname = "athenas";
+        system = "x86_64-linux";
       };
     };
   };
 }
+

@@ -52,7 +52,7 @@
       pfetch
       fastfetch
       gparted
-      xfce.thunar
+      thunar # File manager (formerly xfce.thunar)
 
       # # Just cool
       peaclock

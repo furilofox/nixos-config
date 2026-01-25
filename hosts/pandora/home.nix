@@ -83,7 +83,7 @@
       easyeffects # Speaker / Mic Management
       nextcloud-client # File Sync
       telegram-desktop # Chatting
-      youtube-music
+      pear-desktop # Formerly youtube-music
       antigravity
     ];
 
