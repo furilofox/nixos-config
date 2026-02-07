@@ -12,7 +12,7 @@
 
     ../../nixos/desktop/hyprland
 
-    ../../nixos/services/mullvad.nix
+    # ../../nixos/services/mullvad.nix
     ../../nixos/services/gnome-keyring.nix
 
     ../../nixos/printing.nix
@@ -91,6 +91,8 @@
   boot.extraModprobeConfig = ''
     options snd_hda_intel power_save=0 power_save_controller=N
   '';
+
+  services.flatpak.enable = true;
 
   # Don't touch this
   system.stateVersion = "25.05";
