@@ -58,9 +58,10 @@
     unixtools.netstat
     dig
     
-    # Sops utilities
-    sops
-    age
-    ssh-to-age
+    
+    # Sops utilities - removed
+    # sops
+    # age
+    # ssh-to-age
   ];
 }

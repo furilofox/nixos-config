@@ -23,6 +23,7 @@
     ../../home/system/udiskie
     ../../home/system/hardware/libinput.nix
     ../../home/programs/ssh
+    ../../home/programs/niri
   ];
 
   home = {

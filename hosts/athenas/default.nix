@@ -25,9 +25,7 @@
   # Secrets configuration
   secrets = {
     enable = true;
-    keyType = "age";
-    sshKeyPaths = [ config.sshKeyPath ];
-    # secretsRepo = inputs.my-secrets;  # Uncomment when private repo is ready
+    # file = "${inputs.my-secrets}/secrets.nix";  # Uncomment when private repo is ready
   };
 
   # Homelab configuration

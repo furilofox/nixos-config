@@ -2,7 +2,7 @@
   config,
   pkgs,
   inputs,
-  sops,
+
   ...
 }: {
   imports = [
@@ -47,7 +47,7 @@
     shotcut
     satisfactorymodmanager
 
-    sops age ssh-to-age age-plugin-yubikey yubikey-manager gnupg # Yubikey / Sops stuff
+    
   ];
 
   # YUBIKEY STUFF
@@ -55,21 +55,12 @@
 
   services.pcscd.enable = true; # Required for Yubikey (Smart Card Daemon)
 
-  environment.etc."sops/age/keys.txt".text = ''
-    # Primary YubiKey (USB-C)
-    AGE-PLUGIN-YUBIKEY-1C537CQVZFHGZCHS5QHCXQ
-    
-    # Backup YubiKey (USB-A)
-    AGE-PLUGIN-YUBIKEY-1SRXDZQVZGULA6DQNFDM77
-  '';
-  environment.variables.SOPS_AGE_KEY_FILE = "/etc/sops/age/keys.txt";
+
 
   # Point to the secret file in the private input
-  sops.defaultSopsFile = "${inputs.my-secrets}/secrets/general.yaml";
-  sops.defaultSopsFormat = "yaml";
+  # Secrets file (when available)
+  # secrets.file = "${inputs.my-secrets}/secrets.nix";
 
-  # Machine uses its own SSH key to decrypt at boot (Runtime decryption)
-  sops.age.sshKeyPaths = [ config.ssh_key ];
 
   # ============================================
 

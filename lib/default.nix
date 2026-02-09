@@ -12,7 +12,6 @@ let
       modules = [
         # Core modules from flake inputs
         inputs.home-manager.nixosModules.home-manager
-        inputs.sops-nix.nixosModules.sops
         
         # Our module system
         ../modules

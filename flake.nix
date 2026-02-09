@@ -2,7 +2,7 @@
   description = ''
     Modular NixOS Configuration with Niri & Noctalia.
     Fully declarative with config.* options, profiles for shared configurations,
-    and sops-nix secrets management.
+    and secrets management.
   '';
 
   inputs = {
@@ -30,6 +30,8 @@
       # Note: quickshell follows removed - noctalia doesn't expose that input
     };
 
+    niri.url = "github:sodiboo/niri-flake";
+
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     nixcord.url = "github:kaylorben/nixcord";
     # stylix.url = "github:danth/stylix";
@@ -52,10 +54,7 @@
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
 
     # Private secrets repository (uncomment when ready)
     # my-secrets = {

@@ -29,29 +29,20 @@
   # Secrets configuration with YubiKey
   secrets = {
     enable = true;
-    keyType = "age-yubikey";
-    sshKeyPaths = [ config.sshKeyPath ];
-    # secretsRepo = inputs.my-secrets;  # Uncomment when private repo is ready
+    # file = "${inputs.my-secrets}/secrets.nix";  # Uncomment when private repo is ready
   };
 
   # YubiKey support
   services.pcscd.enable = true;
   
   # Age keys for YubiKey
-  environment.etc."sops/age/keys.txt".text = ''
-    # Primary YubiKey (USB-C)
-    AGE-PLUGIN-YUBIKEY-1C537CQVZFHGZCHS5QHCXQ
-    
-    # Backup YubiKey (USB-A)
-    AGE-PLUGIN-YUBIKEY-1SRXDZQVZGULA6DQNFDM77
-  '';
-  environment.variables.SOPS_AGE_KEY_FILE = "/etc/sops/age/keys.txt";
+
 
   # Pandora-specific packages
   environment.systemPackages = with pkgs; [
     satisfactorymodmanager
     shotcut
-    age-plugin-yubikey
+
     yubikey-manager
     gnupg
   ];

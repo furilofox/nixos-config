@@ -3,6 +3,8 @@
 let
   cfg = config.desktop.niri;
 in {
+  imports = [ inputs.niri.nixosModules.niri ];
+
   options.desktop.niri = {
     enable = lib.mkEnableOption "Niri scrollable-tiling Wayland compositor";
     
@@ -74,6 +76,7 @@ in {
   config = lib.mkIf cfg.enable {
     # Enable Niri from nixpkgs
     programs.niri.enable = true;
+    nixpkgs.overlays = [ inputs.niri.overlays.niri ];
 
     # Display manager - greetd with tuigreet
     services.greetd = {
@@ -98,9 +101,22 @@ in {
       grim
       slurp
       xdg-utils
+      
+      # Qt Wayland support
+      qt6.qtwayland
+      qt6.qtbase
     ];
 
     # Enable noctalia shell if selected
     desktop.noctalia.enable = lib.mkIf (cfg.shell == "noctalia") true;
+
+    # Enforce Wayland session variables
+    environment.sessionVariables = {
+      NIXOS_OZONE_WL = "1"; # Hint electron apps to use wayland
+      MOZ_ENABLE_WAYLAND = "1"; # Firefox wayland
+      QT_QPA_PLATFORM = "wayland"; # Force Qt to use wayland
+      SDL_VIDEODRIVER = "wayland"; # Force SDL to use wayland
+      XDG_SESSION_TYPE = "wayland";
+    };
   };
 }
