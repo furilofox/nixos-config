@@ -40,28 +40,4 @@
 
   # Secrets
   secrets.enable = true;
-
-  # Common packages for desktop machines
-  environment.systemPackages = with pkgs; [
-    # Clipboard & screenshots
-    wl-clipboard
-    cliphist
-    grim
-    slurp
-    hyprpicker
-    hyprshot
-    
-    # Terminal
-    kitty
-    
-    # Utilities
-    unixtools.netstat
-    dig
-    
-    
-    # Sops utilities - removed
-    # sops
-    # age
-    # ssh-to-age
-  ];
 }

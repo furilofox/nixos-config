@@ -1,13 +1,8 @@
 # Git configuration
 {
-  config,
-  pkgs,
-  lib,
+  osConfig,
   ...
-}: let
-  username = config.var.git.username;
-  email = config.var.git.email;
-in {
+}: {
   programs.git = {
     enable = true;
     ignores = [
@@ -24,33 +19,13 @@ in {
     ];
     settings = {
       user = {
-        name = username;
-        email = email;
+        name = osConfig.git.username;
+        email = osConfig.git.email;
       };
       init.defaultBranch = "main";
       pull.rebase = false;
       push.autoSetupRemote = true;
       color.ui = "auto";
-    };
-  };
-  systemd = {
-    user.services.polkit-gnome-authentication-agent-1 = {
-      Unit = {
-        Description = "polkit-gnome-authentication-agent-1";
-        Wants = ["graphical-session.target"];
-        After = ["graphical-session-pre.target"];
-      };
-      Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-        Restart = "on-failure";
-        KillMode = "mixed";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
-      };
-      Install = {
-        WantedBy = ["graphical-session.target"];
-      };
     };
   };
 }

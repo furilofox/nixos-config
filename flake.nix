@@ -10,12 +10,6 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,18 +21,15 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-      # Note: quickshell follows removed - noctalia doesn't expose that input
     };
 
     niri.url = "github:sodiboo/niri-flake";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     nixcord.url = "github:kaylorben/nixcord";
-    # stylix.url = "github:danth/stylix";
 
     caddy-nix = {
       url = "github:vincentbernat/caddy-nix";
-      # Note: nixpkgs follows removed - caddy-nix doesn't expose that input
     };
 
     home-manager = {
@@ -54,13 +45,6 @@
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-
-    # Private secrets repository (uncomment when ready)
-    # my-secrets = {
-    #   url = "git+ssh://git@github.com/YOUR_USERNAME/nixos-secrets.git";
-    #   flake = false;
-    # };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }:
@@ -72,19 +56,19 @@
     };
   in {
     nixosConfigurations = {
-      # Desktop - uses desktop profile
+      # Desktop
       pandora = myLib.mkHost {
         hostname = "pandora";
         system = "x86_64-linux";
       };
 
-      # Laptop - uses desktop profile  
+      # Laptop
       promethea = myLib.mkHost {
         hostname = "promethea";
         system = "x86_64-linux";
       };
 
-      # Server - uses server profile
+      # Server
       athenas = myLib.mkHost {
         hostname = "athenas";
         system = "x86_64-linux";
@@ -92,4 +76,3 @@
     };
   };
 }
-

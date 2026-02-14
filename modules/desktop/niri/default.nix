@@ -74,7 +74,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    # Enable Niri from nixpkgs
+    # Enable Niri from niri-flake
     programs.niri.enable = true;
     nixpkgs.overlays = [ inputs.niri.overlays.niri ];
 
@@ -89,17 +89,8 @@ in {
       };
     };
 
-    # XDG portal for screen sharing and file dialogs
-    xdg.portal = {
-      enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-    };
-
-    # Required packages for Wayland desktop
+    # Additional Wayland packages (niri-flake already provides xdg-desktop-portal-gnome)
     environment.systemPackages = with pkgs; [
-      wl-clipboard
-      grim
-      slurp
       xdg-utils
       
       # Qt Wayland support
@@ -112,10 +103,10 @@ in {
 
     # Enforce Wayland session variables
     environment.sessionVariables = {
-      NIXOS_OZONE_WL = "1"; # Hint electron apps to use wayland
-      MOZ_ENABLE_WAYLAND = "1"; # Firefox wayland
-      QT_QPA_PLATFORM = "wayland"; # Force Qt to use wayland
-      SDL_VIDEODRIVER = "wayland"; # Force SDL to use wayland
+      NIXOS_OZONE_WL = "1";
+      MOZ_ENABLE_WAYLAND = "1";
+      QT_QPA_PLATFORM = "wayland";
+      SDL_VIDEODRIVER = "wayland";
       XDG_SESSION_TYPE = "wayland";
     };
   };

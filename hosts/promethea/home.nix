@@ -1,51 +1,54 @@
+# Promethea - Laptop Home Manager configuration
 {
   pkgs,
-  config,
+  osConfig,
   ...
 }: {
   imports = [
-    ./variables.nix
-
     # Programs
     ../../home/programs/zen
     ../../home/programs/discord
     ../../home/programs/git
     ../../home/programs/nextcloud
     ../../home/programs/devenv
+    ../../home/programs/kitty
+    ../../home/programs/ssh
+    ../../home/programs/niri
 
-    # Scripts
-    # ../../home/scripts # All scripts
+    # Desktop shell
+    ../../home/programs/quickshell
 
     # System
-    ../../home/system/hypr/hyprland
-    ../../home/programs/quickshell
     ../../home/system/mime
     ../../home/system/udiskie
     ../../home/system/hardware/libinput.nix
-    ../../home/programs/ssh
-    ../../home/programs/niri
   ];
 
   home = {
-    inherit (config.var) username;
-    homeDirectory = "/home/" + config.var.username;
+    username = osConfig.username;
+    homeDirectory = "/home/${osConfig.username}";
 
     packages = with pkgs; [
+      # Wayland tools
+      wl-clipboard
+      cliphist
+      grim
+      slurp
+      hyprpicker
+      hyprshot
+
       # System Monitoring
-      resources # Shows System Ressources better
-      mission-center # Shows Processes better
-      btop # Console System Monitoring
+      resources
+      mission-center
+      btop
 
       # Development
       vscode
       git
       bruno
       mongodb-compass
-      kitty # Terminal
 
-      # Apps
-
-      # # Utils
+      # Utils
       zip
       unzip
       optipng
@@ -53,25 +56,49 @@
       pfetch
       fastfetch
       gparted
-      thunar # File manager (formerly xfce.thunar)
+      thunar
+      unixtools.netstat
+      dig
 
-      # # Just cool
+      # Fun
       peaclock
       cbonsai
-      pipes # pipes.sh -t [0-9]
+      pipes
       cmatrix
 
-      # Unsorted
-      bottles # windows app container
-      obsidian # Note taking app
-      easyeffects # Speaker / Mic Management
-      nextcloud-client # File Sync
-      telegram-desktop # Chatting
+      # Apps
+      bottles
+      obsidian
+      easyeffects
+      nextcloud-client
+      telegram-desktop
       onlyoffice-desktopeditors
+
+      # Miracast
+      gnome-network-displays
     ];
 
-    # Don't touch this
     stateVersion = "24.11";
+  };
+
+  # Polkit authentication agent
+  systemd.user.services.polkit-gnome-authentication-agent-1 = {
+    Unit = {
+      Description = "polkit-gnome-authentication-agent-1";
+      Wants = ["graphical-session.target"];
+      After = ["graphical-session-pre.target"];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      Restart = "on-failure";
+      KillMode = "mixed";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
+    };
   };
 
   programs.home-manager.enable = true;

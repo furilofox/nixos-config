@@ -1,4 +1,5 @@
-{config, ...}: {
+# SSH client configuration
+{ osConfig, ... }: {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
@@ -7,21 +8,21 @@
       "athenas" = {
         host = "athenas";
         hostname = "192.168.20.10";
-        user = config.var.username;
+        user = osConfig.username;
         forwardAgent = true;
       };
 
       "pandora" = {
         host = "pandora";
         hostname = "192.168.20.21";
-        user = config.var.username;
+        user = osConfig.username;
         forwardAgent = true;
       };
 
       "promethea" = {
         host = "promethea";
         hostname = "192.168.20.22";
-        user = config.var.username;
+        user = osConfig.username;
         forwardAgent = true;
       };
 

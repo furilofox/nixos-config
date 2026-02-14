@@ -1,25 +1,23 @@
+# Athenas - Server Home Manager configuration
 {
   pkgs,
-  config,
-  inputs,
+  osConfig,
   ...
 }: {
   imports = [
-    # Mostly user-specific configuration
-    ./variables.nix
-
     ../../home/programs/ssh
+    ../../home/programs/git
   ];
 
   home = {
-    inherit (config.var) username;
-    homeDirectory = "/home/" + config.var.username;
+    username = osConfig.username;
+    homeDirectory = "/home/${osConfig.username}";
 
     packages = with pkgs; [
-      
+      btop
+      fastfetch
     ];
 
-    # Don't touch this
     stateVersion = "25.05";
   };
 

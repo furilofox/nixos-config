@@ -1,57 +1,58 @@
+# Pandora - Desktop Home Manager configuration
 {
   pkgs,
-  config,
+  osConfig,
   inputs,
   ...
 }: {
   imports = [
-    # Mostly user-specific configuration
-    ./variables.nix
-
     # Programs
-    # ../../home/programs/brave
     ../../home/programs/zen
     ../../home/programs/discord
     ../../home/programs/git
-    # ../../home/programs/kitty
     ../../home/programs/nextcloud
     ../../home/programs/devenv
+    ../../home/programs/kitty
+    ../../home/programs/ssh
+    ../../home/programs/niri
 
-    # Scripts
-    # ../../home/scripts # All scripts
+    # Desktop shell
+    ../../home/programs/quickshell
 
     # System
-    ../../home/system/hypr/hyprland
     ../../home/system/mime
     ../../home/system/udiskie
-    ../../home/programs/quickshell
-    ../../home/programs/ssh
   ];
 
   home = {
-    inherit (config.var) username;
-    homeDirectory = "/home/" + config.var.username;
+    username = osConfig.username;
+    homeDirectory = "/home/${osConfig.username}";
 
     packages = with pkgs; [
+      # Wayland tools
+      wl-clipboard
+      cliphist
+      grim
+      slurp
+      hyprpicker
+      hyprshot
+
       # System Monitoring
-      resources # Shows System Ressources better
-      mission-center # Shows Processes better
-      btop # Console System Monitoring
+      resources
+      mission-center
+      btop
 
       # Development
       vscode
       git
       bruno
 
-      # Apps
-
-      # # Gaming
-      mangohud # Game Hardware stats
-      protonup-ng # "protonup" in terminal to download proton-ge
-      lutris # great game launcher
-      heroic # good for epicgames
+      # Gaming
+      mangohud
+      protonup-ng
+      lutris
+      heroic
       (prismlauncher.override {
-        # Minecraft
         additionalPrograms = [ffmpeg];
         jdks = [
           graalvmPackages.graalvm-ce
@@ -61,7 +62,7 @@
         ];
       })
 
-      # # Utils
+      # Utils
       zip
       unzip
       optipng
@@ -69,26 +70,53 @@
       pfetch
       fastfetch
       gparted
-      bottles # windows app container
-      nautilus # File Manager (Gnome Files)
+      bottles
+      nautilus
+      unixtools.netstat
+      dig
 
-      # # Just cool
+      # Fun
       peaclock
       cbonsai
-      pipes # pipes.sh -t [0-9]
+      pipes
       cmatrix
 
-      # Unsorted
-      obsidian # Note taking app
-      easyeffects # Speaker / Mic Management
-      nextcloud-client # File Sync
-      telegram-desktop # Chatting
-      pear-desktop # Formerly youtube-music
+      # Apps
+      obsidian
+      easyeffects
+      nextcloud-client
+      telegram-desktop
+      pear-desktop
       antigravity
+
+      # Pandora-specific
+      satisfactorymodmanager
+      shotcut
+      yubikey-manager
+      gnupg
     ];
 
-    # Don't touch this
     stateVersion = "25.05";
+  };
+
+  # Polkit authentication agent
+  systemd.user.services.polkit-gnome-authentication-agent-1 = {
+    Unit = {
+      Description = "polkit-gnome-authentication-agent-1";
+      Wants = ["graphical-session.target"];
+      After = ["graphical-session-pre.target"];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      Restart = "on-failure";
+      KillMode = "mixed";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
+    };
   };
 
   programs.home-manager.enable = true;

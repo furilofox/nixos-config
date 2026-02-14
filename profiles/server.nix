@@ -7,7 +7,6 @@
   
   # No desktop environment
   desktop.niri.enable = false;
-  desktop.hyprland.enable = false;
   
   # Server secrets
   secrets.enable = true;

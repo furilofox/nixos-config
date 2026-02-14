@@ -5,7 +5,7 @@
   inputs,
   ...
 }: let
-  directory = "/home/fabian/Pictures/wallpapers";
+  directory = "${config.home.homeDirectory}/Pictures/wallpapers";
   wallpaper = directory + "/" + "dark-magical-forest.png";
 in {
   imports = [
