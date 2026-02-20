@@ -26,6 +26,13 @@
       pull.rebase = false;
       push.autoSetupRemote = true;
       color.ui = "auto";
+
+      diff.algorithm = "histogram";
+      merge.conflictStyle = "zdiff3";
+      core.autocrlf = "input";
+      rerere.enable = true;
+      fetch.prune = true;
+      rebase.autoStash = true;
     };
   };
 }

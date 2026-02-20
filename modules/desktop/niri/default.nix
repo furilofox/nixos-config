@@ -74,11 +74,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    # Enable Niri from niri-flake
     programs.niri.enable = true;
     nixpkgs.overlays = [ inputs.niri.overlays.niri ];
 
-    # Display manager - greetd with tuigreet
+
     services.greetd = {
       enable = true;
       settings = {
@@ -89,25 +88,12 @@ in {
       };
     };
 
-    # Additional Wayland packages (niri-flake already provides xdg-desktop-portal-gnome)
     environment.systemPackages = with pkgs; [
       xdg-utils
-      
-      # Qt Wayland support
       qt6.qtwayland
       qt6.qtbase
     ];
 
-    # Enable noctalia shell if selected
     desktop.noctalia.enable = lib.mkIf (cfg.shell == "noctalia") true;
-
-    # Enforce Wayland session variables
-    environment.sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-      MOZ_ENABLE_WAYLAND = "1";
-      QT_QPA_PLATFORM = "wayland";
-      SDL_VIDEODRIVER = "wayland";
-      XDG_SESSION_TYPE = "wayland";
-    };
   };
 }

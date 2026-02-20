@@ -1,4 +1,4 @@
-# Utility environment settings
+# Utility options (values consumed by HM via osConfig)
 { config, lib, pkgs, ... }:
 {
   options.utils = {
@@ -12,13 +12,6 @@
       type = lib.types.str;
       default = "zen-beta";
       description = "Default web browser";
-    };
-  };
-
-  config = {
-    environment.variables = {
-      EDITOR = config.utils.defaultEditor;
-      BROWSER = config.utils.defaultBrowser;
     };
   };
 }
