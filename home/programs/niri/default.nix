@@ -55,11 +55,14 @@
       spawn-at-startup = [
         { command = [ "noctalia-shell" ]; }
         { command = [ "wl-paste" "--watch" "cliphist" "store" ]; }
+        { command = [ "discord" ]; }
+        { command = [ "zen-beta" ]; }
+        { command = [ "kdeconnect-indicator" ]; }
+        { command = [ "netbird-ui" ]; }
+        { command = [ "easyeffects" "--daemon" ]; }
       ];
-      
-      environment = {
-        DISPLAY = ":0";
-      };
+
+      xwayland-satellite.enable = true;
 
       prefer-no-csd = true;
       screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";

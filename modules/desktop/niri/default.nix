@@ -92,8 +92,13 @@ in {
       xdg-utils
       qt6.qtwayland
       qt6.qtbase
+      xwayland-satellite
+      xwayland
     ];
 
     desktop.noctalia.enable = lib.mkIf (cfg.shell == "noctalia") true;
+
+    # Disable niri-flake's built-in KDE polkit agent (we use polkit-gnome via Home Manager)
+    systemd.user.services.niri-flake-polkit.enable = false;
   };
 }

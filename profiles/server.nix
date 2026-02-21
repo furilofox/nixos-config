@@ -11,6 +11,9 @@
   # Server secrets
   secrets.enable = true;
 
+  # Mesh VPN (CLI only, no UI)
+  services.netbirdVpn.enable = true;
+
   # SSH enabled by default
   ssh.enable = true;
 }

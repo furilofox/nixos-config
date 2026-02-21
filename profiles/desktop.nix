@@ -33,11 +33,19 @@
 
   # Services
   services = {
-    mullvad.enable = true;
+    mullvad.enable = false;
     onepassword.enable = true;
     gnomeKeyring.enable = true;
+    kdeConnect.enable = true;
+    netbirdVpn = {
+      enable = true;
+      ui = true;
+    };
   };
 
   # Secrets
   secrets.enable = true;
+
+  # Enable udisks2 for udiskie (automount daemon)
+  services.udisks2.enable = true;
 }
