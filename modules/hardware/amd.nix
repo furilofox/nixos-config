@@ -22,8 +22,7 @@ in {
       [
         "amdgpu.dc=1"
         "amdgpu.dpm=1"
-        "amdgpu.ppfeaturemask=0xffffffff"
-        "amdgpu.mst=0"
+        "amdgpu.mst=1"
         "amdgpu.audio=0"
       ]
       ++ lib.optionals cfg.freesync [
@@ -32,16 +31,13 @@ in {
       ];
 
     hardware = {
-      amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
       graphics = {
         enable = true;
         enable32Bit = true;
-        extraPackages = with pkgs; [
-          rocmPackages.clr.icd
-          clinfo
-          vulkan-tools
-          vulkan-validation-layers
-        ];
+      };
+      amdgpu = {
+        initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
+        overdrive.enable = true;
       };
     };
 

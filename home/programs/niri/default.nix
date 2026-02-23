@@ -3,234 +3,243 @@
   lib,
   pkgs,
   inputs,
+  osConfig,
   ...
-}: {
-  programs.niri = {
-    settings = {
-      input = {
-        keyboard = {
-          xkb = {
-            layout = "de";
+}: let
+  cfg = osConfig.desktop.niri;
+in {
+  config = lib.mkIf cfg.enable {
+    programs.niri = {
+      settings = {
+        input = {
+          keyboard = {
+            xkb = {
+              layout = "de";
+            };
           };
-        };
-        touchpad = {
-          tap = true;
-          natural-scroll = true;
-        };
-        mouse = {};
-        trackpoint = {};
-        focus-follows-mouse.max-scroll-amount = "0%";
-      };
-
-      outputs = {
-        "eDP-1" = {
-          scale = 2.0;
-          position = {
-            x = 1280;
-            y = 0;
+          touchpad = {
+            tap = true;
+            natural-scroll = true;
           };
-          mode = {
-            width = 2880;
-            height = 1800;
-            refresh = 120.0;
-          };
+          mouse = {};
+          trackpoint = {};
+          focus-follows-mouse.max-scroll-amount = "0%";
         };
-      };
 
-      layout = {
-        gaps = 16;
-        center-focused-column = "never";
-        preset-column-widths = [
-          {proportion = 1.0 / 3.0;}
-          {proportion = 1.0 / 2.0;}
-          {proportion = 2.0 / 3.0;}
-        ];
-        default-column-width = {proportion = 0.5;};
-        focus-ring = {
-          width = 4;
-          active.color = "#7fc8ff";
-          inactive.color = "#505050";
-        };
-        border = {
-          enable = false;
-        };
-        shadow = {
-          enable = true;
-          softness = 30;
-          spread = 5;
-          offset = {
-            x = 0;
-            y = 5;
-          };
-          color = "#00000007";
-        };
-      };
+        outputs = builtins.listToAttrs (map (m: {
+            name = m.name;
+            value = {
+              mode = {
+                width = m.width;
+                height = m.height;
+                refresh = m.refresh + 0.0; # float conversion
+              };
+              position = let
+                pos = lib.splitString "," m.position;
+              in {
+                x = lib.toInt (builtins.elemAt pos 0);
+                y = lib.toInt (builtins.elemAt pos 1);
+              };
+              scale = m.scale;
+            };
+          })
+          osConfig.desktop.monitors);
 
-      spawn-at-startup = [
-        {command = ["noctalia-shell"];}
-        {command = ["wl-paste" "--watch" "cliphist" "store"];}
-        {command = ["discord"];}
-        {command = ["zen-beta"];}
-        {command = ["kdeconnect-indicator"];}
-        {command = ["netbird-ui"];}
-        {command = ["easyeffects" "--daemon"];}
-      ];
-
-      xwayland-satellite.enable = true;
-
-      prefer-no-csd = true;
-      screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
-
-      animations = {
-        slowdown = 3.0;
-      };
-
-      window-rules = [
-        {
-          matches = [{app-id = "^org\\.wezfurlong\\.wezterm$";}];
-          default-column-width = {};
-        }
-        {
-          matches = [
-            {
-              app-id = "firefox$";
-              title = "^Picture-in-Picture$";
-            }
+        layout = {
+          gaps = 16;
+          center-focused-column = "never";
+          preset-column-widths = [
+            {proportion = 1.0 / 3.0;}
+            {proportion = 1.0 / 2.0;}
+            {proportion = 2.0 / 3.0;}
           ];
-          open-floating = true;
-        }
-      ];
+          default-column-width = {proportion = 0.5;};
+          focus-ring = {
+            width = 4;
+            active.color = "#7fc8ff";
+            inactive.color = "#505050";
+          };
+          border = {
+            enable = false;
+          };
+          shadow = {
+            enable = true;
+            softness = 30;
+            spread = 5;
+            offset = {
+              x = 0;
+              y = 5;
+            };
+            color = "#00000007";
+          };
+        };
 
-      binds = {
-        # ── Core actions (matching Hyprland keybinds) ──────────────
-        "Mod+Q".action.spawn = "kitty"; # Terminal
-        "Mod+C".action.close-window = []; # Close window
-        "Mod+R".action.spawn = ["noctalia-shell" "ipc" "call" "launcher" "toggle"]; # App launcher
-        "Mod+E".action.spawn = "nautilus"; # File manager
-        "Mod+L".action.spawn = ["noctalia-shell" "ipc" "call" "lockScreen" "lock"]; # Lock screen
-        "Mod+V".action.toggle-window-floating = []; # Toggle floating
-        "Mod+M".action.quit = []; # Exit compositor
-        "Mod+Shift+Slash".action.show-hotkey-overlay = [];
+        spawn-at-startup = [
+          {command = ["noctalia-shell"];}
+          {command = ["wl-paste" "--watch" "cliphist" "store"];}
+          {command = ["discord"];}
+          {command = ["zen-beta"];}
+          {command = ["kdeconnect-indicator"];}
+          {command = ["netbird-ui"];}
+          {command = ["easyeffects" "--daemon"];}
+        ];
 
-        # ── Volume & brightness ───────────────────────────────────
-        "XF86AudioRaiseVolume".action.spawn = ["wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+"];
-        "XF86AudioLowerVolume".action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"];
-        "XF86AudioMute".action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
-        "XF86AudioMicMute".action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
-        "XF86MonBrightnessUp".action.spawn = ["brightnessctl" "-e4" "-n2" "set" "5%+"];
-        "XF86MonBrightnessDown".action.spawn = ["brightnessctl" "-e4" "-n2" "set" "5%-"];
+        xwayland-satellite.enable = true;
 
-        # ── Media controls ────────────────────────────────────────
-        "XF86AudioNext".action.spawn = ["playerctl" "next"];
-        "XF86AudioPrev".action.spawn = ["playerctl" "previous"];
-        "XF86AudioPlay".action.spawn = ["playerctl" "play-pause"];
-        "XF86AudioPause".action.spawn = ["playerctl" "play-pause"];
+        prefer-no-csd = true;
+        screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
 
-        # ── Focus (arrow keys) ────────────────────────────────────
-        "Mod+Left".action.focus-column-left = [];
-        "Mod+Down".action.focus-window-down = [];
-        "Mod+Up".action.focus-window-up = [];
-        "Mod+Right".action.focus-column-right = [];
+        animations = {
+          slowdown = 3.0;
+        };
 
-        # ── Move windows (Ctrl + arrows) ──────────────────────────
-        "Mod+Ctrl+Left".action.move-column-left = [];
-        "Mod+Ctrl+Down".action.move-window-down = [];
-        "Mod+Ctrl+Up".action.move-window-up = [];
-        "Mod+Ctrl+Right".action.move-column-right = [];
+        window-rules = [
+          {
+            matches = [{app-id = "^org\\.wezfurlong\\.wezterm$";}];
+            default-column-width = {};
+          }
+          {
+            matches = [
+              {
+                app-id = "firefox$";
+                title = "^Picture-in-Picture$";
+              }
+            ];
+            open-floating = true;
+          }
+        ];
 
-        # ── First/last column ─────────────────────────────────────
-        "Mod+Home".action.focus-column-first = [];
-        "Mod+End".action.focus-column-last = [];
-        "Mod+Ctrl+Home".action.move-column-to-first = [];
-        "Mod+Ctrl+End".action.move-column-to-last = [];
+        binds = {
+          # ── Core actions (matching Hyprland keybinds) ──────────────
+          "Mod+Q".action.spawn = "kitty"; # Terminal
+          "Mod+C".action.close-window = []; # Close window
+          "Mod+R".action.spawn = ["noctalia-shell" "ipc" "call" "launcher" "toggle"]; # App launcher
+          "Mod+E".action.spawn = "nautilus"; # File manager
+          "Mod+L".action.spawn = ["noctalia-shell" "ipc" "call" "lockScreen" "lock"]; # Lock screen
+          "Mod+V".action.toggle-window-floating = []; # Toggle floating
+          "Mod+M".action.quit = []; # Exit compositor
+          "Mod+Shift+Slash".action.show-hotkey-overlay = [];
 
-        # ── Monitor focus ─────────────────────────────────────────
-        "Mod+Shift+Left".action.focus-monitor-left = [];
-        "Mod+Shift+Down".action.focus-monitor-down = [];
-        "Mod+Shift+Up".action.focus-monitor-up = [];
-        "Mod+Shift+Right".action.focus-monitor-right = [];
+          # ── Volume & brightness ───────────────────────────────────
+          "XF86AudioRaiseVolume".action.spawn = ["wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+"];
+          "XF86AudioLowerVolume".action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"];
+          "XF86AudioMute".action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
+          "XF86AudioMicMute".action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
+          "XF86MonBrightnessUp".action.spawn = ["brightnessctl" "-e4" "-n2" "set" "5%+"];
+          "XF86MonBrightnessDown".action.spawn = ["brightnessctl" "-e4" "-n2" "set" "5%-"];
 
-        # ── Move to monitor ───────────────────────────────────────
-        "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = [];
-        "Mod+Shift+Ctrl+Down".action.move-column-to-monitor-down = [];
-        "Mod+Shift+Ctrl+Up".action.move-column-to-monitor-up = [];
-        "Mod+Shift+Ctrl+Right".action.move-column-to-monitor-right = [];
+          # ── Media controls ────────────────────────────────────────
+          "XF86AudioNext".action.spawn = ["playerctl" "next"];
+          "XF86AudioPrev".action.spawn = ["playerctl" "previous"];
+          "XF86AudioPlay".action.spawn = ["playerctl" "play-pause"];
+          "XF86AudioPause".action.spawn = ["playerctl" "play-pause"];
 
-        # ── Workspace navigation ──────────────────────────────────
-        "Mod+Page_Down".action.focus-workspace-down = [];
-        "Mod+Page_Up".action.focus-workspace-up = [];
-        "Mod+Ctrl+Page_Down".action.move-column-to-workspace-down = [];
-        "Mod+Ctrl+Page_Up".action.move-column-to-workspace-up = [];
-        "Mod+Shift+Page_Down".action.move-workspace-down = [];
-        "Mod+Shift+Page_Up".action.move-workspace-up = [];
+          # ── Focus (arrow keys) ────────────────────────────────────
+          "Mod+Left".action.focus-column-left = [];
+          "Mod+Down".action.focus-window-down = [];
+          "Mod+Up".action.focus-window-up = [];
+          "Mod+Right".action.focus-column-right = [];
 
-        # ── Scroll wheel workspace/column ─────────────────────────
-        "Mod+WheelScrollDown".action.focus-workspace-down = [];
-        "Mod+WheelScrollUp".action.focus-workspace-up = [];
-        "Mod+Ctrl+WheelScrollDown".action.move-column-to-workspace-down = [];
-        "Mod+Ctrl+WheelScrollUp".action.move-column-to-workspace-up = [];
-        "Mod+WheelScrollRight".action.focus-column-right = [];
-        "Mod+WheelScrollLeft".action.focus-column-left = [];
-        "Mod+Ctrl+WheelScrollRight".action.move-column-right = [];
-        "Mod+Ctrl+WheelScrollLeft".action.move-column-left = [];
-        "Mod+Shift+WheelScrollDown".action.focus-column-right = [];
-        "Mod+Shift+WheelScrollUp".action.focus-column-left = [];
-        "Mod+Ctrl+Shift+WheelScrollDown".action.move-column-right = [];
-        "Mod+Ctrl+Shift+WheelScrollUp".action.move-column-left = [];
+          # ── Move windows (Ctrl + arrows) ──────────────────────────
+          "Mod+Ctrl+Left".action.move-column-left = [];
+          "Mod+Ctrl+Down".action.move-window-down = [];
+          "Mod+Ctrl+Up".action.move-window-up = [];
+          "Mod+Ctrl+Right".action.move-column-right = [];
 
-        # ── Workspaces 1-9 (matching Hyprland) ────────────────────
-        "Mod+1".action.focus-workspace = 1;
-        "Mod+2".action.focus-workspace = 2;
-        "Mod+3".action.focus-workspace = 3;
-        "Mod+4".action.focus-workspace = 4;
-        "Mod+5".action.focus-workspace = 5;
-        "Mod+6".action.focus-workspace = 6;
-        "Mod+7".action.focus-workspace = 7;
-        "Mod+8".action.focus-workspace = 8;
-        "Mod+9".action.focus-workspace = 9;
+          # ── First/last column ─────────────────────────────────────
+          "Mod+Home".action.focus-column-first = [];
+          "Mod+End".action.focus-column-last = [];
+          "Mod+Ctrl+Home".action.move-column-to-first = [];
+          "Mod+Ctrl+End".action.move-column-to-last = [];
 
-        # ── Move to workspace 1-9 (Mod+Shift, matching Hyprland) ──
-        "Mod+Shift+1".action.move-column-to-workspace = 1;
-        "Mod+Shift+2".action.move-column-to-workspace = 2;
-        "Mod+Shift+3".action.move-column-to-workspace = 3;
-        "Mod+Shift+4".action.move-column-to-workspace = 4;
-        "Mod+Shift+5".action.move-column-to-workspace = 5;
-        "Mod+Shift+6".action.move-column-to-workspace = 6;
-        "Mod+Shift+7".action.move-column-to-workspace = 7;
-        "Mod+Shift+8".action.move-column-to-workspace = 8;
-        "Mod+Shift+9".action.move-column-to-workspace = 9;
+          # ── Monitor focus ─────────────────────────────────────────
+          "Mod+Shift+Left".action.focus-monitor-left = [];
+          "Mod+Shift+Down".action.focus-monitor-down = [];
+          "Mod+Shift+Up".action.focus-monitor-up = [];
+          "Mod+Shift+Right".action.focus-monitor-right = [];
 
-        # ── Column/window management ──────────────────────────────
-        "Mod+BracketLeft".action.consume-or-expel-window-left = [];
-        "Mod+BracketRight".action.consume-or-expel-window-right = [];
-        "Mod+Comma".action.consume-window-into-column = [];
-        "Mod+Period".action.expel-window-from-column = [];
+          # ── Move to monitor ───────────────────────────────────────
+          "Mod+Shift+Ctrl+Left".action.move-column-to-monitor-left = [];
+          "Mod+Shift+Ctrl+Down".action.move-column-to-monitor-down = [];
+          "Mod+Shift+Ctrl+Up".action.move-column-to-monitor-up = [];
+          "Mod+Shift+Ctrl+Right".action.move-column-to-monitor-right = [];
 
-        # ── Resize ────────────────────────────────────────────────
-        "Mod+P".action.switch-preset-column-width = [];
-        "Mod+Shift+P".action.switch-preset-window-height = [];
-        "Mod+Ctrl+P".action.reset-window-height = [];
-        "Mod+F".action.maximize-column = [];
-        "Mod+Shift+F".action.fullscreen-window = [];
-        "Mod+Ctrl+F".action.expand-column-to-available-width = [];
+          # ── Workspace navigation ──────────────────────────────────
+          "Mod+Page_Down".action.focus-workspace-down = [];
+          "Mod+Page_Up".action.focus-workspace-up = [];
+          "Mod+Ctrl+Page_Down".action.move-column-to-workspace-down = [];
+          "Mod+Ctrl+Page_Up".action.move-column-to-workspace-up = [];
+          "Mod+Shift+Page_Down".action.move-workspace-down = [];
+          "Mod+Shift+Page_Up".action.move-workspace-up = [];
 
-        "Mod+Minus".action.set-column-width = "-10%";
-        "Mod+Equal".action.set-column-width = "+10%";
-        "Mod+Shift+Minus".action.set-window-height = "-10%";
-        "Mod+Shift+Equal".action.set-window-height = "+10%";
+          # ── Scroll wheel workspace/column ─────────────────────────
+          "Mod+WheelScrollDown".action.focus-workspace-down = [];
+          "Mod+WheelScrollUp".action.focus-workspace-up = [];
+          "Mod+Ctrl+WheelScrollDown".action.move-column-to-workspace-down = [];
+          "Mod+Ctrl+WheelScrollUp".action.move-column-to-workspace-up = [];
+          "Mod+WheelScrollRight".action.focus-column-right = [];
+          "Mod+WheelScrollLeft".action.focus-column-left = [];
+          "Mod+Ctrl+WheelScrollRight".action.move-column-right = [];
+          "Mod+Ctrl+WheelScrollLeft".action.move-column-left = [];
+          "Mod+Shift+WheelScrollDown".action.focus-column-right = [];
+          "Mod+Shift+WheelScrollUp".action.focus-column-left = [];
+          "Mod+Ctrl+Shift+WheelScrollDown".action.move-column-right = [];
+          "Mod+Ctrl+Shift+WheelScrollUp".action.move-column-left = [];
 
-        # ── Floating & tabs ───────────────────────────────────────
-        "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [];
-        "Mod+W".action.toggle-column-tabbed-display = [];
+          # ── Workspaces 1-9 (matching Hyprland) ────────────────────
+          "Mod+1".action.focus-workspace = 1;
+          "Mod+2".action.focus-workspace = 2;
+          "Mod+3".action.focus-workspace = 3;
+          "Mod+4".action.focus-workspace = 4;
+          "Mod+5".action.focus-workspace = 5;
+          "Mod+6".action.focus-workspace = 6;
+          "Mod+7".action.focus-workspace = 7;
+          "Mod+8".action.focus-workspace = 8;
+          "Mod+9".action.focus-workspace = 9;
 
-        # ── Screenshots (matching Hyprland) ───────────────────────
-        "Print".action.screenshot = []; # Area screenshot
-        "Ctrl+Print".action.screenshot-screen = []; # Full screen
-        "Alt+Print".action.screenshot-window = []; # Window
+          # ── Move to workspace 1-9 (Mod+Shift, matching Hyprland) ──
+          "Mod+Shift+1".action.move-column-to-workspace = 1;
+          "Mod+Shift+2".action.move-column-to-workspace = 2;
+          "Mod+Shift+3".action.move-column-to-workspace = 3;
+          "Mod+Shift+4".action.move-column-to-workspace = 4;
+          "Mod+Shift+5".action.move-column-to-workspace = 5;
+          "Mod+Shift+6".action.move-column-to-workspace = 6;
+          "Mod+Shift+7".action.move-column-to-workspace = 7;
+          "Mod+Shift+8".action.move-column-to-workspace = 8;
+          "Mod+Shift+9".action.move-column-to-workspace = 9;
 
-        # ── Session ───────────────────────────────────────────────
-        "Ctrl+Alt+Delete".action.quit = [];
-        "Mod+Shift+O".action.power-off-monitors = [];
+          # ── Column/window management ──────────────────────────────
+          "Mod+BracketLeft".action.consume-or-expel-window-left = [];
+          "Mod+BracketRight".action.consume-or-expel-window-right = [];
+          "Mod+Comma".action.consume-window-into-column = [];
+          "Mod+Period".action.expel-window-from-column = [];
+
+          # ── Resize ────────────────────────────────────────────────
+          "Mod+P".action.switch-preset-column-width = [];
+          "Mod+Shift+P".action.switch-preset-window-height = [];
+          "Mod+Ctrl+P".action.reset-window-height = [];
+          "Mod+F".action.maximize-column = [];
+          "Mod+Shift+F".action.fullscreen-window = [];
+          "Mod+Ctrl+F".action.expand-column-to-available-width = [];
+
+          "Mod+Minus".action.set-column-width = "-10%";
+          "Mod+Equal".action.set-column-width = "+10%";
+          "Mod+Shift+Minus".action.set-window-height = "-10%";
+          "Mod+Shift+Equal".action.set-window-height = "+10%";
+
+          # ── Floating & tabs ───────────────────────────────────────
+          "Mod+Shift+V".action.switch-focus-between-floating-and-tiling = [];
+          "Mod+W".action.toggle-column-tabbed-display = [];
+
+          # ── Screenshots (matching Hyprland) ───────────────────────
+          "Print".action.screenshot = []; # Area screenshot
+          "Ctrl+Print".action.screenshot-screen = []; # Full screen
+          "Alt+Print".action.screenshot-window = []; # Window
+
+          # ── Session ───────────────────────────────────────────────
+          "Ctrl+Alt+Delete".action.quit = [];
+          "Mod+Shift+O".action.power-off-monitors = [];
+        };
       };
     };
   };

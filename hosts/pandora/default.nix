@@ -19,7 +19,7 @@
     freesync = true;
   };
 
-  desktop.niri.monitors = [
+  desktop.monitors = [
     {
       name = "HDMI-A-2";
       width = 1920;

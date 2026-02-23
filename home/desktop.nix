@@ -13,6 +13,7 @@
     ./programs/kitty
     ./programs/ssh
     ./programs/niri
+    ./programs/hyprland
     ./programs/brave
     ./programs/quickshell
     ./system/mime

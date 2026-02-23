@@ -22,7 +22,7 @@ in {
   config = lib.mkIf cfg.enable {
     programs.gamescope = {
       enable = true;
-      capSysNice = true;
+      capSysNice = false;
     };
 
     programs.steam = lib.mkIf cfg.steam.enable {

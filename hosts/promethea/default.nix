@@ -14,7 +14,7 @@
   hostname = "promethea";
   username = "fabian";
 
-  desktop.niri.monitors = [
+  desktop.monitors = [
     {
       name = "eDP-1";
       width = 1920;
