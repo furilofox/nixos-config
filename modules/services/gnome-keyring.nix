@@ -1,6 +1,10 @@
 # GNOME Keyring module
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.services.gnomeKeyring;
 in {
   options.services.gnomeKeyring = {

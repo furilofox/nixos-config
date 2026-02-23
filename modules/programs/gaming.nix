@@ -1,11 +1,15 @@
 # Gaming module
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.programs.gaming;
 in {
   options.programs.gaming = {
     enable = lib.mkEnableOption "Gaming support (Steam, Gamescope, etc.)";
-    
+
     steam = {
       enable = lib.mkOption {
         type = lib.types.bool;
@@ -26,7 +30,7 @@ in {
       remotePlay.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
       gamescopeSession.enable = true;
-      extraCompatPackages = with pkgs; [ proton-ge-bin ];
+      extraCompatPackages = with pkgs; [proton-ge-bin];
     };
 
     programs.gamemode.enable = true;

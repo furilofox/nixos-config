@@ -1,6 +1,5 @@
 # Service modules
-{ ... }:
-{
+{...}: {
   imports = [
     ./mullvad.nix
     ./onepassword.nix

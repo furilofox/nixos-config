@@ -1,6 +1,11 @@
 # Promethea - Laptop
-{ config, lib, pkgs, inputs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ../../profiles/desktop.nix
     ./hardware-configuration.nix
@@ -10,7 +15,13 @@
   username = "fabian";
 
   desktop.niri.monitors = [
-    { name = "eDP-1"; width = 1920; height = 1080; refresh = 60; scale = 1.0; }
+    {
+      name = "eDP-1";
+      width = 1920;
+      height = 1080;
+      refresh = 60;
+      scale = 1.0;
+    }
   ];
 
   hardware.sensor.iio.enable = true;

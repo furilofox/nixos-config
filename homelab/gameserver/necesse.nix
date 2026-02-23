@@ -1,16 +1,17 @@
-{ config, pkgs, lib, ... }:
-
-with lib;
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+with lib; let
   cfg = config.services.necesse-server;
   # Necesse requires Java 17+. We define it here to pass it explicitly.
   jdk = pkgs.jdk17;
-  
+
   # Necesse App ID
   appId = "1169370";
-in
-{
+in {
   options.services.necesse-server = {
     enable = mkEnableOption "Necesse Dedicated Server";
 
@@ -53,20 +54,20 @@ in
       group = "necesse";
       description = "Necesse Server service user";
     };
-    users.groups.necesse = { };
+    users.groups.necesse = {};
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
-      allowedUDPPorts = [ cfg.port ];
+      allowedTCPPorts = [cfg.port];
+      allowedUDPPorts = [cfg.port];
     };
 
     systemd.services.necesse-server = {
       description = "Necesse Dedicated Server";
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-      
+      wants = ["network-online.target"];
+      after = ["network-online.target"];
+
       # --- FIX: This ensures the service starts on boot ---
-      wantedBy = [ "multi-user.target" ]; 
+      wantedBy = ["multi-user.target"];
 
       serviceConfig = {
         User = "necesse";
@@ -75,7 +76,7 @@ in
         Restart = "always";
         RestartSec = "10s";
         # Increase timeout for the first SteamCMD download
-        TimeoutStartSec = "300"; 
+        TimeoutStartSec = "300";
       };
 
       preStart = ''

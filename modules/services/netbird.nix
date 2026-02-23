@@ -1,6 +1,10 @@
 # Netbird - WireGuard-based mesh VPN
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.services.netbirdVpn;
 in {
   options.services.netbirdVpn = {
@@ -18,6 +22,6 @@ in {
     services.netbird.enable = true;
 
     environment.systemPackages =
-      lib.optionals cfg.ui [ pkgs.netbird-ui ];
+      lib.optionals cfg.ui [pkgs.netbird-ui];
   };
 }

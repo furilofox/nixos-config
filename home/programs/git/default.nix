@@ -1,8 +1,5 @@
 # Git configuration
-{
-  osConfig,
-  ...
-}: {
+{osConfig, ...}: {
   programs.git = {
     enable = true;
     ignores = [

@@ -1,13 +1,17 @@
 # SSH configuration module
-{ config, lib, pkgs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   options.ssh = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
       description = "Enable OpenSSH server";
     };
-    
+
     permitRootLogin = lib.mkOption {
       type = lib.types.str;
       default = "yes";
@@ -21,7 +25,7 @@
       settings = {
         KbdInteractiveAuthentication = false;
         PermitRootLogin = config.ssh.permitRootLogin;
-        AllowUsers = [ config.username ];
+        AllowUsers = [config.username];
         PasswordAuthentication = false;
         PubkeyAuthentication = true;
       };
@@ -37,15 +41,15 @@
       startAgent = true;
       knownHosts = {
         pandora = {
-          extraHostNames = [ "pandora" "192.168.20.21" ];
+          extraHostNames = ["pandora" "192.168.20.21"];
           publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3akVuki5R7QbCLl5+l9l0IpxapzEOJ6acAwQBwxYcm fabian@pandora";
         };
         athenas = {
-          extraHostNames = [ "athenas" "192.168.20.10" ];
+          extraHostNames = ["athenas" "192.168.20.10"];
           publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+VEZW7j6KqZzkzQmVWm7r8+hwcO50Z90PzRkkAs9UM fabian@athenas";
         };
         promethea = {
-          extraHostNames = [ "promethea" "192.168.20.22" ];
+          extraHostNames = ["promethea" "192.168.20.22"];
           publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILfeLjwq/Yh3WSXg+5XMlurPguOFh5T7yo7UaiPiwbIc fabian@promethea";
         };
       };

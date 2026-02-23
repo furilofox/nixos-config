@@ -1,11 +1,14 @@
 # Bluetooth module
-{ config, lib, ... }:
-let
+{
+  config,
+  lib,
+  ...
+}: let
   cfg = config.bluetooth;
 in {
   options.bluetooth = {
     enable = lib.mkEnableOption "Bluetooth support";
-    
+
     powerOnBoot = lib.mkOption {
       type = lib.types.bool;
       default = true;

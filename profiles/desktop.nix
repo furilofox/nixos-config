@@ -1,6 +1,10 @@
 # Desktop Profile - Shared configuration for pandora (desktop) and promethea (laptop)
-{ config, lib, pkgs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   # Enable desktop features
   audio = {
     enable = true;

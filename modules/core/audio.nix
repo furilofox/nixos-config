@@ -1,6 +1,9 @@
 # Audio module with PipeWire configuration
-{ config, lib, ... }:
-let
+{
+  config,
+  lib,
+  ...
+}: let
   cfg = config.audio;
 in {
   options.audio = {
@@ -39,7 +42,7 @@ in {
         };
         "99-input-denoising" = {
           "context.properties" = {
-            "default.clock.allowed-rates" = [ 44100 48000 88200 96000 ];
+            "default.clock.allowed-rates" = [44100 48000 88200 96000];
           };
         };
       };

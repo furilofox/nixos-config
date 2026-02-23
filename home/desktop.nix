@@ -94,7 +94,7 @@
       nixu = "nix flake update";
       nixg = "nh clean --keep 5 --keep-since 5d";
     };
-    historyControl = [ "ignoredups" "erasedups" ];
+    historyControl = ["ignoredups" "erasedups"];
     historySize = 50000;
     historyFileSize = 100000;
   };

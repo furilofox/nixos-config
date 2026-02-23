@@ -1,14 +1,17 @@
 # Locale and timezone configuration
-{ config, lib, ... }:
-let
+{
+  config,
+  lib,
+  ...
+}: let
   cfg = config.locale;
 in {
   # Locale options are defined in modules/default.nix
   # This module applies those settings
-  
+
   config = {
     time.timeZone = cfg.timeZone;
-    
+
     i18n.defaultLocale = cfg.defaultLocale;
     i18n.extraLocaleSettings = {
       LC_ADDRESS = cfg.extraLocale;
@@ -21,9 +24,9 @@ in {
       LC_TELEPHONE = cfg.extraLocale;
       LC_TIME = cfg.extraLocale;
     };
-    
+
     console.keyMap = cfg.keyboardLayout;
-    
+
     services.xserver = {
       xkb.layout = cfg.keyboardLayout;
       xkb.variant = "";

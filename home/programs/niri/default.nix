@@ -1,6 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
   programs.niri = {
     settings = {
       input = {
@@ -21,8 +25,15 @@
       outputs = {
         "eDP-1" = {
           scale = 2.0;
-          position = { x = 1280; y = 0; };
-          mode = { width = 2880; height = 1800; refresh = 120.0; };
+          position = {
+            x = 1280;
+            y = 0;
+          };
+          mode = {
+            width = 2880;
+            height = 1800;
+            refresh = 120.0;
+          };
         };
       };
 
@@ -30,11 +41,11 @@
         gaps = 16;
         center-focused-column = "never";
         preset-column-widths = [
-          { proportion = 1.0 / 3.0; }
-          { proportion = 1.0 / 2.0; }
-          { proportion = 2.0 / 3.0; }
+          {proportion = 1.0 / 3.0;}
+          {proportion = 1.0 / 2.0;}
+          {proportion = 2.0 / 3.0;}
         ];
-        default-column-width = { proportion = 0.5; };
+        default-column-width = {proportion = 0.5;};
         focus-ring = {
           width = 4;
           active.color = "#7fc8ff";
@@ -47,19 +58,22 @@
           enable = true;
           softness = 30;
           spread = 5;
-          offset = { x = 0; y = 5; };
+          offset = {
+            x = 0;
+            y = 5;
+          };
           color = "#00000007";
         };
       };
 
       spawn-at-startup = [
-        { command = [ "noctalia-shell" ]; }
-        { command = [ "wl-paste" "--watch" "cliphist" "store" ]; }
-        { command = [ "discord" ]; }
-        { command = [ "zen-beta" ]; }
-        { command = [ "kdeconnect-indicator" ]; }
-        { command = [ "netbird-ui" ]; }
-        { command = [ "easyeffects" "--daemon" ]; }
+        {command = ["noctalia-shell"];}
+        {command = ["wl-paste" "--watch" "cliphist" "store"];}
+        {command = ["discord"];}
+        {command = ["zen-beta"];}
+        {command = ["kdeconnect-indicator"];}
+        {command = ["netbird-ui"];}
+        {command = ["easyeffects" "--daemon"];}
       ];
 
       xwayland-satellite.enable = true;
@@ -70,41 +84,46 @@
       animations = {
         slowdown = 3.0;
       };
-      
+
       window-rules = [
         {
-          matches = [{ app-id = "^org\\.wezfurlong\\.wezterm$"; }];
+          matches = [{app-id = "^org\\.wezfurlong\\.wezterm$";}];
           default-column-width = {};
         }
         {
-          matches = [{ app-id = "firefox$"; title = "^Picture-in-Picture$"; }];
+          matches = [
+            {
+              app-id = "firefox$";
+              title = "^Picture-in-Picture$";
+            }
+          ];
           open-floating = true;
         }
       ];
 
       binds = {
         # ── Core actions (matching Hyprland keybinds) ──────────────
-        "Mod+Q".action.spawn = "kitty";                                              # Terminal
-        "Mod+C".action.close-window = [];                                            # Close window
-        "Mod+R".action.spawn = ["noctalia-shell" "ipc" "call" "launcher" "toggle"];   # App launcher
-        "Mod+E".action.spawn = "nautilus";                                           # File manager
-        "Mod+L".action.spawn = ["noctalia-shell" "ipc" "call" "lockScreen" "lock"];  # Lock screen
-        "Mod+V".action.toggle-window-floating = [];                                  # Toggle floating
-        "Mod+M".action.quit = [];                                                    # Exit compositor
+        "Mod+Q".action.spawn = "kitty"; # Terminal
+        "Mod+C".action.close-window = []; # Close window
+        "Mod+R".action.spawn = ["noctalia-shell" "ipc" "call" "launcher" "toggle"]; # App launcher
+        "Mod+E".action.spawn = "nautilus"; # File manager
+        "Mod+L".action.spawn = ["noctalia-shell" "ipc" "call" "lockScreen" "lock"]; # Lock screen
+        "Mod+V".action.toggle-window-floating = []; # Toggle floating
+        "Mod+M".action.quit = []; # Exit compositor
         "Mod+Shift+Slash".action.show-hotkey-overlay = [];
 
         # ── Volume & brightness ───────────────────────────────────
         "XF86AudioRaiseVolume".action.spawn = ["wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+"];
         "XF86AudioLowerVolume".action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"];
-        "XF86AudioMute".action.spawn        = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
-        "XF86AudioMicMute".action.spawn     = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
-        "XF86MonBrightnessUp".action.spawn  = ["brightnessctl" "-e4" "-n2" "set" "5%+"];
+        "XF86AudioMute".action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
+        "XF86AudioMicMute".action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
+        "XF86MonBrightnessUp".action.spawn = ["brightnessctl" "-e4" "-n2" "set" "5%+"];
         "XF86MonBrightnessDown".action.spawn = ["brightnessctl" "-e4" "-n2" "set" "5%-"];
 
         # ── Media controls ────────────────────────────────────────
-        "XF86AudioNext".action.spawn  = ["playerctl" "next"];
-        "XF86AudioPrev".action.spawn  = ["playerctl" "previous"];
-        "XF86AudioPlay".action.spawn  = ["playerctl" "play-pause"];
+        "XF86AudioNext".action.spawn = ["playerctl" "next"];
+        "XF86AudioPrev".action.spawn = ["playerctl" "previous"];
+        "XF86AudioPlay".action.spawn = ["playerctl" "play-pause"];
         "XF86AudioPause".action.spawn = ["playerctl" "play-pause"];
 
         # ── Focus (arrow keys) ────────────────────────────────────
@@ -205,15 +224,14 @@
         "Mod+W".action.toggle-column-tabbed-display = [];
 
         # ── Screenshots (matching Hyprland) ───────────────────────
-        "Print".action.screenshot = [];                                              # Area screenshot
-        "Ctrl+Print".action.screenshot-screen = [];                                  # Full screen
-        "Alt+Print".action.screenshot-window = [];                                   # Window
+        "Print".action.screenshot = []; # Area screenshot
+        "Ctrl+Print".action.screenshot-screen = []; # Full screen
+        "Alt+Print".action.screenshot-window = []; # Window
 
         # ── Session ───────────────────────────────────────────────
         "Ctrl+Alt+Delete".action.quit = [];
         "Mod+Shift+O".action.power-off-monitors = [];
       };
-
     };
   };
 }

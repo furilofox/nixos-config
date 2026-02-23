@@ -1,6 +1,12 @@
 # Unified module system - imports all modules and defines global options
-{ config, lib, pkgs, inputs, hostname, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  hostname,
+  ...
+}: {
   imports = [
     ./core
     ./desktop

@@ -1,6 +1,11 @@
 # Browser options (packages managed by HM)
-{ config, lib, pkgs, inputs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   cfg = config.programs.browsers;
 in {
   options.programs.browsers = {

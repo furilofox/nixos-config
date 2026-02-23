@@ -1,25 +1,72 @@
 # Nix configuration and package management
-{ config, lib, pkgs, inputs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
   # Allow rebuild without password for primary user
   security.sudo.extraRules = [
     {
-      users = [ config.username ];
+      users = [config.username];
       commands = [
-        { command = "/run/current-system/sw/bin/nixos-rebuild"; options = [ "NOPASSWD" ]; }
-        { command = "/run/current-system/sw/bin/nh"; options = [ "NOPASSWD" ]; }
-        { command = "/nix/store/*/bin/nixos-rebuild"; options = [ "NOPASSWD" ]; }
-        { command = "/nix/store/*/bin/nh"; options = [ "NOPASSWD" ]; }
-        { command = "/run/current-system/sw/bin/nix"; options = [ "NOPASSWD" ]; }
-        { command = "/nix/store/*/bin/nix"; options = [ "NOPASSWD" ]; }
-        { command = "/run/current-system/sw/bin/nix-env"; options = [ "NOPASSWD" ]; }
-        { command = "/nix/store/*/bin/nix-env"; options = [ "NOPASSWD" ]; }
-        { command = "/run/current-system/sw/bin/systemctl"; options = [ "NOPASSWD" ]; }
-        { command = "/nix/store/*/bin/systemctl"; options = [ "NOPASSWD" ]; }
-        { command = "/nix/store/*/sw/bin/nix-env"; options = [ "NOPASSWD" ]; }
-        { command = "/nix/store/*/activate"; options = [ "NOPASSWD" ]; }
-        { command = "/nix/store/*/bin/switch-to-configuration"; options = [ "NOPASSWD" ]; }
-        { command = "/nix/store/*/specialisation/*/bin/switch-to-configuration"; options = [ "NOPASSWD" ]; }
+        {
+          command = "/run/current-system/sw/bin/nixos-rebuild";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/run/current-system/sw/bin/nh";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/nixos-rebuild";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/nh";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/run/current-system/sw/bin/nix";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/nix";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/run/current-system/sw/bin/nix-env";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/nix-env";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/run/current-system/sw/bin/systemctl";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/systemctl";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/sw/bin/nix-env";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/activate";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/bin/switch-to-configuration";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/nix/store/*/specialisation/*/bin/switch-to-configuration";
+          options = ["NOPASSWD"];
+        }
       ];
     }
   ];
@@ -35,7 +82,7 @@
   programs.command-not-found.enable = false;
 
   nix = {
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
     channel.enable = false;
 
     extraOptions = ''
@@ -44,9 +91,9 @@
 
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
 
-      trusted-users = [ "root" config.username ];
+      trusted-users = ["root" config.username];
 
       substituters = [
         "https://cache.nixos.org?priority=10"
@@ -81,7 +128,7 @@
     enable = true;
     flake = "${config.configDirectory}";
     dates = "daily";
-    flags = [ "--update-input" "nixpkgs" "--commit-lock-file" ];
+    flags = ["--update-input" "nixpkgs" "--commit-lock-file"];
     allowReboot = false;
   };
 }

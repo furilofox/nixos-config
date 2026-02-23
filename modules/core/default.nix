@@ -1,6 +1,5 @@
 # Core system modules
-{ ... }:
-{
+{...}: {
   imports = [
     ./audio.nix
     ./bluetooth.nix

@@ -1,15 +1,20 @@
 # Niri scrollable-tiling Wayland compositor module
-{ config, lib, pkgs, inputs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
   cfg = config.desktop.niri;
 in {
-  imports = [ inputs.niri.nixosModules.niri ];
+  imports = [inputs.niri.nixosModules.niri];
 
   options.desktop.niri = {
     enable = lib.mkEnableOption "Niri scrollable-tiling Wayland compositor";
-    
+
     shell = lib.mkOption {
-      type = lib.types.enum [ "noctalia" "waybar" "none" ];
+      type = lib.types.enum ["noctalia" "waybar" "none"];
       default = "noctalia";
       description = "Desktop shell to use with Niri";
     };
@@ -20,7 +25,7 @@ in {
         default = 8;
         description = "Gap between windows in pixels";
       };
-      
+
       border = {
         width = lib.mkOption {
           type = lib.types.int;
@@ -33,31 +38,31 @@ in {
     monitors = lib.mkOption {
       type = lib.types.listOf (lib.types.submodule {
         options = {
-          name = lib.mkOption { 
-            type = lib.types.str; 
+          name = lib.mkOption {
+            type = lib.types.str;
             description = "Monitor output name (e.g., DP-1, HDMI-A-1)";
           };
-          width = lib.mkOption { 
-            type = lib.types.int; 
+          width = lib.mkOption {
+            type = lib.types.int;
             description = "Resolution width";
           };
-          height = lib.mkOption { 
-            type = lib.types.int; 
+          height = lib.mkOption {
+            type = lib.types.int;
             description = "Resolution height";
           };
-          refresh = lib.mkOption { 
-            type = lib.types.int; 
-            default = 60; 
+          refresh = lib.mkOption {
+            type = lib.types.int;
+            default = 60;
             description = "Refresh rate in Hz";
           };
-          position = lib.mkOption { 
-            type = lib.types.str; 
-            default = "0,0"; 
+          position = lib.mkOption {
+            type = lib.types.str;
+            default = "0,0";
             description = "Position as x,y";
           };
-          scale = lib.mkOption { 
-            type = lib.types.float; 
-            default = 1.0; 
+          scale = lib.mkOption {
+            type = lib.types.float;
+            default = 1.0;
             description = "Display scale factor";
           };
         };
@@ -75,8 +80,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     programs.niri.enable = true;
-    nixpkgs.overlays = [ inputs.niri.overlays.niri ];
-
+    nixpkgs.overlays = [inputs.niri.overlays.niri];
 
     services.greetd = {
       enable = true;

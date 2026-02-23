@@ -1,6 +1,10 @@
 # 1Password module
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.services.onepassword;
 in {
   options.services.onepassword = {
@@ -17,16 +21,16 @@ in {
       _1password.enable = true;
       _1password-gui = {
         enable = true;
-        polkitPolicyOwners = [ config.username ];
+        polkitPolicyOwners = [config.username];
       };
     };
-    
+
     security.polkit.enable = true;
 
     systemd.user.services."1password-gui" = {
       enable = true;
       description = "1Password GUI";
-      wantedBy = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
       serviceConfig = {
         ExecStart = "${pkgs._1password-gui}/bin/1password --silent";
         Restart = "on-failure";

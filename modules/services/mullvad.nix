@@ -1,6 +1,10 @@
 # Mullvad VPN module
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.services.mullvad;
 in {
   options.services.mullvad = {
@@ -12,7 +16,7 @@ in {
       enable = true;
       package = pkgs.mullvad-vpn;
     };
-    
+
     environment.systemPackages = [
       (pkgs.makeAutostartItem {
         name = "mullvad-vpn";

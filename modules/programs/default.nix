@@ -1,6 +1,5 @@
 # Program modules
-{ ... }:
-{
+{...}: {
   imports = [
     ./gaming.nix
     ./development.nix

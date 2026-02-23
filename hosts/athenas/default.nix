@@ -1,15 +1,20 @@
 # Athenas - Server Machine
 # Uses server profile with homelab services
-{ config, lib, pkgs, inputs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     # Server profile
     ../../profiles/server.nix
-    
+
     # Homelab services (existing)
     ../../homelab
     ../../homelab/gameserver/necesse.nix
-    
+
     # Hardware configuration
     ./hardware-configuration.nix
   ];
@@ -70,17 +75,19 @@
 
   # Network configuration
   networking = {
-    nameservers = [ "127.0.0.1" ];
+    nameservers = ["127.0.0.1"];
     defaultGateway = "192.168.20.1";
     interfaces.enp2s0 = {
-      ipv4.addresses = [{
-        address = "192.168.20.10";
-        prefixLength = 24;
-      }];
+      ipv4.addresses = [
+        {
+          address = "192.168.20.10";
+          prefixLength = 24;
+        }
+      ];
     };
     firewall = {
-      allowedTCPPorts = [ 80 443 53 ];
-      allowedUDPPorts = [ 53 67 68 ];
+      allowedTCPPorts = [80 443 53];
+      allowedUDPPorts = [53 67 68];
     };
   };
 

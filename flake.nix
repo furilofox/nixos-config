@@ -47,12 +47,15 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }:
-  let
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    ...
+  }: let
     # Import custom library with mkHost helper
-    myLib = import ./lib { 
-      inherit (nixpkgs) lib; 
-      inherit inputs; 
+    myLib = import ./lib {
+      inherit (nixpkgs) lib;
+      inherit inputs;
     };
   in {
     nixosConfigurations = {

@@ -1,6 +1,10 @@
 # Boot configuration module
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.boot;
 in {
   # Note: Using config.boot.* conflicts with NixOS boot options

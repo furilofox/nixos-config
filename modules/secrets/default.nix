@@ -1,6 +1,9 @@
 # Secrets management module (simple file inclusion)
-{ config, lib, ... }:
-let
+{
+  config,
+  lib,
+  ...
+}: let
   cfg = config.secrets;
 in {
   options.secrets = {
