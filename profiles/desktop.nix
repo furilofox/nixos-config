@@ -14,14 +14,13 @@
 
   bluetooth.enable = true;
 
-  # Desktop environment - Niri with noctalia (default)
   desktop = {
     niri = {
-      enable = false;
+      enable = true;
       shell = "noctalia";
       layout.gaps = 8;
     };
-    hyprland.enable = true;
+    hyprland.enable = false;
   };
 
   # Programs
