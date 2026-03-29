@@ -100,6 +100,10 @@
         "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY &"
         "gnome-keyring-daemon --start --components=pkcs11,secrets,ssh &"
         "wl-paste --watch cliphist store &"
+        "easyeffects -w &"
+        "discord &"
+        "zen-beta &"
+        "steam &"
       ];
 
       # Environment variables

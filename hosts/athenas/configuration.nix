@@ -12,6 +12,7 @@ in {
     ../../homelab
 
     ../../homelab/gameserver/necesse.nix
+    ../../homelab/gameserver/modded-minecraft.nix
 
     ./hardware-configuration.nix
     ./variables.nix
@@ -63,6 +64,17 @@ in {
     worldName = "IrgendEineWelt"; # Will be created if it doesn't exist
     slots = 20;
     openFirewall = true;
+  };
+
+  services.modded-minecraft-server = {
+    enable = true;
+    eula = true;
+    memory = "6G";
+    serverPackZip = ~/Downloads/deceasedcraft-server.zip;
+    serverProperties = {
+      motd = "DeceasedCraft - Zombie Apocalypse";
+      max-players = "10";
+    };
   };
 
   networking = {

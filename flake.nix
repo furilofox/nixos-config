@@ -56,6 +56,9 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {
@@ -96,6 +99,7 @@
       athenas = mkHost {
         modules = [
           inputs.home-manager.nixosModules.home-manager
+          inputs.nix-index-database.nixosModules.nix-index
           
           ./hosts/athenas/configuration.nix
         ];

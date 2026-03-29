@@ -77,7 +77,7 @@ in {
       # Use Caddy with Cloudflare plugin
       package = pkgs.caddy.withPlugins {
         plugins = ["github.com/caddy-dns/cloudflare"];
-        hash = "sha256-ea8PC/+SlPRdEVVF/I3c1CBprlVp1nrumKM5cMwJJ3U=";
+        hash = "sha256-Olz4W84Kiyldy+JtbIicVCL7dAYl4zq+2rxEOUTObxA=";
       };
 
       virtualHosts =

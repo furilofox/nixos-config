@@ -57,7 +57,7 @@
 
         vcNarrator = {
           enable = true;
-          voice = "English (America) espeak-ng";
+          # voice = "English (America) espeak-ng";
         };
       };
     };
