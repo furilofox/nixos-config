@@ -8,7 +8,6 @@
     ./adguard
     ./caddy
     ./homepage
-    ./minecraft
     ./paperless-ngx
   ];
 }

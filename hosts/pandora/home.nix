@@ -48,8 +48,8 @@
       # # Gaming
       mangohud # Game Hardware stats
       protonup-ng # "protonup" in terminal to download proton-ge
-      lutris # great game launcher
-      heroic # good for epicgames
+      # lutris # great game launcher
+      # heroic # good for epicgames
       (prismlauncher.override {
         # Minecraft
         additionalPrograms = [ffmpeg];
@@ -69,7 +69,7 @@
       pfetch
       fastfetch
       gparted
-      bottles # windows app container
+      # bottles # windows app container
       nautilus # File Manager (Gnome Files)
 
       # # Just cool
@@ -80,7 +80,7 @@
 
       # Unsorted
       obsidian # Note taking app
-      easyeffects # Speaker / Mic Management
+      # easyeffects # Speaker / Mic Management
       nextcloud-client # File Sync
       telegram-desktop # Chatting
       youtube-music

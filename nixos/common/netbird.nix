@@ -11,7 +11,7 @@ in {
   options.netbird = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = false; #TODO: Broken, wait for fix and reenable
+      default = true;
       description = "Enable Netbird VPN CLI";
     };
     enableUi = lib.mkOption {

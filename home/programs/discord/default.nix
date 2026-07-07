@@ -47,7 +47,6 @@
         mentionAvatars.enable = true;
         memberCount.enable = true;
         imageZoom.enable = true;
-        friendsSince.enable = true;
         fakeNitro.enable = true;
 
         messageLogger = {

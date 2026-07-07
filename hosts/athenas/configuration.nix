@@ -1,107 +1,106 @@
 let
   secrets = import ./secrets.nix;
-in {
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
-  imports = [
-    ../../nixos
+in
+  {
+    config,
+    pkgs,
+    lib,
+    ...
+  }: {
+    imports = [
+      ../../nixos
 
-    ../../homelab
+      ../../homelab
 
-    ../../homelab/gameserver/necesse.nix
-    ../../homelab/gameserver/modded-minecraft.nix
+      ../../homelab/gameserver/necesse.nix
+      ../../homelab/gameserver/modded-minecraft.nix
 
-    ./hardware-configuration.nix
-    ./variables.nix
-  ];
+      ./hardware-configuration.nix
+      ./variables.nix
+    ];
 
-  system = {
-    audio.enable = false;
-  };
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  homelab = {
-    enable = true;
-    user = "homelab";
-    group = "homelab";
-    baseDomain = "furilo.me";
-
-    homepage = {
-      enable = true;
+    system = {
+      audio.enable = false;
     };
 
-    adguard = {
-      enable = true;
-      port = 3000;
-      dnsPort = 53;
-    };
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
 
-    caddy = {
+    homelab = {
       enable = true;
-      domain = "furilo.me";
-      cloudflareApiToken = secrets.cloudflareApiToken;
-      routes = {
-        homepage = {
-          subdomain = "home";
-          upstream = "http://localhost:8082";
-        };
+      user = "homelab";
+      group = "homelab";
+      baseDomain = "furilo.me";
 
-        adguard = {
-          subdomain = "adguard";
-          upstream = "http://localhost:3000";
+      homepage = {
+        enable = true;
+      };
+
+      adguard = {
+        enable = true;
+        port = 3000;
+        dnsPort = 53;
+      };
+
+      caddy = {
+        enable = true;
+        domain = "furilo.me";
+        cloudflareApiToken = secrets.cloudflareApiToken;
+        routes = {
+          homepage = {
+            subdomain = "home";
+            upstream = "http://localhost:8082";
+          };
+
+          adguard = {
+            subdomain = "adguard";
+            upstream = "http://localhost:3000";
+          };
         };
       };
     };
-  };
 
-  services.necesse-server = {
-    enable = true;
-    worldName = "IrgendEineWelt"; # Will be created if it doesn't exist
-    slots = 20;
-    openFirewall = true;
-  };
-
-  services.modded-minecraft-server = {
-    enable = true;
-    eula = true;
-    memory = "6G";
-    serverPackZip = ~/Downloads/deceasedcraft-server.zip;
-    serverProperties = {
-      motd = "DeceasedCraft - Zombie Apocalypse";
-      max-players = "10";
+    services.necesse-server = {
+      enable = true;
+      worldName = "IrgendEineWelt"; # Will be created if it doesn't exist
+      slots = 20;
+      openFirewall = true;
     };
-  };
 
-  networking = {
-    nameservers = ["127.0.0.1"];
-    defaultGateway = "192.168.20.1";
-    interfaces.enp2s0 = {
-      ipv4.addresses = [
-        {
-          address = "192.168.20.10";
-          prefixLength = 24;
-        }
-      ];
+    services.modded-minecraft = {
+      enable = true;
+      serverPackZip = ~/Downloads/Aoc_Aeronautics_v1.6_serverpack.zip;
+      serverProperties = {
+        motd = "Create";
+        max-players = 10;
+      };
     };
-    firewall = {
-      allowedTCPPorts = [
-        80 # HTTP
-        443 # HTTPS
-        53 # DNS TCP
-      ];
-      allowedUDPPorts = [
-        53 # DNS UDP
-        67 # DHCP
-        68 # DHCP
-      ];
-    };
-  };
 
-  # Don't touch this
-  system.stateVersion = "25.05";
-}
+    networking = {
+      nameservers = ["127.0.0.1"];
+      defaultGateway = "192.168.20.1";
+      interfaces.enp2s0 = {
+        ipv4.addresses = [
+          {
+            address = "192.168.20.10";
+            prefixLength = 24;
+          }
+        ];
+      };
+      firewall = {
+        allowedTCPPorts = [
+          80 # HTTP
+          443 # HTTPS
+          53 # DNS TCP
+        ];
+        allowedUDPPorts = [
+          53 # DNS UDP
+          67 # DHCP
+          68 # DHCP
+        ];
+      };
+    };
+
+    # Don't touch this
+    system.stateVersion = "25.05";
+  }

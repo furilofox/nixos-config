@@ -11,69 +11,71 @@
 
     settings = let
       # Helper function to generate binds from a map
-      generateBinds = keymap: pkgs.lib.flatten (
-        pkgs.lib.mapAttrsToList (action: keys:
-          map (key: "${key},${action}") keys
-        ) keymap
-      );
+      generateBinds = keymap:
+        pkgs.lib.flatten (
+          pkgs.lib.mapAttrsToList (
+            action: keys:
+              map (key: "${key},${action}") keys
+          )
+          keymap
+        );
 
       # Regular binds
       keybinds = {
-        "exec,$terminal" = [ "$mainMod,Q" ];
-        "killactive," = [ "$mainMod,C" ];
-        "exit," = [ "$mainMod,M" ];
-        "exec,$fileManager" = [ "$mainMod,E" ];
-        "togglefloating," = [ "$mainMod,V" ];
-        "pseudo," = [ "$mainMod,P" ];
-        "exec,$menu" = [ "$mainMod,R" ];
-        "togglesplit," = [ "$mainMod,J" ];
-        "exec,$lockScreen" = [ "$mainMod,L" ];
-        "movefocus,l" = [ "$mainMod,left" ];
-        "movefocus,r" = [ "$mainMod,right" ];
-        "movefocus,u" = [ "$mainMod,up" ];
-        "movefocus,d" = [ "$mainMod,down" ];
-        "workspace,e+1" = [ "$mainMod,mouse_down" ];
-        "workspace,e-1" = [ "$mainMod,mouse_up" ];
-        "exec,$areaScreenshot" = [ ",XF86CUT" ",Print" ];
-        "exec,hyprshot -m window" = [ "$mainMod SHIFT,XF86CUT" ];
+        "exec,$terminal" = ["$mainMod,Q"];
+        "killactive," = ["$mainMod,C"];
+        "exit," = ["$mainMod,M"];
+        "exec,$fileManager" = ["$mainMod,E"];
+        "togglefloating," = ["$mainMod,V"];
+        "pseudo," = ["$mainMod,P"];
+        "exec,$menu" = ["$mainMod,R"];
+        "exec,$lockScreen" = ["$mainMod,L"];
+        "movefocus,l" = ["$mainMod,left"];
+        "movefocus,r" = ["$mainMod,right"];
+        "movefocus,u" = ["$mainMod,up"];
+        "movefocus,d" = ["$mainMod,down"];
+        "workspace,e+1" = ["$mainMod,mouse_down"];
+        "workspace,e-1" = ["$mainMod,mouse_up"];
+        "exec,$areaScreenshot" = ["$mainMod,S"];
+        "exec,hyprshot -m window" = ["$mainMod SHIFT,S"];
       };
 
       # Mouse bindings
       mousebinds = {
-        "movewindow" = [ "$mainMod,mouse:272" ];
-        "resizewindow" = [ "$mainMod,mouse:273" ];
+        "movewindow" = ["$mainMod,mouse:272"];
+        "resizewindow" = ["$mainMod,mouse:273"];
       };
 
       # Repeating binds (volume, brightness)
       repeatingBinds = {
-        "exec,wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+" = [ ",XF86AudioRaiseVolume" ];
-        "exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" = [ ",XF86AudioLowerVolume" ];
-        "exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" = [ ",XF86AudioMute" ];
-        "exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle" = [ ",XF86AudioMicMute" ];
-        "exec,brightnessctl -e4 -n2 set 5%+" = [ ",XF86MonBrightnessUp" ];
-        "exec,brightnessctl -e4 -n2 set 5%-" = [ ",XF86MonBrightnessDown" ];
+        "exec,wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+" = [",XF86AudioRaiseVolume"];
+        "exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" = [",XF86AudioLowerVolume"];
+        "exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" = [",XF86AudioMute"];
+        "exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle" = [",XF86AudioMicMute"];
+        "exec,brightnessctl -e4 -n2 set 5%+" = [",XF86MonBrightnessUp"];
+        "exec,brightnessctl -e4 -n2 set 5%-" = [",XF86MonBrightnessDown"];
       };
 
       # Locked binds (media controls)
       lockedBinds = {
-        "exec,playerctl next" = [ ",XF86AudioNext" ];
-        "exec,playerctl play-pause" = [ ",XF86AudioPause" ",XF86AudioPlay" ];
-        "exec,playerctl previous" = [ ",XF86AudioPrev" ];
+        "exec,playerctl next" = [",XF86AudioNext"];
+        "exec,playerctl play-pause" = [",XF86AudioPause" ",XF86AudioPlay"];
+        "exec,playerctl previous" = [",XF86AudioPrev"];
       };
-    in
-    {
+    in {
       # Variables
       "$mainMod" = "SUPER";
 
       # Program variables
       "$terminal" = "kitty";
       "$fileManager" = "dolphin";
-      "$menu" = "noctalia-shell ipc call launcher toggle";
+      "$menu" = "noctalia msg panel-toggle launcher";
       "$lockScreen" = "noctalia-shell ipc call lockScreen lock";
       "$areaScreenshot" = "hyprshot -m region --clipboard-only --freeze";
 
       # Keybindings
-      bind = generateBinds keybinds
+      bind =
+        generateBinds keybinds
         ++ (
           # workspaces
           # binds $mainMod + [shift +] {1..9} to [move to] workspace {1..9}
@@ -96,11 +98,11 @@
 
       # Autostart
       exec-once = [
-        "noctalia-shell &"
+        "noctalia &"
         "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY &"
         "gnome-keyring-daemon --start --components=pkcs11,secrets,ssh &"
         "wl-paste --watch cliphist store &"
-        "easyeffects -w &"
+        # "easyeffects -w &"
         "discord &"
         "zen-beta &"
         "steam &"
@@ -189,12 +191,6 @@
         ];
       };
 
-      # Dwindle layout
-      dwindle = {
-        pseudotile = true;
-        preserve_split = true;
-      };
-
       # Master layout
       master = {
         new_status = "master";
@@ -205,7 +201,6 @@
         force_default_wallpaper = -1;
         disable_hyprland_logo = true;
         vrr = 1;
-        vfr = true;
       };
     };
   };

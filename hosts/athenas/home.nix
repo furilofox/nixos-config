@@ -16,7 +16,6 @@
     homeDirectory = "/home/" + config.var.username;
 
     packages = with pkgs; [
-      
     ];
 
     # Don't touch this

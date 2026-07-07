@@ -22,7 +22,8 @@ in {
     };
     */
     passwordFile = lib.mkOption {
-      type = lib.types.path;
+      type = lib.types.nullOr lib.types.path;
+      default = null;
     };
     configDir = lib.mkOption {
       type = lib.types.str;
@@ -31,6 +32,16 @@ in {
     url = lib.mkOption {
       type = lib.types.str;
       default = "paperless.${homelab.baseDomain}";
+    };
+    useCaddy = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether to set up a Caddy reverse proxy for Paperless";
+    };
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 28981;
+      description = "Port for Paperless to listen on";
     };
     homepage.name = lib.mkOption {
       type = lib.types.str;
@@ -53,15 +64,15 @@ in {
     services = {
       ${service} = {
         enable = true;
-        # passwordFile = cfg.passwordFile;
+        passwordFile = lib.mkIf (cfg.passwordFile != null) cfg.passwordFile;
         user = homelab.user;
+        port = cfg.port;
         /*
            mediaDir = cfg.mediaDir;
         consumptionDir = cfg.consumptionDir;
         */
         consumptionDirIsPublic = true;
         settings = {
-          PAPERLESS_URL = "https://${cfg.url}";
           PAPERLESS_CONSUMER_IGNORE_PATTERN = [
             ".DS_STORE/*"
             "desktop.ini"
@@ -71,14 +82,20 @@ in {
             optimize = 1;
             pdfa_image_compression = "lossless";
           };
+        } // lib.optionalAttrs cfg.useCaddy {
+          PAPERLESS_URL = "https://${cfg.url}";
         };
       };
+    } // lib.optionalAttrs cfg.useCaddy {
       caddy.virtualHosts."${cfg.url}" = {
         # useACMEHost = homelab.baseDomain;
         extraConfig = ''
-          reverse_proxy http://127.0.0.1:${toString config.services.${service}.port}
+          reverse_proxy http://127.0.0.1:${toString cfg.port}
         '';
       };
     };
+
+    # Open the firewall port when not using Caddy (direct IP access)
+    networking.firewall.allowedTCPPorts = lib.mkIf (!cfg.useCaddy) [cfg.port];
   };
 }

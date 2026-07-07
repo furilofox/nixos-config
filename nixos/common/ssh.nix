@@ -33,7 +33,7 @@
       };
       promethea = {
         extraHostNames = ["promethea" "192.168.20.22"];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILfeLjwq/Yh3WSXg+5XMlurPguOFh5T7yo7UaiPiwbIc fabian@promethea";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID0bYU3Ouu/iATAkAf7W5WbeWDTHIv2UZALLubGvRxqh fabian@promethea";
       };
     };
   };
@@ -41,7 +41,7 @@
   users.users.${config.var.username} = {
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID3akVuki5R7QbCLl5+l9l0IpxapzEOJ6acAwQBwxYcm fabian@pandora"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO9feviQt7FkGvXKpWic+G+9q8wzTFzwIM/6EowDeTxi fabian@promethea"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID0bYU3Ouu/iATAkAf7W5WbeWDTHIv2UZALLubGvRxqh fabian@promethea"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE7fx0ZHLUDdCW9giuF9D5rqwHh7QC4PEGxcJd9Z1wZH fabian@athenas"
     ];
   };

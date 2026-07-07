@@ -1,210 +1,87 @@
-# Stop the server
-# sudo systemctl stop modded-minecraft-server
-
-# Start the server
-# sudo systemctl start modded-minecraft-server
-
-# Restart the server
-# sudo systemctl restart modded-minecraft-server
-
-# Check status
-# sudo systemctl status modded-minecraft-server
-
-# View live logs
-# sudo journalctl -u modded-minecraft-server -f
-
-
+# Modded Minecraft server using nix-minecraft
+# https://github.com/Infinidoge/nix-minecraft
+#
+# Manage the server:
+#   sudo systemctl stop minecraft-server-modded
+#   sudo systemctl start minecraft-server-modded
+#   sudo systemctl restart minecraft-server-modded
+#   sudo systemctl status minecraft-server-modded
+#
+# Attach to the server console:
+#   sudo tmux -S /run/minecraft/modded.sock attach
+#   (press Ctrl+b then d to detach)
+#
+# View logs:
+#   sudo journalctl -u minecraft-server-modded -f
+#
+# Server data is stored in: /srv/minecraft/modded
 {
   config,
   pkgs,
   lib,
   ...
-}:
-with lib; let
-  cfg = config.services.modded-minecraft-server;
+}: let
+  cfg = config.services.modded-minecraft;
+
+  # Extract the CurseForge server pack into the nix store
+  serverPack = pkgs.stdenv.mkDerivation {
+    name = "minecraft-serverpack";
+    src = cfg.serverPackZip;
+    nativeBuildInputs = [pkgs.unzip];
+    sourceRoot = ".";
+    unpackCmd = "unzip $curSrc -d .";
+    installPhase = ''
+      mkdir -p $out
+      cp -r . $out/
+    '';
+  };
 in {
-  options.services.modded-minecraft-server = {
-    enable = mkEnableOption "Modded Minecraft (Forge) server";
+  options.services.modded-minecraft = {
+    enable = lib.mkEnableOption "Modded Minecraft server (via nix-minecraft)";
 
-    dataDir = mkOption {
-      type = types.path;
-      default = "/var/lib/modded-minecraft";
-      description = "Directory to store server data, world saves, and mods.";
+    serverPackZip = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to the CurseForge modpack server pack ZIP file.";
     };
 
-    serverPackZip = mkOption {
-      type = types.path;
-      description = ''
-        Path to the modpack server pack ZIP file.
-        Download from CurseForge and place in this repository.
-      '';
-    };
-
-    javaPackage = mkOption {
-      type = types.package;
-      default = pkgs.jdk17;
-      description = "Java package to use. Forge 1.20.1 requires Java 17.";
-    };
-
-    memory = mkOption {
-      type = types.str;
-      default = "6G";
-      description = "Maximum heap memory allocation for the server (e.g. '6G', '8G').";
-    };
-
-    port = mkOption {
-      type = types.port;
-      default = 25565;
-      description = "Port for the Minecraft server to listen on.";
-    };
-
-    openFirewall = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Whether to open the server port in the firewall.";
-    };
-
-    eula = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Whether to accept the Minecraft EULA.
-        Must be set to true for the server to start.
-        See: https://aka.ms/MinecraftEULA
-      '';
-    };
-
-    serverProperties = mkOption {
-      type = types.attrsOf types.str;
+    serverProperties = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.oneOf [lib.types.bool lib.types.int lib.types.str]);
       default = {};
       example = {
         motd = "My Modded Server";
-        max-players = "10";
-        difficulty = "hard";
+        max-players = 10;
       };
-      description = ''
-        Additional server.properties key-value pairs to set.
-        These are applied on every start, overriding values in the file.
-      '';
+      description = "Minecraft server.properties — see https://minecraft.wiki/w/Server.properties";
     };
   };
 
-  config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = cfg.eula;
-        message = "You must accept the Minecraft EULA by setting services.modded-minecraft-server.eula = true";
-      }
-    ];
+  config = lib.mkIf cfg.enable {
+    services.minecraft-servers = {
+      enable = true;
+      eula = true;
 
-    users.users.minecraft = {
-      isSystemUser = true;
-      home = cfg.dataDir;
-      createHome = true;
-      group = "minecraft";
-      description = "Modded Minecraft server user";
-    };
-    users.groups.minecraft = {};
+      servers.modded = {
+        enable = true;
+        openFirewall = true;
 
-    networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [cfg.port];
-      allowedUDPPorts = [cfg.port];
-    };
+        # NeoForge 1.21.1 — nix-minecraft handles the server jar natively
+        package = pkgs.neoforgeServers.neoforge-1_21_1;
 
-    systemd.services.modded-minecraft-server = {
-      description = "Modded Minecraft (Forge) Server";
-      wants = ["network-online.target"];
-      after = ["network-online.target"];
-      wantedBy = ["multi-user.target"];
+        jvmOpts = "-Xmx6G -Xms6G";
 
-      serviceConfig = {
-        User = "minecraft";
-        Group = "minecraft";
-        WorkingDirectory = cfg.dataDir;
-        Restart = "on-failure";
-        RestartSec = "15s";
-        # First run downloads Forge libraries — give it time
-        TimeoutStartSec = "600";
-        # Graceful shutdown via RCON stop or SIGTERM
-        KillSignal = "SIGTERM";
-        TimeoutStopSec = "120";
-        SuccessExitStatus = "0 130";
+        serverProperties = cfg.serverProperties;
+
+        # Symlink modpack mods and config from the nix store.
+        # Symlinks are read-only, which is fine for mods and most config.
+        symlinks = {
+          "mods" = "${serverPack}/mods";
+        };
+
+        # Copy config as writable files (some mods write to their config)
+        files = {
+          "config" = "${serverPack}/config";
+        };
       };
-
-      preStart = ''
-        # --- Extract server pack on first install ---
-        if [ ! -f "${cfg.dataDir}/.installed" ]; then
-          echo "First run: extracting server pack..."
-          ${pkgs.unzip}/bin/unzip -o "${cfg.serverPackZip}" -d "${cfg.dataDir}"
-          echo "Server pack extracted."
-        fi
-
-        # --- Run Forge installer if libraries are missing ---
-        if [ ! -d "${cfg.dataDir}/libraries" ]; then
-          echo "Running Forge installer..."
-          INSTALLER=$(find "${cfg.dataDir}" -maxdepth 1 -name "forge-*-installer.jar" | head -1)
-          if [ -n "$INSTALLER" ]; then
-            ${cfg.javaPackage}/bin/java -jar "$INSTALLER" --installServer "${cfg.dataDir}"
-            echo "Forge installed successfully."
-          else
-            echo "ERROR: No forge installer jar found!"
-            exit 1
-          fi
-        fi
-
-        # --- Mark as installed after both extraction and Forge install ---
-        touch "${cfg.dataDir}/.installed"
-
-        # --- Accept EULA ---
-        echo "eula=true" > "${cfg.dataDir}/eula.txt"
-
-        # --- Apply server.properties overrides ---
-        PROPS="${cfg.dataDir}/server.properties"
-        if [ ! -f "$PROPS" ]; then
-          touch "$PROPS"
-        fi
-        ${concatStringsSep "\n" (mapAttrsToList (key: value: ''
-            if ${pkgs.gnugrep}/bin/grep -q "^${key}=" "$PROPS"; then
-              ${pkgs.gnused}/bin/sed -i "s|^${key}=.*|${key}=${value}|" "$PROPS"
-            else
-              echo "${key}=${value}" >> "$PROPS"
-            fi
-          '')
-          (cfg.serverProperties
-            // {
-              server-port = toString cfg.port;
-            }))}
-
-        # --- Make startup scripts executable ---
-        for f in "${cfg.dataDir}"/*.sh; do
-          [ -f "$f" ] && chmod +x "$f"
-        done
-      '';
-
-      script = ''
-        cd "${cfg.dataDir}"
-
-        # Find the unix_args.txt generated by the Forge installer
-        UNIX_ARGS=$(find "${cfg.dataDir}/libraries/net/minecraftforge/forge" -name "unix_args.txt" 2>/dev/null | head -1)
-
-        if [ -n "$UNIX_ARGS" ]; then
-          echo "Starting Forge server using $UNIX_ARGS"
-          exec ${cfg.javaPackage}/bin/java \
-            -Xmx${cfg.memory} -Xms${cfg.memory} \
-            @"$UNIX_ARGS" \
-            nogui "$@"
-        else
-          # Fallback: find forge server jar directly
-          FORGE_JAR=$(find . -maxdepth 1 -name "forge-*.jar" -not -name "*installer*" | head -1)
-          if [ -z "$FORGE_JAR" ]; then
-            echo "ERROR: Could not find Forge server JAR or unix_args.txt. Check your server pack."
-            exit 1
-          fi
-          exec ${cfg.javaPackage}/bin/java \
-            -Xmx${cfg.memory} -Xms${cfg.memory} \
-            -jar "$FORGE_JAR" nogui
-        fi
-      '';
     };
   };
 }

@@ -12,6 +12,9 @@
 
     ../../nixos/desktop/hyprland
 
+    # Homelab services
+    ../../homelab
+
     # ../../nixos/services/mullvad.nix
     ../../nixos/services/gnome-keyring.nix
 
@@ -47,7 +50,12 @@
     shotcut
     satisfactorymodmanager
 
-    sops age ssh-to-age age-plugin-yubikey yubikey-manager gnupg # Yubikey / Sops stuff
+    sops
+    age
+    ssh-to-age
+    age-plugin-yubikey
+    yubikey-manager
+    gnupg # Yubikey / Sops stuff
   ];
 
   # YUBIKEY STUFF
@@ -58,7 +66,7 @@
   environment.etc."sops/age/keys.txt".text = ''
     # Primary YubiKey (USB-C)
     AGE-PLUGIN-YUBIKEY-1C537CQVZFHGZCHS5QHCXQ
-    
+
     # Backup YubiKey (USB-A)
     AGE-PLUGIN-YUBIKEY-1SRXDZQVZGULA6DQNFDM77
   '';
@@ -69,7 +77,7 @@
   sops.defaultSopsFormat = "yaml";
 
   # Machine uses its own SSH key to decrypt at boot (Runtime decryption)
-  sops.age.sshKeyPaths = [ config.ssh_key ];
+  sops.age.sshKeyPaths = [config.ssh_key];
 
   # ============================================
 
