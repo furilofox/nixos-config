@@ -8,6 +8,7 @@
     ./adguard
     ./caddy
     ./homepage
+    ./open-webui
     ./paperless-ngx
   ];
 }

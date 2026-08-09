@@ -8,200 +8,235 @@
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-
-    settings = let
-      # Helper function to generate binds from a map
-      generateBinds = keymap:
-        pkgs.lib.flatten (
-          pkgs.lib.mapAttrsToList (
-            action: keys:
-              map (key: "${key},${action}") keys
-          )
-          keymap
-        );
-
-      # Regular binds
-      keybinds = {
-        "exec,$terminal" = ["$mainMod,Q"];
-        "killactive," = ["$mainMod,C"];
-        "exit," = ["$mainMod,M"];
-        "exec,$fileManager" = ["$mainMod,E"];
-        "togglefloating," = ["$mainMod,V"];
-        "pseudo," = ["$mainMod,P"];
-        "exec,$menu" = ["$mainMod,R"];
-        "exec,$lockScreen" = ["$mainMod,L"];
-        "movefocus,l" = ["$mainMod,left"];
-        "movefocus,r" = ["$mainMod,right"];
-        "movefocus,u" = ["$mainMod,up"];
-        "movefocus,d" = ["$mainMod,down"];
-        "workspace,e+1" = ["$mainMod,mouse_down"];
-        "workspace,e-1" = ["$mainMod,mouse_up"];
-        "exec,$areaScreenshot" = ["$mainMod,S"];
-        "exec,hyprshot -m window" = ["$mainMod SHIFT,S"];
-      };
-
-      # Mouse bindings
-      mousebinds = {
-        "movewindow" = ["$mainMod,mouse:272"];
-        "resizewindow" = ["$mainMod,mouse:273"];
-      };
-
-      # Repeating binds (volume, brightness)
-      repeatingBinds = {
-        "exec,wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+" = [",XF86AudioRaiseVolume"];
-        "exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" = [",XF86AudioLowerVolume"];
-        "exec,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" = [",XF86AudioMute"];
-        "exec,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle" = [",XF86AudioMicMute"];
-        "exec,brightnessctl -e4 -n2 set 5%+" = [",XF86MonBrightnessUp"];
-        "exec,brightnessctl -e4 -n2 set 5%-" = [",XF86MonBrightnessDown"];
-      };
-
-      # Locked binds (media controls)
-      lockedBinds = {
-        "exec,playerctl next" = [",XF86AudioNext"];
-        "exec,playerctl play-pause" = [",XF86AudioPause" ",XF86AudioPlay"];
-        "exec,playerctl previous" = [",XF86AudioPrev"];
-      };
-    in {
-      # Variables
-      "$mainMod" = "SUPER";
-
-      # Program variables
-      "$terminal" = "kitty";
-      "$fileManager" = "dolphin";
-      "$menu" = "noctalia msg panel-toggle launcher";
-      "$lockScreen" = "noctalia-shell ipc call lockScreen lock";
-      "$areaScreenshot" = "hyprshot -m region --clipboard-only --freeze";
-
-      # Keybindings
-      bind =
-        generateBinds keybinds
-        ++ (
-          # workspaces
-          # binds $mainMod + [shift +] {1..9} to [move to] workspace {1..9}
-          builtins.concatLists (builtins.genList (
-              i: let
-                ws = i + 1;
-              in [
-                "$mainMod, code:1${toString i}, workspace, ${toString ws}"
-                "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-              ]
-            )
-            9)
-        );
-      bindm = generateBinds mousebinds;
-      binde = generateBinds repeatingBinds; # `bindel` was likely a typo for `binde` (repeating)
-      bindl = generateBinds lockedBinds;
-
-      # Monitor configuration
-      monitor = config.var.monitors ++ [",preferred,auto,auto"];
-
-      # Autostart
-      exec-once = [
-        "noctalia &"
-        "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY &"
-        "gnome-keyring-daemon --start --components=pkcs11,secrets,ssh &"
-        "wl-paste --watch cliphist store &"
-        # "easyeffects -w &"
-        "discord &"
-        "zen-beta &"
-        "steam &"
-      ];
-
-      # Environment variables
-      env = [
-        "XCURSOR_SIZE,24"
-        "HYPRCURSOR_SIZE,24"
-      ];
-
-      # Input configuration
-      input = {
-        kb_layout = "de";
-        follow_mouse = 1;
-        sensitivity = 0;
-
-        touchpad = {
-          natural_scroll = true;
-        };
-      };
-
-      # General settings
-      general = {
-        gaps_in = 2.5;
-        gaps_out = 5;
-        border_size = 1;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
-        resize_on_border = false;
-        allow_tearing = false;
-        layout = "dwindle";
-      };
-
-      # Decoration
-      decoration = {
-        rounding = 5;
-        rounding_power = 2;
-        active_opacity = 1.0;
-        inactive_opacity = 0.95;
-
-        shadow = {
-          enabled = true;
-          range = 4;
-          render_power = 3;
-          color = "rgba(1a1a1aee)";
-        };
-
-        blur = {
-          enabled = true;
-          size = 3;
-          passes = 1;
-          vibrancy = 0.1696;
-        };
-      };
-
-      # Animations
-      animations = {
-        enabled = true;
-
-        bezier = [
-          "easeOutQuint,0.23,1,0.32,1"
-          "easeInOutCubic,0.65,0.05,0.36,1"
-          "linear,0,0,1,1"
-          "almostLinear,0.5,0.5,0.75,1.0"
-          "quick,0.15,0,0.1,1"
-        ];
-
-        animation = [
-          "global,1,10,default"
-          "border,1,5.39,easeOutQuint"
-          "windows,1,4.79,easeOutQuint"
-          "windowsIn,1,4.1,easeOutQuint,popin 87%"
-          "windowsOut,1,1.49,linear,popin 87%"
-          "fadeIn,1,1.73,almostLinear"
-          "fadeOut,1,1.46,almostLinear"
-          "fade,1,3.03,quick"
-          "layers,1,3.81,easeOutQuint"
-          "layersIn,1,4,easeOutQuint,fade"
-          "layersOut,1,1.5,linear,fade"
-          "fadeLayersIn,1,1.79,almostLinear"
-          "fadeLayersOut,1,1.39,almostLinear"
-          "workspaces,1,1.94,almostLinear,fade"
-          "workspacesIn,1,1.21,almostLinear,fade"
-          "workspacesOut,1,1.94,almostLinear,fade"
-        ];
-      };
-
-      # Master layout
-      master = {
-        new_status = "master";
-      };
-
-      # Misc settings
-      misc = {
-        force_default_wallpaper = -1;
-        disable_hyprland_logo = true;
-        vrr = 1;
-      };
-    };
+    configType = "lua";
+    
+    # Use extraConfig for Lua-based configuration
+    extraConfig = let
+      # Convert monitor strings to Lua format
+      monitorConfig = builtins.concatStringsSep "\n" (
+        map (m: 
+          let
+            # Parse monitor string: "NAME, WIDTHxHEIGHT@RATE, X_OFFSETxY_OFFSET, SCALE[, vrr, VRR_VALUE]"
+            parts = builtins.filter builtins.isString (builtins.split ", " m);
+            name = builtins.elemAt parts 0;
+            mode = builtins.elemAt parts 1;
+            position = builtins.elemAt parts 2;
+            scale = builtins.elemAt parts 3;
+            hasVrr = builtins.length parts > 4;
+          in
+            if hasVrr then
+              ''
+                hl.monitor({
+                  output   = "${name}",
+                  mode     = "${mode}",
+                  position = "${position}",
+                  scale    = ${scale},
+                  vrr      = ${builtins.elemAt parts 5},
+                })
+              ''
+            else
+              ''
+                hl.monitor({
+                  output   = "${name}",
+                  mode     = "${mode}",
+                  position = "${position}",
+                  scale    = ${scale},
+                })
+              ''
+        ) config.var.monitors
+      );
+    in ''
+      -- Hyprland Lua Configuration
+      
+      --------------------
+      ---- MONITORS ----
+      --------------------
+      
+      ${monitorConfig}
+      
+      -- Fallback monitor
+      hl.monitor({
+        output   = "",
+        mode     = "preferred",
+        position = "auto",
+        scale    = "auto",
+      })
+      
+      
+      ---------------------
+      ---- MY PROGRAMS ----
+      ---------------------
+      
+      local terminal = "kitty"
+      local fileManager = "dolphin"
+      local menu = "noctalia msg panel-toggle launcher"
+      local lockScreen = "noctalia-shell ipc call lockScreen lock"
+      local areaScreenshot = "hyprshot -m region --clipboard-only --freeze"
+      
+      
+      -------------------
+      ---- AUTOSTART ----
+      -------------------
+      
+      hl.on("hyprland.start", function()
+        hl.exec_cmd("noctalia")
+        hl.exec_cmd("dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY")
+        hl.exec_cmd("gnome-keyring-daemon --start --components=pkcs11,secrets,ssh")
+        hl.exec_cmd("wl-paste --watch cliphist store")
+        hl.exec_cmd("discord")
+        hl.exec_cmd("zen-beta")
+        hl.exec_cmd("steam")
+      end)
+      
+      
+      -------------------------------
+      ---- ENVIRONMENT VARIABLES ----
+      -------------------------------
+      
+      hl.env("XCURSOR_SIZE", "24")
+      hl.env("HYPRCURSOR_SIZE", "24")
+      
+      
+      -----------------------
+      ---- CONFIGURATION ----
+      -----------------------
+      
+      hl.config({
+        input = {
+          kb_layout = "de",
+          follow_mouse = 1,
+          sensitivity = 0,
+          
+          touchpad = {
+            natural_scroll = true,
+          },
+        },
+        
+        general = {
+          gaps_in = 2.5,
+          gaps_out = 5,
+          border_size = 1,
+          
+          col = {
+            active_border = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
+            inactive_border = "rgba(595959aa)",
+          },
+          
+          resize_on_border = false,
+          allow_tearing = false,
+          layout = "dwindle",
+        },
+        
+        decoration = {
+          rounding = 5,
+          active_opacity = 1.0,
+          inactive_opacity = 0.95,
+          
+          shadow = {
+            enabled = true,
+            range = 4,
+            render_power = 3,
+            color = "rgba(1a1a1aee)",
+          },
+          
+          blur = {
+            enabled = true,
+            size = 3,
+            passes = 1,
+            vibrancy = 0.1696,
+          },
+        },
+        
+        animations = {
+          enabled = true,
+          
+          bezier = {
+            { name = "easeOutQuint", points = {0.23, 1, 0.32, 1} },
+            { name = "easeInOutCubic", points = {0.65, 0.05, 0.36, 1} },
+            { name = "linear", points = {0, 0, 1, 1} },
+            { name = "almostLinear", points = {0.5, 0.5, 0.75, 1.0} },
+            { name = "quick", points = {0.15, 0, 0.1, 1} },
+          },
+          
+          animation = {
+            { name = "global", duration = 10, curve = "default", enabled = 1 },
+            { name = "border", duration = 5.39, curve = "easeOutQuint", enabled = 1 },
+            { name = "windows", duration = 4.79, curve = "easeOutQuint", enabled = 1 },
+            { name = "windowsIn", duration = 4.1, curve = "easeOutQuint", style = "popin 87%", enabled = 1 },
+            { name = "windowsOut", duration = 1.49, curve = "linear", style = "popin 87%", enabled = 1 },
+            { name = "fadeIn", duration = 1.73, curve = "almostLinear", enabled = 1 },
+            { name = "fadeOut", duration = 1.46, curve = "almostLinear", enabled = 1 },
+            { name = "fade", duration = 3.03, curve = "quick", enabled = 1 },
+            { name = "layers", duration = 3.81, curve = "easeOutQuint", enabled = 1 },
+            { name = "layersIn", duration = 4, curve = "easeOutQuint", style = "fade", enabled = 1 },
+            { name = "layersOut", duration = 1.5, curve = "linear", style = "fade", enabled = 1 },
+            { name = "fadeLayersIn", duration = 1.79, curve = "almostLinear", enabled = 1 },
+            { name = "fadeLayersOut", duration = 1.39, curve = "almostLinear", enabled = 1 },
+            { name = "workspaces", duration = 1.94, curve = "almostLinear", style = "fade", enabled = 1 },
+            { name = "workspacesIn", duration = 1.21, curve = "almostLinear", style = "fade", enabled = 1 },
+            { name = "workspacesOut", duration = 1.94, curve = "almostLinear", style = "fade", enabled = 1 },
+          },
+        },
+        
+        master = {
+          new_status = "master",
+        },
+        
+        misc = {
+          force_default_wallpaper = -1,
+          disable_hyprland_logo = true,
+          vrr = 1,
+        },
+      })
+      
+      
+      --------------------
+      ---- KEYBINDINGS ----
+      --------------------
+      
+      local mainMod = "SUPER"
+      
+      -- Regular binds
+      hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
+      hl.bind(mainMod .. " + C", hl.dsp.window.close())
+      hl.bind(mainMod .. " + N", hl.dsp.exit())
+      hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+      hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+      hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+      hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
+      hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(lockScreen))
+      hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
+      hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
+      hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
+      hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+      hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+      hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+      hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(areaScreenshot))
+      hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m window"))
+      
+      -- Workspace bindings (1-9)
+      for i = 1, 9 do
+        hl.bind(mainMod .. " + code:1" .. (i-1), hl.dsp.focus({ workspace = i }))
+        hl.bind(mainMod .. " + SHIFT + code:1" .. (i-1), hl.dsp.window.move({ workspace = i }))
+      end
+      
+      -- Mouse bindings
+      hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+      hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+      
+      -- Volume and brightness controls (locked and repeating)
+      hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+      hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+      hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
+      hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
+      hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
+      hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
+      
+      -- Media controls (locked)
+      hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
+      hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+      hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+      hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+    '';
   };
 }

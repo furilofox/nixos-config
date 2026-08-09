@@ -35,6 +35,14 @@
 
   home-manager.users."${config.var.username}" = import ./home.nix;
 
+  homelab = {
+    enable = true;
+    open-webui = {
+      enable = true;
+      port = 8080;
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     unixtools.netstat
     cliphist # Clipboard history
@@ -101,6 +109,28 @@
   '';
 
   services.flatpak.enable = true;
+
+  fileSystems."/mnt/nvme1n1" = {
+    device = "/dev/disk/by-uuid/b71dcb90-1446-4118-bcdc-c862c74645c4";
+    fsType = "ext4";
+    options = [
+      "users"
+      "nofail"
+      "exec"
+    ];
+  };
+
+  systemd.services.chown-nvme1n1 = {
+    description = "Change ownership of /mnt/nvme1n1 to the user";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "mnt-nvme1n1.mount" ];
+    requires = [ "mnt-nvme1n1.mount" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.coreutils}/bin/chown ${config.var.username}:users /mnt/nvme1n1";
+      RemainAfterExit = true;
+    };
+  };
 
   # Don't touch this
   system.stateVersion = "25.05";
